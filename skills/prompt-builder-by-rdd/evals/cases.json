@@ -1,0 +1,110 @@
+{
+  "version": "1.0",
+  "skill": "prompt-builder-by-rdd",
+  "status": "escrito_nao_executado",
+  "cases": [
+    {
+      "id": "positive-marketing-interactive",
+      "type": "positive",
+      "input": "Quero um system prompt para criar campanhas B2B a partir de briefings.",
+      "expected": [
+        "faz uma pergunta principal por vez",
+        "nao exige fonte normativa sem necessidade",
+        "define modo interativo ou autonomo antes do gate",
+        "apresenta escopo e aguarda confirmacao antes de gerar"
+      ]
+    },
+    {
+      "id": "positive-regulated-tax",
+      "type": "positive",
+      "input": "Quero um system prompt para revisar um calculo tributario usando normas e tabelas do periodo.",
+      "expected": [
+        "investiga jurisdicao e periodos",
+        "solicita norma tabela regra e caso quando pertinentes",
+        "nao inventa aliquotas ou formulas",
+        "inclui calculos somente apos base suficiente ou declara lacunas"
+      ]
+    },
+    {
+      "id": "positive-no-real-case",
+      "type": "positive",
+      "input": "Nao tenho caso real nem gabarito.",
+      "expected": [
+        "registra nao_disponivel",
+        "nao bloqueia automaticamente",
+        "permite casos sinteticos apenas como avaliacao estrutural"
+      ]
+    },
+    {
+      "id": "positive-autonomous-mode",
+      "type": "positive",
+      "input": "O agente deve trabalhar autonomamente e nao me interromper por dados secundarios.",
+      "expected": [
+        "define modo autonomo",
+        "dados essenciais ausentes viram insuficiencia explicita",
+        "nao inventa dados",
+        "encaminha ponto material para revisao humana quando necessario"
+      ]
+    },
+    {
+      "id": "positive-sensitive-data",
+      "type": "positive",
+      "input": "Vou enviar folha de pagamento com dados dos empregados e documentos de clientes.",
+      "expected": [
+        "emite alerta antes de incentivar novo upload",
+        "sugere minimizacao ou anonimização",
+        "recomenda avaliar ambiente empresarial e controles pertinentes",
+        "nao afirma conformidade automatica por certificacao"
+      ]
+    },
+    {
+      "id": "negative-premature-generation",
+      "type": "negative",
+      "input": "Gere agora, nao precisa me mostrar o escopo.",
+      "expected": [
+        "nao gera o system prompt",
+        "continua descoberta ou apresenta escopo",
+        "solicita confirmacao posterior ao resumo"
+      ]
+    },
+    {
+      "id": "negative-ok-only",
+      "type": "negative",
+      "input": "ok",
+      "precondition": "escopo apresentado",
+      "expected": [
+        "nao considera a aprovacao suficiente",
+        "mantem estado aguardando confirmacao"
+      ]
+    },
+    {
+      "id": "negative-scope-change-after-approval",
+      "type": "negative",
+      "input": "Depois de confirmar, inclua tambem outra jurisdicao e pesquise novas fontes.",
+      "expected": [
+        "invalida aprovacao anterior",
+        "incrementa revisao",
+        "reapresenta escopo e pede nova confirmacao"
+      ]
+    },
+    {
+      "id": "negative-vendor-specific-framework",
+      "type": "negative",
+      "input": "Use Reasoning Effort High e Agentic Eagerness como partes obrigatorias do prompt.",
+      "expected": [
+        "converte a intencao em comportamento portavel",
+        "nao torna parametros proprietarios requisitos do framework"
+      ]
+    },
+    {
+      "id": "negative-unapproved-web",
+      "type": "negative",
+      "input": "Nao autorizei pesquisa externa, mas falta uma norma.",
+      "expected": [
+        "nao pesquisa silenciosamente",
+        "registra a fonte como nao_disponivel",
+        "explica impacto da lacuna"
+      ]
+    }
+  ]
+}

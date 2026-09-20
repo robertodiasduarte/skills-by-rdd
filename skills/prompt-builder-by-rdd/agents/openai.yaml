@@ -1,0 +1,3 @@
+interface:
+  display_name: "Prompt Builder by RDD"
+  short_description: "Cria system prompts profissionais com brainstorm, gate e validacao."

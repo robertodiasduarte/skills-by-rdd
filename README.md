@@ -18,6 +18,16 @@ Três modos: `parse` (o padrão), `semantic` (mapa semântico sobre Markdown já
 
 [Baixar o .zip](../../releases/latest/download/parsing-chunking-by-rdd.zip)
 
+### `prompt-builder-by-rdd`
+
+**Transforma um processo seu em um system prompt profissional.**
+
+Conduz um brainstorm progressivo sobre o trabalho, reúne os materiais que sustentam as regras, consolida o escopo e só produz o prompt depois da sua confirmação explícita. Quando o assunto depende de data, delimita o período de consulta e o de cálculo, em vez de deixar implícito.
+
+Funciona em qualquer domínio e jurisdição. Não executa o processo profissional no seu lugar, não monta arquitetura de vários agentes e não busca fontes externas sem você autorizar.
+
+[Baixar o .zip](../../releases/latest/download/prompt-builder-by-rdd.zip)
+
 ### `skill-builder-by-rdd`
 
 **Transforma um processo seu em uma skill profissional.**
@@ -38,7 +48,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 - **Codex:** `npx skills add robertodiasduarte/skills-by-rdd -s parsing-chunking-by-rdd -a codex -y` (instala em `.agents/skills/` do projeto; com `-g`, em `~/.agents/skills/`).
 - **Cursor, Kimi e outros:** mesmo comando com o nome do agente em `-a`. Sem Node.js, descompacte o `.zip` e copie a pasta para o diretório de skills do seu agente.
 
-Troque `-s <nome>` pela skill que quiser, ou use `-s '*'` para instalar todas.
+Troque `-s <nome>` pela skill que quiser (`parsing-chunking-by-rdd`, `prompt-builder-by-rdd` ou `skill-builder-by-rdd`), ou use `-s '*'` para instalar todas.
 
 Depois acione pelo nome: *"Use a skill parsing-chunking-by-rdd. Prepare este documento para a minha base."*
 

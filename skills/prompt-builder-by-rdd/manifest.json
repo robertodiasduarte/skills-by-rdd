@@ -1,0 +1,98 @@
+{
+  "name": "prompt-builder-by-rdd",
+  "display_name": "Prompt Builder by RDD",
+  "version": "3.0.0",
+  "scope": {
+    "id": "PB-RDD-001",
+    "revision": 1,
+    "status": "confirmed_after_versioned_scope"
+  },
+  "profile_requested": "meta-operational prompt construction",
+  "profile_effective": "C",
+  "coverage": {
+    "consultive": "global and multidisciplinary system-prompt construction",
+    "calculation": "not applicable; the skill may specify calculations inside generated prompts but does not execute professional calculations"
+  },
+  "implemented_paths": [
+    "progressive brainstorm",
+    "material collection",
+    "versioned scope consolidation",
+    "explicit confirmation gate",
+    "single XML system-prompt generation",
+    "quality validation",
+    "external generation report"
+  ],
+  "released_paths": [
+    "progressive brainstorm",
+    "explicit confirmation gate",
+    "single prompt generation after approval",
+    "portable XML framework",
+    "source and confidentiality controls"
+  ],
+  "materials": [
+    {
+      "id": "M001",
+      "title": "prompt-builder.zip",
+      "role": "legacy skill used as migration source",
+      "status": "used"
+    },
+    {
+      "id": "M002",
+      "title": "legacy accounting prompt examples",
+      "role": "structural and behavioral examples only; not normative goldens",
+      "status": "used"
+    }
+  ],
+  "tests_written": [
+    "10 behavioral scenarios in evals/cases.json",
+    "skill-creator quick_validate",
+    "RDD lint_bundle",
+    "JSON syntax checks",
+    "legacy-term scan",
+    "package inspection"
+  ],
+  "tests_executed": [
+    {
+      "test": "skill-creator quick_validate",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "RDD lint_bundle",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "manifest.json parse",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "evals/cases.json parse",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "agents/openai.yaml parse",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "placeholder and required-contract assertions",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "skill package creation",
+      "status": "executado_aprovado"
+    }
+  ],
+  "pending": [
+    "behavioral execution in target LLM products is not proven by local structural validation",
+    "no real professional golden case was supplied",
+    "the RDD scope_gate schema is specialized to four regulated areas and cannot faithfully encode this approved general-domain scope"
+  ],
+  "o_que_ainda_nao_prova": [
+    "identical behavior across all LLM providers",
+    "professional validity of user-supplied domain rules",
+    "current certification status of any third-party AI vendor",
+    "legal compliance of a deployment solely because a vendor has a certification"
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}
