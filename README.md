@@ -44,11 +44,24 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
 - **Claude (claude.ai):** Configurações → Capacidades → Skills → upload do `.zip` **sem descompactar**.
 - **ChatGPT:** Configurações → Habilidades (`chatgpt.com/admin/skills`) → **+** → arraste o `.zip`. Sem acesso à administração? Crie um Projeto, envie os arquivos e instrua: *"Siga o SKILL.md que está nos arquivos deste projeto."*
-- **Claude Code:** `npx skills add robertodiasduarte/skills-by-rdd -s parsing-chunking-by-rdd -a claude-code -y` (instala em `.claude/skills/` do projeto; com `-g`, em `~/.claude/skills/`).
-- **Codex:** `npx skills add robertodiasduarte/skills-by-rdd -s parsing-chunking-by-rdd -a codex -y` (instala em `.agents/skills/` do projeto; com `-g`, em `~/.agents/skills/`).
-- **Cursor, Kimi e outros:** mesmo comando com o nome do agente em `-a`. Sem Node.js, descompacte o `.zip` e copie a pasta para o diretório de skills do seu agente.
+- **Claude Code, Codex, Cursor e outros agentes de terminal:** peça, dentro do seu projeto:
 
-Troque `-s <nome>` pela skill que quiser (`parsing-chunking-by-rdd`, `prompt-builder-by-rdd` ou `skill-builder-by-rdd`), ou use `-s '*'` para instalar todas.
+  > Instale a skill `parsing-chunking-by-rdd` do repositório `robertodiasduarte/skills-by-rdd`.
+
+  O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
+
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd` ou `skill-builder-by-rdd`.
+
+<details>
+<summary>Prefere o comando direto?</summary>
+
+```bash
+npx skills add robertodiasduarte/skills-by-rdd -s <nome-da-skill> -a claude-code -y
+```
+
+Troque `-a claude-code` por `-a codex` ou pelo nome do seu agente, e use `-s '*'` para instalar todas. Sem Node.js, descompacte o `.zip` e copie a pasta para o diretório de skills do seu agente.
+
+</details>
 
 Depois acione pelo nome: *"Use a skill parsing-chunking-by-rdd. Prepare este documento para a minha base."*
 
