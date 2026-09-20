@@ -1,0 +1,66 @@
+{
+  "name": "skill-builder-by-rdd",
+  "version": "1.1.1",
+  "date": "2026-09-20",
+  "kind": "meta-skill",
+  "perfil": "C",
+  "funcao": "Criar skills profissionais mediante brainstorm e escopo confirmado",
+  "areas": [
+    "contabil",
+    "tributario",
+    "trabalhista",
+    "juridico"
+  ],
+  "coverage": {
+    "consulta_normativa": "nao aplicavel",
+    "calculo_profissional": "nao aplicavel"
+  },
+  "modes": [
+    "controle_conversacional",
+    "arquivos",
+    "execucao_local"
+  ],
+  "runtime": {
+    "python": "3.10+",
+    "third_party_dependencies": [],
+    "network_required": false
+  },
+  "source": {
+    "title": "Geração de Agent Skills na Plataforma RDD — Documentação Técnica",
+    "version": "1.0",
+    "date": "2026-09-20",
+    "distributed_in_bundle": false,
+    "note": "Documento interno da plataforma RDD; não distribuído no pacote público. Regras derivadas em references/RASTREABILIDADE.md.",
+    "repository_accessed": false
+  },
+  "audit": {
+    "unit_tests": {
+      "executed": 43,
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0
+    },
+    "behavioral_cases": {
+      "written": 14,
+      "executed_across_models": 0
+    },
+    "scope_gate": "consistency_only; identity and authentic capture require host",
+    "lint": "basic_local_subset; not official RDD validator",
+    "professional_calculations_included": false
+  },
+  "optional_provider_metadata": [
+    "agents/openai.yaml"
+  ],
+  "pending": [
+    "Comportamento ainda não avaliado em Claude, ChatGPT, Grok ou Kimi.",
+    "Suporte nativo e aceitação do pacote precisam ser verificados no ambiente-alvo.",
+    "Controle conversacional não equivale a bloqueio técnico.",
+    "Registro JSON de aprovação não autentica a identidade do usuário.",
+    "Templates, validador e gates originais do repositório RDD não foram executados.",
+    "Não inclui motor normativo, tabelas profissionais, gabaritos oficiais ou revisão jurídica.",
+    "Detector local de credenciais é limitado e não substitui revisão de PII e segurança."
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}

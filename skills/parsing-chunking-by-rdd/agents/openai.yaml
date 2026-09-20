@@ -1,0 +1,4 @@
+interface:
+  display_name: "Parsing&Chunking by RDD"
+  short_description: "Prepara DOCX/PDF/TXT com rastreabilidade e mapa semântico opcional."
+  default_prompt: "Prepare o arquivo anexado para parsing e chunking conservador. Preserve redação e ordem, não use OCR e exclua apenas não vigência objetivamente comprovada. Se eu pedir explicitamente mapa semântico ou índice de remissões, use o modo semantic/full."

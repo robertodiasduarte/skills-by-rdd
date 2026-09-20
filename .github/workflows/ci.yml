@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Content safety gate
+        run: bash scripts/publish-check.sh
+
+      - name: Validators compile
+        run: python3 -m py_compile skills/*/scripts/*.py
+
+      - name: Shell scripts parse
+        run: bash -n scripts/package.sh scripts/publish-check.sh
+
+      - name: Skill zips build
+        run: bash scripts/package.sh
