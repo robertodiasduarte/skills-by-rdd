@@ -28,8 +28,8 @@ As variáveis mostradas nos comandos são convenções documentais, não recurso
 
 ## Uso em um chat comum
 
-Colar a versão consolidada `META_SKILL_PORTATIL.md` entregue junto ao ZIP, ou fornecer
-SKILL.md e as referências do pacote. Pedir que o assistente inicie o brainstorm.
+Colar o conteúdo de `SKILL.md` e das referências do pacote que forem pertinentes ao caso.
+Pedir que o assistente inicie o brainstorm.
 Se o ambiente não conseguir ler algum recurso, fornecer o texto pertinente.
 
 Sem persistência, salvar o resumo e o registro de aprovação externamente.
