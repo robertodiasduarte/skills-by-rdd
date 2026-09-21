@@ -1,3 +1,13 @@
 interface:
-  display_name: "Prompt Builder by RDD"
-  short_description: "Cria system prompts profissionais com brainstorm, gate e validacao."
+  display_name: Prompt Builder by RDD
+  short_description: Cria system prompts contract-first com brainstorm, evidencia
+    e gate.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

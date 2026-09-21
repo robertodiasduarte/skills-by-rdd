@@ -1,24 +1,29 @@
 {
   "name": "prompt-builder-by-rdd",
   "display_name": "Prompt Builder by RDD",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "scope": {
     "id": "PB-RDD-001",
-    "revision": 1,
+    "revision": 2,
     "status": "confirmed_after_versioned_scope"
   },
   "profile_requested": "meta-operational prompt construction",
   "profile_effective": "C",
   "coverage": {
     "consultive": "global and multidisciplinary system-prompt construction",
-    "calculation": "not applicable; the skill may specify calculations inside generated prompts but does not execute professional calculations"
+    "calculation": "the skill specifies calculation and validation contracts but does not execute the user's professional calculation"
   },
   "implemented_paths": [
     "progressive brainstorm",
     "material collection",
+    "contract-first design",
+    "evidence and source-priority contract",
     "versioned scope consolidation",
     "explicit confirmation gate",
-    "single XML system-prompt generation",
+    "single portable system-prompt generation",
+    "runtime-data delimitation",
+    "closed-state and decision-table support",
+    "numeric-validation policy",
     "quality validation",
     "external generation report"
   ],
@@ -26,8 +31,10 @@
     "progressive brainstorm",
     "explicit confirmation gate",
     "single prompt generation after approval",
-    "portable XML framework",
-    "source and confidentiality controls"
+    "contract-first portable framework",
+    "data-delimited runtime inputs",
+    "evidence and confidentiality controls",
+    "external deployment recommendations"
   ],
   "materials": [
     {
@@ -41,14 +48,21 @@
       "title": "legacy accounting prompt examples",
       "role": "structural and behavioral examples only; not normative goldens",
       "status": "used"
+    },
+    {
+      "id": "M003",
+      "title": "Melhores praticas comuns - Fable e Astra para prompts contabeis",
+      "role": "user-provided reference used to revise contract-first architecture, evidence, data delimitation, numeric verification and stability",
+      "status": "used"
     }
   ],
   "tests_written": [
-    "10 behavioral scenarios in evals/cases.json",
+    "18 behavioral scenarios in evals/cases.json",
     "skill-creator quick_validate",
     "RDD lint_bundle",
     "JSON syntax checks",
     "legacy-term scan",
+    "contract-first assertions",
     "package inspection"
   ],
   "tests_executed": [
@@ -73,24 +87,29 @@
       "status": "executado_aprovado"
     },
     {
-      "test": "placeholder and required-contract assertions",
+      "test": "contract-first static assertions",
       "status": "executado_aprovado"
     },
     {
-      "test": "skill package creation",
+      "test": "provisional package_skill.py",
+      "status": "executado_aprovado"
+    },
+    {
+      "test": "provisional ZIP inspection",
       "status": "executado_aprovado"
     }
   ],
   "pending": [
     "behavioral execution in target LLM products is not proven by local structural validation",
     "no real professional golden case was supplied",
-    "the RDD scope_gate schema is specialized to four regulated areas and cannot faithfully encode this approved general-domain scope"
+    "provider-specific deployment settings require current verification in the target environment before recommendation"
   ],
   "o_que_ainda_nao_prova": [
     "identical behavior across all LLM providers",
     "professional validity of user-supplied domain rules",
     "current certification status of any third-party AI vendor",
-    "legal compliance of a deployment solely because a vendor has a certification"
+    "legal compliance of a deployment solely because a vendor has a certification",
+    "behavioral stability until evals are executed in target models"
   ],
   "author": "Roberto Dias Duarte",
   "license": "MIT",

@@ -8,7 +8,8 @@ A skill e escrita para ser agnostica de fornecedor. O comportamento central depe
 
 - manter contexto da conversa durante o brainstorm;
 - ler texto fornecido pelo usuario;
-- gerar um bloco de texto/XML;
+- gerar um system prompt estruturado em Markdown/texto;
+- usar delimitadores de dados quando necessario;
 - respeitar o gate de confirmacao.
 
 ## Capacidades opcionais
@@ -19,15 +20,20 @@ Se o ambiente puder ler arquivos, a skill pode catalogar e extrair regras dos ma
 ### Pesquisa web
 Usar somente com autorizacao explicita do usuario e quando o ambiente realmente disponibilizar pesquisa. Priorizar fontes primarias quando houver dependencia normativa ou temporal.
 
-### Execucao de codigo
-Nao e requisito para o funcionamento normal da skill. Pode ser util para validacoes deterministicas de formulas ou estruturas, se o ambiente permitir e o escopo exigir.
+### Execucao de codigo ou planilha
+Nao e requisito para todo prompt. Quando houver calculos, totais, saldos, reconciliacoes ou outras operacoes numericas materiais, pode ser requisito de confiabilidade. Nesses casos, definir quem calcula e quem valida e nao afirmar validacao deterministica sem execucao real.
 
 ### Conectores
 Nao presumir conectores. Se o prompt final depender de CRM, banco de dados, documentos, planilhas ou outro sistema, descrever a capacidade e somente nomear o fornecedor quando isso fizer parte do escopo confirmado.
 
+### Contexto limpo para verificacao
+Quando o ambiente permitir nova sessao, chamada separada ou contexto limpo, a skill pode recomendar um segundo passe de verificacao para tarefas materiais. Essa recomendacao nao cria arquitetura multiagente obrigatoria.
+
 ## Portabilidade
 
-Nao usar `Reasoning Effort`, `Agentic Eagerness`, nomes de modos proprietarios ou instrucoes que dependam de uma UI especifica. Traduzir intencoes em regras operacionais.
+Nao colocar parametros proprietarios de effort, nomes de modos ou configuracoes de UI dentro do system prompt portatil. Traduzir intencoes em regras operacionais.
+
+Se o ambiente-alvo for conhecido e uma configuracao especifica for util, registra-la no relatorio externo de geracao como recomendacao de deployment.
 
 ## Limites
 

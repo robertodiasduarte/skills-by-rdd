@@ -22,7 +22,7 @@ Três modos: `parse` (o padrão), `semantic` (mapa semântico sobre Markdown já
 
 **Transforma um processo seu em um system prompt profissional.**
 
-Conduz um brainstorm progressivo sobre o trabalho, reúne os materiais que sustentam as regras, consolida o escopo e só produz o prompt depois da sua confirmação explícita. Quando o assunto depende de data, delimita o período de consulta e o de cálculo, em vez de deixar implícito.
+Conduz um brainstorm progressivo sobre o trabalho, reúne os materiais que sustentam as regras, consolida o escopo e só produz o prompt depois da sua confirmação explícita. O prompt gerado é contract-first: define resultado pronto, limites e critério de evidência em vez de prescrever a cadeia de raciocínio, e separa instruções de dados, documentos e exemplos com delimitadores — sem exigir XML como envelope principal. Quando o assunto depende de data, delimita o período de consulta e o de cálculo, em vez de deixar implícito.
 
 Funciona em qualquer domínio e jurisdição. Não executa o processo profissional no seu lugar, não monta arquitetura de vários agentes e não busca fontes externas sem você autorizar.
 

@@ -1,40 +1,43 @@
-# Notas de migracao da versao anterior
+# Notas de migracao
 
 ## Origem
 
-A versao anterior se chamava `prompt-builder` e produzia um prompt em XML. Ela continha regras uteis de contrato de saida, dados faltantes, verificacao e formulas, alem de uma integracao SDD especifica.
+A linhagem comecou em `prompt-builder`, que produzia prompts em XML e possuia integracao SDD. A versao 3.0 removeu SDD, adicionou brainstorm, gate, portabilidade, seguranca e suporte global, mas manteve XML como estrutura principal e uma ideia ampla de autossuficiencia.
 
-## Preservado e ampliado
+## Versao 4.0 - mudanca de arquitetura
 
-- contrato de saida definido antes de escrever detalhes;
-- regras explicitas para contexto ausente;
-- formulas estruturadas quando houver calculo;
-- verificacao e completude;
-- isolamento de material de referencia;
-- recuperacao diante de resultado vazio;
-- remocao de redundancia;
-- uso de XML semantico.
+A versao 4.0 preserva a governanca da 3.0 e altera o framework de geracao para **contract-first + data-delimited + evidence-driven**.
 
-## Removido
+### Preservado
+
+- brainstorm progressivo;
+- gate de escopo versionado;
+- um unico system prompt como artefato principal;
+- autoria do usuario e metodologia RDD separadas;
+- pesquisa somente com autorizacao;
+- seguranca documental;
+- cinco gavetas RDD;
+- relatorio externo de fontes, lacunas e limitacoes;
+- ausencia de chain-of-thought solicitado.
+
+### Alterado
+
+- XML deixou de ser envelope principal obrigatorio;
+- Markdown/secoes textuais viraram estrutura padrao do contrato;
+- XML passou a ser preferido como delimitador de dados, documentos e exemplos;
+- autossuficiencia passou a significar contrato de comportamento completo, nao copia integral de corpus;
+- evidencia e prioridade de fontes passaram a ser componentes explicitos quando pertinentes;
+- autonomia passou a distinguir cobertura de julgamento;
+- regra de nao expandir escopo foi fortalecida;
+- estados fechados e tabelas de decisao passaram a ser preferidos quando reduzem variancia;
+- calculos materiais passaram a exigir definicao de mecanismo de validacao quando disponivel;
+- recomendacoes de configuracao proprietaria, quando uteis, ficam apenas no relatorio externo;
+- testes passaram a incluir estabilidade do prompt produzido.
+
+### Continua removido
 
 - toda integracao SDD;
-- qualquer dependencia de workflow SDD;
-- `Reasoning Effort`, `Agentic Eagerness` e configuracoes similares;
 - `ReasoningSteps` como convite a raciocinio interno exposto;
-- `context_dump` monolitico como bloco generico;
-- suposicao de que um prompt complexo deve seguir anatomia fixa mesmo quando secoes nao se aplicam.
-
-## Adicionado
-
-- brainstorm obrigatorio e progressivo;
-- cinco gavetas RDD para materiais;
-- escopo versionado;
-- confirmacao explicita antes da geracao;
-- modo `interativo` ou `autonomo` obrigatorio;
-- autoria do prompt atribuida ao usuario;
-- metodologia RDD separada da autoria e das fontes;
-- suporte global e multidominio;
-- pesquisa externa somente com autorizacao;
-- alerta de confidencialidade e seguranca;
-- relatorio externo de fontes, lacunas e limitacoes;
-- testes comportamentais positivos e negativos.
+- `context_dump` monolitico como arquitetura padrao;
+- configuracoes proprietarias dentro do prompt portatil;
+- anatomia fixa com secoes vazias ou ornamentais.
