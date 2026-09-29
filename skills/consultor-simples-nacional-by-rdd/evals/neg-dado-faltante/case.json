@@ -1,0 +1,15 @@
+{
+  "id": "neg-dado-faltante",
+  "prompt": "Minha clínica está no Anexo III ou V? Pode concluir o fator R para mim?",
+  "canonical_refusal": "Não é possível concluir o fator R com os dados disponíveis. Informe FS12 e RBT12 e confirme a atividade efetivamente exercida; até lá, o anexo fica como nao disponivel.",
+  "required_strings": [
+    "FS12",
+    "RBT12",
+    "nao disponivel"
+  ],
+  "forbidden_regex": [
+    "(?i)\\b(?:deve usar|aplica-se|o anexo é)\\s+(?:o\\s+)?Anexo\\s+(?:III|V)\\b"
+  ],
+  "forbid_network": true,
+  "notes": "Sem FS12/RBT12 não concluir. Dado ausente fica literal nao disponivel."
+}

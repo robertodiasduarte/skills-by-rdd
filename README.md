@@ -38,6 +38,18 @@ A skill que ela cria não vem com motor de cálculo verificado: para conta confe
 
 [Baixar o .zip](../../releases/latest/download/skill-builder-by-rdd.zip)
 
+## Modelo para estudo
+
+### `consultor-simples-nacional-by-rdd`
+
+**Uma skill padrão-ouro de Simples Nacional, aberta para você ver por dentro.**
+
+Manual com fronteira nomeada e recusa literal, legislação e tabelas por ano dentro da pasta, motor de cálculo, conferente independente que trava a entrega se divergir, gabarito oficial do Manual do PGDAS-D, testes e casos negativos. A maioria das peças existe porque uma versão anterior errou sem ela — a explicação peça por peça está em [robertodiasduarte.com.br/anatomia-skill](https://www.robertodiasduarte.com.br/anatomia-skill/), e o `COMECE_AQUI.md` do pacote segue a mesma ordem.
+
+> Skill criada para aprendizado. O conteúdo — legislação, tabelas e regras — está datado de setembro de 2026 e não recebe atualização da RDD: mantê-la atualizada é por sua conta.
+
+[Baixar o .zip](../../releases/latest/download/consultor-simples-nacional-by-rdd.zip)
+
 ## Instalação
 
 Baixe o `.zip` da [última Release](../../releases/latest).
@@ -50,7 +62,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
   O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
 
-Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd` ou `skill-builder-by-rdd`.
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd` ou `consultor-simples-nacional-by-rdd`.
 
 <details>
 <summary>Prefere o comando direto?</summary>

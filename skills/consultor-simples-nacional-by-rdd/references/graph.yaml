@@ -1,0 +1,272 @@
+{
+  "metadata": {
+    "domain": "Simples Nacional",
+    "base_legal_principal": [
+      "Lei Complementar nº 123/2006",
+      "Resolução CGSN nº 140/2018"
+    ],
+    "concepts_count": 17,
+    "versao": "4.1.0"
+  },
+  "communities": [
+    {
+      "id": "regime",
+      "label": "Regime e enquadramento",
+      "summary": "Opção, atividade, CNAE, exclusão e permanência."
+    },
+    {
+      "id": "apuracao",
+      "label": "Apuração",
+      "summary": "Receita, faixas, anexos, fator R e retenções."
+    },
+    {
+      "id": "limites",
+      "label": "Limites e territorialidade",
+      "summary": "Limite anual, sublimite, exportação e início de atividade."
+    },
+    {
+      "id": "operacional",
+      "label": "Sistemas e regularização",
+      "summary": "PGDAS-D, DEFIS, parcelamento, compensação e PERT."
+    },
+    {
+      "id": "temporal",
+      "label": "Vigência e transição",
+      "summary": "Tabelas por período e ponte para 2027."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "SIMPLES",
+      "community": "regime",
+      "type": "regime",
+      "base_legal": "LC 123/2006"
+    },
+    {
+      "id": "CNAE",
+      "community": "regime",
+      "type": "triagem",
+      "base_legal": "tabela derivada + confirmação normativa"
+    },
+    {
+      "id": "ATIVIDADE_EFETIVA",
+      "community": "regime",
+      "type": "fato",
+      "base_legal": "LC 123/2006 e Res. 140/2018"
+    },
+    {
+      "id": "EXCLUSAO",
+      "community": "regime",
+      "type": "efeito",
+      "base_legal": "LC 123/2006; Res. 140/2018"
+    },
+    {
+      "id": "RBT12",
+      "community": "apuracao",
+      "type": "base",
+      "base_legal": "Res. CGSN 140/2018, art. 21"
+    },
+    {
+      "id": "RPA",
+      "community": "apuracao",
+      "type": "base",
+      "base_legal": "Res. CGSN 140/2018"
+    },
+    {
+      "id": "FATOR_R",
+      "community": "apuracao",
+      "type": "classificador",
+      "base_legal": "LC 123/2006; Manual PGDAS-D"
+    },
+    {
+      "id": "ANEXO_III",
+      "community": "apuracao",
+      "type": "anexo",
+      "base_legal": "LC 123/2006"
+    },
+    {
+      "id": "ANEXO_V",
+      "community": "apuracao",
+      "type": "anexo",
+      "base_legal": "LC 123/2006"
+    },
+    {
+      "id": "ISS_RETIDO",
+      "community": "apuracao",
+      "type": "qualificacao",
+      "base_legal": "Res. CGSN 140/2018"
+    },
+    {
+      "id": "RBA",
+      "community": "limites",
+      "type": "base",
+      "base_legal": "LC 123/2006"
+    },
+    {
+      "id": "SUBLIMITE",
+      "community": "limites",
+      "type": "limite",
+      "base_legal": "LC 123/2006; Res. 140/2018"
+    },
+    {
+      "id": "EXPORTACAO",
+      "community": "limites",
+      "type": "qualificacao",
+      "base_legal": "LC 123/2006"
+    },
+    {
+      "id": "INICIO_ATIVIDADE",
+      "community": "limites",
+      "type": "condicao",
+      "base_legal": "LC 123/2006; Res. 140/2018"
+    },
+    {
+      "id": "PGDAS",
+      "community": "operacional",
+      "type": "sistema",
+      "base_legal": "Manual PGDAS-D/DEFIS"
+    },
+    {
+      "id": "PARCELAMENTO",
+      "community": "operacional",
+      "type": "regularizacao",
+      "base_legal": "Manual do Parcelamento"
+    },
+    {
+      "id": "TRANSICAO_2027",
+      "community": "temporal",
+      "type": "vigencia",
+      "base_legal": "ponte de atualização incorporada"
+    }
+  ],
+  "edges": [
+    {
+      "from": "CNAE",
+      "to": "ATIVIDADE_EFETIVA",
+      "relation": "condiciona",
+      "nota": "CNAE só orienta a triagem; a atividade efetiva precisa ser confirmada antes do enquadramento."
+    },
+    {
+      "from": "ATIVIDADE_EFETIVA",
+      "to": "FATOR_R",
+      "relation": "condiciona",
+      "nota": "Fator R só é relevante quando a atividade pertence ao rol aplicável."
+    },
+    {
+      "from": "FATOR_R",
+      "to": "ANEXO_III",
+      "relation": "aplica",
+      "nota": "Quando a regra documental e o limiar aplicável apontam para III, a receita segue o Anexo III."
+    },
+    {
+      "from": "FATOR_R",
+      "to": "ANEXO_V",
+      "relation": "aplica",
+      "nota": "Quando a regra documental e o limiar aplicável apontam para V, a receita segue o Anexo V."
+    },
+    {
+      "from": "RBT12",
+      "to": "ANEXO_III",
+      "relation": "condiciona",
+      "nota": "RBT12 determina a faixa e a alíquota efetiva do anexo."
+    },
+    {
+      "from": "RBT12",
+      "to": "ANEXO_V",
+      "relation": "condiciona",
+      "nota": "RBT12 determina a faixa e a alíquota efetiva do anexo."
+    },
+    {
+      "from": "ISS_RETIDO",
+      "to": "PGDAS",
+      "relation": "condiciona",
+      "nota": "A receita sujeita à retenção altera a parcela de ISS e precisa ser segregada corretamente."
+    },
+    {
+      "from": "EXPORTACAO",
+      "to": "RBT12",
+      "relation": "condiciona",
+      "nota": "Mercado interno e exportação usam RBT12/RPA separados. A V4.1 calcula apenas revenda de mercadorias do Anexo I sem efeito de sublimite; demais exportações são bloqueadas."
+    },
+    {
+      "from": "SUBLIMITE",
+      "to": "PGDAS",
+      "relation": "restringe",
+      "nota": "Excesso do sublimite altera o tratamento de ICMS/ISS; precisa de RBA/RBAA e período."
+    },
+    {
+      "from": "INICIO_ATIVIDADE",
+      "to": "RBT12",
+      "relation": "substitui",
+      "nota": "Nos primeiros meses aplica-se RBT12 proporcionalizada em vez da regra ordinária dos 12 meses."
+    },
+    {
+      "from": "RBA",
+      "to": "EXCLUSAO",
+      "relation": "condiciona",
+      "nota": "Excesso de receita anual pode produzir exclusão em data que depende da magnitude e do período."
+    },
+    {
+      "from": "TRANSICAO_2027",
+      "to": "PGDAS",
+      "relation": "restringe",
+      "nota": "Motores 2018–2026 não calculam 2027 por fallback; resposta 2027 é somente a evidência local incorporada."
+    },
+    {
+      "from": "PARCELAMENTO",
+      "to": "SIMPLES",
+      "relation": "regime_proprio",
+      "nota": "Regularização de débitos tem procedimentos próprios e não altera automaticamente a regra de apuração mensal."
+    }
+  ],
+  "queries": [
+    {
+      "pergunta": "Meu CNAE fica no Anexo III ou V?",
+      "navegacao": [
+        "CNAE",
+        "ATIVIDADE_EFETIVA",
+        "FATOR_R",
+        "ANEXO_III",
+        "ANEXO_V"
+      ]
+    },
+    {
+      "pergunta": "Ultrapassei o sublimite. O que acontece com ICMS e ISS?",
+      "navegacao": [
+        "RBA",
+        "SUBLIMITE",
+        "PGDAS"
+      ]
+    },
+    {
+      "pergunta": "Tenho exportação. Posso usar a mesma alíquota do mercado interno?",
+      "navegacao": [
+        "EXPORTACAO",
+        "RBT12",
+        "PGDAS"
+      ]
+    },
+    {
+      "pergunta": "Comecei a empresa agora. Como calculo a faixa?",
+      "navegacao": [
+        "INICIO_ATIVIDADE",
+        "RBT12",
+        "PGDAS"
+      ]
+    },
+    {
+      "pergunta": "Meu cliente reteve ISS. Como fica o DAS?",
+      "navegacao": [
+        "ISS_RETIDO",
+        "PGDAS"
+      ]
+    },
+    {
+      "pergunta": "Posso calcular janeiro de 2027 com a tabela de 2026?",
+      "navegacao": [
+        "TRANSICAO_2027",
+        "PGDAS"
+      ]
+    }
+  ]
+}

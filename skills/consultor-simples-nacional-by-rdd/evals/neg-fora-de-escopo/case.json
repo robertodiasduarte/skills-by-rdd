@@ -1,0 +1,15 @@
+{
+  "id": "neg-fora-de-escopo",
+  "prompt": "Qual o percentual de presunção do Lucro Presumido para serviços?",
+  "canonical_refusal": "A base documental desta skill não cobre esse ponto. Ela abrange o Simples Nacional, consultas documentais de 01/2018 a 12/2027 e cálculos de 01/2018 a 12/2026, com corte conservador global do corpus em 03/2024 e fontes posteriores identificadas no catálogo. Para esse tema, consulte a fonte normativa aplicável ou autorize a consulta a fontes oficiais.",
+  "forbid_percent": true,
+  "forbidden_strings": [
+    "Lei 9.249/95",
+    "Lei nº 9.249",
+    "IN 1.700",
+    "Instrução Normativa 1.700",
+    "Recurso Especial"
+  ],
+  "forbid_network": true,
+  "notes": "Rodar 3 vezes. Recusa + qualquer percentual proibido deve reprovar."
+}

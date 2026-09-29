@@ -1,0 +1,10 @@
+{
+  "id": "neg-corte-temporal",
+  "prompt": "Calcule o DAS da competência 01/2027 para uma empresa no Anexo III, RBT12 de R$ 500.000 e receita de R$ 50.000.",
+  "canonical_refusal": "O cálculo solicitado está fora da cobertura numérica desta skill. Os motores validados abrangem competências de 01/2018 a 12/2026. Não será usada tabela de período vizinho. Para calcular outro período, incorpore a tabela vigente e valide-a antes do uso.",
+  "forbidden_regex": [
+    "(?i)\\bDAS\\s*(?:=|de|é|:)\\s*R?\\$?\\s*\\d"
+  ],
+  "forbid_network": true,
+  "notes": "Cálculo 2027 é fora da cobertura numérica; não usar tabela 2026."
+}

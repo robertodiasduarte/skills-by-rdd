@@ -1,0 +1,51 @@
+{
+  "name": "consultor-simples-nacional-by-rdd",
+  "release": "4.1.1",
+  "generator_profile": "A-normativo-numerico",
+  "generator_instructions": "instrucoes_skill-3 v3",
+  "built_at": "2026-09-13",
+  "author": "Roberto Dias Duarte",
+  "purpose": "didático",
+  "coverage": {
+    "consultivo": "2018-01 a 2027-12, somente conforme evidência local",
+    "calculo": "2018-01 a 2026-12",
+    "global_conservative_source_cutoff": "2024-03",
+    "newer_sources": "registradas individualmente até 2026-09-13"
+  },
+  "audit": {
+    "source_catalog": true,
+    "rule_map": true,
+    "graph": true,
+    "router": true,
+    "engine_verify_hard_stop": true,
+    "verify_independence": "implementação separada + Decimal; mesma tabela normativa; não constitui segunda fonte normativa",
+    "source_backed_goldens": true,
+    "behavioral_evals": true,
+    "security_fact_barrier": true,
+    "example6_official_golden": "PGDAS-EX6-ANEXO-I-EXPORTACAO",
+    "generic_pass_status": false
+  },
+  "pending": [
+    "Executar cada eval comportamental obrigatório 3 vezes no harness real e registrar taxa 3/3.",
+    "Bloquear egress no host para avaliações de corpus fechado; allowed-tools restringe ferramentas, mas Bash pode ter rede dependendo do host.",
+    "Adicionar tabelas e rotina auditada antes de qualquer cálculo de 2027.",
+    "Implementar rotina auditada antes de calcular exportação fora do Anexo I ou exportação com efeito de sublimite.",
+    "Classificação jurídica da atividade continua humana/documental; CNAE é triagem."
+  ],
+  "golden_policy": "somente exemplo oficial publicado ou caso real conferido por profissional identificado; fonte, localizador, procedência e conferido_por são obrigatórios; nunca saída da própria Skill",
+  "mappings": {
+    "rules": "references/RULE_MAP.md",
+    "sources": "references/SOURCE_CATALOG.md",
+    "graph": "references/graph.yaml",
+    "router": "references/router.md",
+    "tests": "tests/TEST_MATRIX.md",
+    "evals": "evals/README.md"
+  },
+  "security_redactions": {
+    "types": [
+      "CNPJ"
+    ],
+    "count": 2,
+    "values_logged": false
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "version": "2.1",
+  "policy": "Goldens somente de exemplo oficial publicado ou caso real conferido por profissional identificado. Nenhum resultado gerado pela Skill é promovido a golden.",
+  "cases": [
+    {
+      "id": "PGDAS-EX3-ANEXO-I-JAN2018",
+      "kind": "das",
+      "input": {
+        "competencia": "2018-01",
+        "anexo": "I",
+        "rbt12": 120000.0,
+        "rpa": 10000.0,
+        "receita_iss_retido": 0.0,
+        "modo": "ordinario",
+        "qualificacoes": {
+          "exportacao": false,
+          "sublimite": false,
+          "icms_st": false,
+          "monofasico_pis_cofins": false,
+          "inicio_atividade": false
+        }
+      },
+      "expected": {
+        "total_das_calculado": 400.0
+      },
+      "source": {
+        "document": "Manual do PGDAS-D e DEFIS",
+        "locator": "Seção 8 — Cálculo do valor devido, Exemplo 3, PA janeiro/2018",
+        "evidence": "RPA Jan = 10.000,00; RBT12 prop = 120.000,00; Valor devido Jan = 10.000 × 4% = 400,00."
+      },
+      "conferido_por": "exemplo oficial publicado",
+      "fonte_do_gabarito": "Manual do PGDAS-D e DEFIS — Seção 8 — Cálculo do valor devido, Exemplo 3, PA janeiro/2018"
+    },
+    {
+      "id": "PGDAS-EX4-ANEXO-III",
+      "kind": "das",
+      "input": {
+        "competencia": "2018-07",
+        "anexo": "III",
+        "rbt12": 500000.0,
+        "rpa": 10000.0,
+        "receita_iss_retido": 0.0,
+        "modo": "ordinario",
+        "qualificacoes": {
+          "exportacao": false,
+          "sublimite": false,
+          "icms_st": false,
+          "monofasico_pis_cofins": false,
+          "inicio_atividade": false
+        }
+      },
+      "expected": {
+        "aliquota_efetiva_pct": 9.972,
+        "total_das_calculado": 997.2
+      },
+      "source": {
+        "document": "Manual do PGDAS-D e DEFIS",
+        "locator": "Seção 8 — Cálculo do valor devido, Exemplo 4",
+        "evidence": "RBT12 = 500.000,00; Anexo III; alíquota efetiva = 9,972%; RPA = 10.000,00; valor devido = 997,20."
+      },
+      "conferido_por": "exemplo oficial publicado",
+      "fonte_do_gabarito": "Manual do PGDAS-D e DEFIS — Seção 8 — Cálculo do valor devido, Exemplo 4"
+    },
+    {
+      "id": "PGDAS-EX5-ANEXO-V",
+      "kind": "das",
+      "input": {
+        "competencia": "2018-07",
+        "anexo": "V",
+        "rbt12": 500000.0,
+        "rpa": 10000.0,
+        "receita_iss_retido": 0.0,
+        "modo": "ordinario",
+        "qualificacoes": {
+          "exportacao": false,
+          "sublimite": false,
+          "icms_st": false,
+          "monofasico_pis_cofins": false,
+          "inicio_atividade": false
+        }
+      },
+      "expected": {
+        "aliquota_efetiva_pct": 17.52,
+        "total_das_calculado": 1752.0
+      },
+      "source": {
+        "document": "Manual do PGDAS-D e DEFIS",
+        "locator": "Seção 8 — Cálculo do valor devido, Exemplo 5",
+        "evidence": "RBT12 = 500.000,00; Anexo V; alíquota efetiva = 17,52%; RPA = 10.000,00; valor devido = 1.752,00."
+      },
+      "conferido_por": "exemplo oficial publicado",
+      "fonte_do_gabarito": "Manual do PGDAS-D e DEFIS — Seção 8 — Cálculo do valor devido, Exemplo 5"
+    },
+    {
+      "id": "PGDAS-83-RBT12P-PRIMEIRO-MES",
+      "kind": "rbt12p",
+      "input": {
+        "ano": 2018,
+        "receita_atual": 10000.0,
+        "receitas_anteriores": []
+      },
+      "expected": {
+        "rbt12p": 120000.0
+      },
+      "source": {
+        "document": "Manual do PGDAS-D e DEFIS",
+        "locator": "Item 8.3 — Empresa em início de atividade, exemplo do primeiro mês",
+        "evidence": "Receita Bruta 02/2018 = 10.000,00; RBT12p = 10.000,00 × 12 = 120.000,00."
+      },
+      "conferido_por": "exemplo oficial publicado",
+      "fonte_do_gabarito": "Manual do PGDAS-D e DEFIS — Item 8.3 — Empresa em início de atividade, exemplo do primeiro mês"
+    },
+    {
+      "id": "PGDAS-EX6-ANEXO-I-EXPORTACAO",
+      "kind": "das",
+      "input": {
+        "competencia": "2018-01",
+        "modo": "exportacao_anexo_i",
+        "anexo": "I",
+        "rbt12_interno": 2000000.0,
+        "rbt12_externo": 1000000.0,
+        "rpa_interno": 100000.0,
+        "rpa_externo": 50000.0,
+        "rba_interno": 100000.0,
+        "rba_externo": 50000.0,
+        "sublimite": 3600000.0,
+        "qualificacoes": {
+          "exportacao": true,
+          "sublimite": false,
+          "icms_st": false,
+          "monofasico_pis_cofins": false,
+          "inicio_atividade": false
+        }
+      },
+      "expected": {
+        "mercado_interno": {
+          "aliquota_efetiva_pct": 9.935,
+          "total": 9935.02
+        },
+        "mercado_externo": {
+          "aliquota_efetiva_pct": 8.45,
+          "total": 2154.76
+        },
+        "total_das_calculado": 12089.78
+      },
+      "source": {
+        "document": "Manual do PGDAS-D e DEFIS",
+        "locator": "Seção 12 — Exemplos de cálculo, Exemplo 6",
+        "evidence": "RBT12 interno 2.000.000; RBT12 externo 1.000.000; RPA interno 100.000; RPA externo 50.000; valor interno 9.935,02; externo 2.154,76; total do PA 12.089,78."
+      },
+      "conferido_por": "exemplo oficial publicado",
+      "fonte_do_gabarito": "Manual do PGDAS-D e DEFIS — Seção 12 — Exemplos de cálculo, Exemplo 6"
+    }
+  ]
+}

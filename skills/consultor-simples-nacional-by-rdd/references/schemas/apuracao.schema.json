@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Apuração do Simples Nacional",
+  "type": "object",
+  "required": [
+    "competencia",
+    "modo",
+    "anexo",
+    "qualificacoes"
+  ],
+  "properties": {
+    "competencia": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}$"
+    },
+    "modo": {
+      "enum": [
+        "ordinario",
+        "exportacao_anexo_i"
+      ]
+    },
+    "anexo": {
+      "enum": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V"
+      ]
+    },
+    "rbt12": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "rpa": {
+      "type": "number",
+      "minimum": 0
+    },
+    "receita_iss_retido": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rbt12_interno": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "rbt12_externo": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "rpa_interno": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rpa_externo": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rba_interno": {
+      "type": "number",
+      "minimum": 0
+    },
+    "rba_externo": {
+      "type": "number",
+      "minimum": 0
+    },
+    "sublimite": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "qualificacoes": {
+      "type": "object",
+      "required": [
+        "exportacao",
+        "sublimite",
+        "icms_st",
+        "monofasico_pis_cofins",
+        "inicio_atividade"
+      ],
+      "properties": {
+        "exportacao": {
+          "type": "boolean"
+        },
+        "sublimite": {
+          "type": "boolean"
+        },
+        "icms_st": {
+          "type": "boolean"
+        },
+        "monofasico_pis_cofins": {
+          "type": "boolean"
+        },
+        "inicio_atividade": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "modo": {
+            "const": "ordinario"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "rbt12",
+          "rpa"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "modo": {
+            "const": "exportacao_anexo_i"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "rbt12_interno",
+          "rbt12_externo",
+          "rpa_interno",
+          "rpa_externo",
+          "rba_interno",
+          "rba_externo",
+          "sublimite"
+        ],
+        "properties": {
+          "anexo": {
+            "const": "I"
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
