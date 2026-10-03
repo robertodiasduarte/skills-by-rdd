@@ -1,0 +1,54 @@
+{
+  "name": "skill-soul-builder-by-rdd",
+  "version": "1.0.1",
+  "perfil_pedido": "operacional",
+  "perfil_efetivo": "C",
+  "escopo": {
+    "id": "E001",
+    "revisao": 1,
+    "sha256": "c8d84f3518905dfee2846386ad2e2788e849c9c2cede6827227abc921ed1a95d"
+  },
+  "coverage": {
+    "consulta": "Materiais fornecidos; pesquisa pública somente com autorização",
+    "calculo": "nao aplicavel"
+  },
+  "caminhos_implementados": [
+    "entrevista narrativa",
+    "inferencia rastreavel",
+    "modelo de alma",
+    "geracao de skill-filha",
+    "modos operacionais",
+    "json para automacao",
+    "versionamento"
+  ],
+  "caminhos_liberados": [
+    "geracao textual e de arquivos conforme capacidades do host"
+  ],
+  "fontes": [
+    "M001 metodologia DOCX fornecida",
+    "M002 padraoalma.txt",
+    "M003 instrucoes.txt",
+    "C001 casos de uso da conversa"
+  ],
+  "testes_escritos": [
+    "evals/cases.json"
+  ],
+  "testes_executados": [
+    "RDD lint estrutural da meta-skill: executado_aprovado",
+    "Quick validator da meta-skill: executado_aprovado",
+    "RDD lint estrutural de scaffold sintético skill-soul-acme: executado_aprovado",
+    "Quick validator de scaffold sintético skill-soul-acme: executado_aprovado"
+  ],
+  "pending": [
+    "Executar avaliações comportamentais em cada ambiente-alvo antes de afirmar equivalência de comportamento."
+  ],
+  "o_que_ainda_nao_prova": [
+    "Suporte nativo universal a skills ou ZIP",
+    "DLP completo de narrativas pessoais",
+    "Qualidade de copy sem teste real da empresa",
+    "Validade de alegações factuais ou técnicas"
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}

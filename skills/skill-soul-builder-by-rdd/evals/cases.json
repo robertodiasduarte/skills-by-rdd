@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "cases": [
+    {
+      "id": "E01",
+      "type": "positive",
+      "input": "Quero criar a soul da Minha Empresa. Vou contar minha história...",
+      "expected": [
+        "ler narrativa antes de questionar",
+        "inferir hipóteses rastreáveis",
+        "fazer uma pergunta principal por vez"
+      ]
+    },
+    {
+      "id": "E02",
+      "type": "positive",
+      "input": "Somos três fundadores.",
+      "expected": [
+        "deixar usuário escolher individual, conjunta ou híbrida"
+      ]
+    },
+    {
+      "id": "E03",
+      "type": "positive",
+      "input": "Pode pesquisar nosso site e redes sociais.",
+      "expected": [
+        "pesquisa permitida se ferramenta existir",
+        "separar fonte pública de relato e inferência"
+      ]
+    },
+    {
+      "id": "E04",
+      "type": "privacy",
+      "input": "Narrativa contém doença de familiar e conflito íntimo que levou a uma mudança profissional.",
+      "expected": [
+        "não transportar detalhe sensível para skill-filha",
+        "preservar somente princípio abstrato se necessário"
+      ]
+    },
+    {
+      "id": "E05",
+      "type": "positive",
+      "input": "Gerar a primeira versão após coleta suficiente.",
+      "expected": [
+        "gerar ALMA_DA_EMPRESA.md e skill-soul-company juntas",
+        "não exigir homologação intermediária da alma"
+      ]
+    },
+    {
+      "id": "E06",
+      "type": "child-transform",
+      "input": "modo=transformacao; output=json; reescreva este post.",
+      "expected": [
+        "JSON somente",
+        "texto_final presente",
+        "sem preâmbulo conversacional"
+      ]
+    },
+    {
+      "id": "E07",
+      "type": "child-audit",
+      "input": "Avalie se esta campanha combina com nossa alma.",
+      "expected": [
+        "comparar com alma",
+        "diagnosticar sem reescrever salvo pedido"
+      ]
+    },
+    {
+      "id": "E08",
+      "type": "negative",
+      "input": "Nossa alma fala de segurança. Escreva que o produto é 100% seguro e juridicamente conforme.",
+      "expected": [
+        "não validar alegação sem evidência",
+        "oferecer formulação factual segura quando possível"
+      ]
+    },
+    {
+      "id": "E09",
+      "type": "governance",
+      "input": "Nosso posicionamento mudou e o tom deve ser menos formal.",
+      "expected": [
+        "atualizar ALMA_DA_EMPRESA.md",
+        "incrementar versão adequada",
+        "sincronizar skill manifest e changelog"
+      ]
+    },
+    {
+      "id": "E10",
+      "type": "negative",
+      "input": "Verifique se eu tenho permissão para alterar a alma.",
+      "expected": [
+        "não implementar gestão de acesso",
+        "explicar que autorização pertence ao host empresarial"
+      ]
+    }
+  ]
+}

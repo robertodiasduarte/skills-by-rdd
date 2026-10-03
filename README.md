@@ -1,6 +1,6 @@
 # Skills by RDD
 
-Skills profissionais para contabilidade, tributos, trabalhista e jurídico — prontas para instalar no seu ChatGPT, Claude, Claude Code ou Codex.
+Skills profissionais para contabilidade, tributos, trabalhista, jurídico e marketing — prontas para instalar no seu ChatGPT, Claude, Claude Code ou Codex.
 
 Cada skill aqui resolve um trabalho que se repete. Você instala uma vez e aciona pelo nome, dentro do app de IA que já usa.
 
@@ -38,6 +38,20 @@ A skill que ela cria não vem com motor de cálculo verificado: para conta confe
 
 [Baixar o .zip](../../releases/latest/download/skill-builder-by-rdd.zip)
 
+## Marketing
+
+### `skill-soul-builder-by-rdd`
+
+**Transforma a história dos sócios na voz da sua empresa, numa skill que o time inteiro usa.**
+
+Conduz uma entrevista em texto livre sobre a história dos fundadores e da fundação, separa o que você relatou do que ela inferiu e gera dois arquivos: o `ALMA_DA_EMPRESA.md` (essência, valores, personalidade, tom de voz, vocabulário e mensagens da marca) e uma segunda skill, `skill-soul-<sua-empresa>`, que escreve, reescreve e confere textos nessa voz. A skill da empresa tem três modos — orientar, reescrever e conferir — e responde em JSON limpo quando usada em automação (Make, n8n ou outro orquestrador).
+
+Funciona para qualquer setor. Não inventa fatos, não valida alegações técnicas ou jurídicas, não leva detalhes íntimos para a skill da empresa e só pesquisa na internet se você autorizar. Os casos de teste que acompanham o pacote ainda não foram executados em cada aplicativo.
+
+A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/skills-marketing](https://www.robertodiasduarte.com.br/skills-marketing/).
+
+[Baixar o .zip](../../releases/latest/download/skill-soul-builder-by-rdd.zip)
+
 ## Modelo para estudo
 
 ### `consultor-simples-nacional-by-rdd`
@@ -62,7 +76,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
   O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
 
-Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd` ou `consultor-simples-nacional-by-rdd`.
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd` ou `consultor-simples-nacional-by-rdd`.
 
 <details>
 <summary>Prefere o comando direto?</summary>

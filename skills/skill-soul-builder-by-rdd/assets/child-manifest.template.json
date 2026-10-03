@@ -1,0 +1,21 @@
+{
+  "name": "skill-soul-company",
+  "version": "1.0.0",
+  "perfil_efetivo": "C",
+  "source_of_truth": "references/ALMA_DA_EMPRESA.md",
+  "modes": [
+    "consultivo",
+    "transformacao",
+    "auditoria"
+  ],
+  "automation_json": true,
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte",
+  "pending": [
+    "Substituir placeholders pelo nome e pela alma da empresa."
+  ],
+  "o_que_ainda_nao_prova": [
+    "A alma não prova alegações factuais, técnicas, jurídicas, regulatórias ou comerciais."
+  ]
+}
