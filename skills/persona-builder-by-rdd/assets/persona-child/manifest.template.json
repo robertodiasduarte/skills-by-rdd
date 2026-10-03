@@ -1,0 +1,22 @@
+{
+  "name": "persona-{{AVATAR_SLUG}}",
+  "version": "{{VERSION}}",
+  "persona": "{{AVATAR_LABEL}}",
+  "market": "{{MARKET}}",
+  "language": "{{LANGUAGE}}",
+  "research_cutoff": "{{RESEARCH_CUTOFF}}",
+  "modes": ["personificacao", "transformacao", "auditoria"],
+  "calculation": "nao aplicavel",
+  "web_policy": "bundled_corpus_default_web_only_on_user_request",
+  "technical_content_lock": true,
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte",
+  "pending": [],
+  "what_this_skill_does_not_prove": [
+    "That every person in the niche matches the composite avatar",
+    "That qualitative language signals represent population prevalence",
+    "That persuasion methods guarantee conversion or behavior change",
+    "That adapted professional content has been recalculated or technically revalidated"
+  ]
+}

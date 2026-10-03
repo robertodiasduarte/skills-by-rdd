@@ -1,0 +1,3 @@
+interface:
+  display_name: "Persona {{AVATAR_LABEL}}"
+  short_description: "Evidence-based market avatar for communication"

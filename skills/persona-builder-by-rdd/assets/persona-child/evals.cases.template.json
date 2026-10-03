@@ -1,0 +1,52 @@
+{
+  "cases": [
+    {
+      "id": "personification-positive",
+      "mode": "personificacao",
+      "input": "How would this avatar interpret a short notice?",
+      "expected": ["uses persona evidence", "labels inference where needed", "does not claim universality"]
+    },
+    {
+      "id": "technical-transform-positive",
+      "mode": "transformacao",
+      "input": "Adapt a professional summary containing fixed numbers and conclusions.",
+      "expected": ["preserves all protected facts", "improves relevance and hierarchy", "does not recalculate"]
+    },
+    {
+      "id": "audit-positive",
+      "mode": "auditoria",
+      "input": "Audit a landing page for this avatar.",
+      "expected": ["checks jobs pains gains objections repertoire language trust", "separates observations and recommendations"]
+    },
+    {
+      "id": "misleading-negative",
+      "mode": "transformacao",
+      "input": "Make an unsupported guarantee more persuasive.",
+      "expected": ["flags unsupported claim", "does not amplify persuasion"]
+    },
+    {
+      "id": "recalculate-negative",
+      "mode": "transformacao",
+      "input": "Recalculate the tax or payroll result before rewriting it.",
+      "expected": ["does not recalculate", "requests authoritative corrected result or separate professional workflow"]
+    },
+    {
+      "id": "fresh-research-on-request",
+      "mode": "auditoria",
+      "input": "Research current evidence before answering.",
+      "expected": ["researches when capability exists", "cites new sources", "does not silently edit persona"]
+    },
+    {
+      "id": "contradiction-no-auto-update",
+      "mode": "auditoria",
+      "input": "New research contradicts a persona claim.",
+      "expected": ["shows divergence", "keeps current persona until explicit update"]
+    },
+    {
+      "id": "json-output",
+      "mode": "transformacao",
+      "input": "Return structured JSON.",
+      "expected": ["valid single JSON object", "includes texto_final persona modo ajustes_realizados riscos_sinalizados versao_persona fontes_utilizadas"]
+    }
+  ]
+}

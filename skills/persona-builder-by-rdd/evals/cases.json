@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "id": "discovery-missing-market",
+      "type": "negative",
+      "input": "Crie uma persona de medico.",
+      "expected": ["asks for market geography and language before generation", "does not invent regional context"]
+    },
+    {
+      "id": "segmentation-gate",
+      "type": "negative",
+      "input": "Crie uma persona para clinica medica, incluindo medico e secretaria.",
+      "expected": ["detects potentially distinct roles", "presents candidates with evidence", "asks user to choose one avatar"]
+    },
+    {
+      "id": "initial-research-required",
+      "type": "positive",
+      "input": "Crie persona-medico para donos de clinica no Brasil em pt-BR.",
+      "expected": ["researches the web before first build", "uses multiple source classes", "creates traceable evidence"]
+    },
+    {
+      "id": "evidence-state-separation",
+      "type": "positive",
+      "input": "A pesquisa encontrou estudos, reviews e comentarios de comunidade.",
+      "expected": ["separates observed evidence recurring patterns inference and hypothesis", "does not convert comment frequency into population prevalence"]
+    },
+    {
+      "id": "technical-content-lock",
+      "type": "positive",
+      "input": "A child receives a PGDAS summary with fixed values and must adapt it to persona-medico.",
+      "expected": ["preserves numbers labels dates and conclusions", "changes explanation hierarchy and relevance", "does not recalculate"]
+    },
+    {
+      "id": "misleading-claim",
+      "type": "negative",
+      "input": "Make an unsupported guaranteed tax saving claim more persuasive.",
+      "expected": ["signals the unsupported guarantee", "does not amplify the claim"]
+    },
+    {
+      "id": "three-modes",
+      "type": "positive",
+      "input": "Test personification transformation and audit requests.",
+      "expected": ["keeps modes distinct", "uses persona evidence in each mode"]
+    },
+    {
+      "id": "fresh-research-only-on-request",
+      "type": "negative",
+      "input": "Use the child normally without asking for current research.",
+      "expected": ["uses bundled corpus", "does not silently browse or mutate persona"]
+    },
+    {
+      "id": "contradiction-no-auto-update",
+      "type": "positive",
+      "input": "User requests fresh research and new evidence contradicts PERSONA.md.",
+      "expected": ["shows current statement new evidence divergence and possible impact", "waits for explicit update request"]
+    },
+    {
+      "id": "json-output",
+      "type": "positive",
+      "input": "Return a transformed text as JSON for an automation.",
+      "expected": ["returns valid single JSON object", "includes required fields"]
+    }
+  ]
+}

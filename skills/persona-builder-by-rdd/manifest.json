@@ -1,0 +1,63 @@
+{
+  "name": "persona-builder-by-rdd",
+  "version": "1.0.0",
+  "perfil_pedido": "operacional",
+  "perfil_efetivo": "C",
+  "escopo": {
+    "id": "E002",
+    "revisao": 1,
+    "sha256": "6287bd7dbfe82ae7f33b1a0eeff8bcba87623b7be26786df5247f294c1474d0d"
+  },
+  "coverage": {
+    "consulta": "Research current to the recorded child research cut-off date",
+    "calculo": "nao aplicavel"
+  },
+  "caminhos_implementados": [
+    "progressive discovery",
+    "mandatory initial web research",
+    "evidence triangulation",
+    "single-avatar modeling",
+    "child generation contract",
+    "personification transformation audit modes",
+    "technical content lock",
+    "versioned update governance",
+    "optional JSON output"
+  ],
+  "caminhos_liberados": [
+    "operational text research and transformation workflow"
+  ],
+  "fontes": [
+    "Strategyzer Value Proposition Canvas",
+    "Harvard Business Review Jobs to Be Done",
+    "Behavioural Insights Team EAST",
+    "American Psychological Association Cialdini interview",
+    "Influence at Work persuasion principles",
+    "CDC Clear Communication Index",
+    "Nielsen Norman Group web-writing research",
+    "Public Erico Rocha Formula de Lancamento materials"
+  ],
+  "testes_escritos": [
+    "evals/cases.json",
+    "child template evals"
+  ],
+  "testes_executados": [
+    "RDD lint on persona-builder-by-rdd: executado_aprovado",
+    "RDD lint on synthetic persona-medico child: executado_aprovado",
+    "Skill Creator package validator on synthetic persona-medico child: executado_aprovado",
+    "Skill Creator package validator on persona-builder-by-rdd prepackage: executado_aprovado"
+  ],
+  "pending": [
+    "Behavioral evals have not been executed in ChatGPT Business, Claude Teams, Make, or n8n",
+    "RDD deterministic scope_gate cannot encode marketing/communication as an area without false classification",
+    "Public source availability and URLs may change over time"
+  ],
+  "o_que_ainda_nao_prova": [
+    "Native installation or identical behavior across all hosts",
+    "Population representativeness of future qualitative community evidence",
+    "Conversion lift from persuasion or campaign methods",
+    "Technical correctness of professional source documents supplied to a child persona"
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}

@@ -64,6 +64,18 @@ A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/s
 
 [Baixar o .zip](../../releases/latest/download/newsletter-reforma-tributaria-by-rdd.zip)
 
+### `persona-builder-by-rdd`
+
+**Pesquisa um público do seu mercado e cria uma skill que fala com ele, a `persona-<avatar>`.**
+
+Você diz qual público quer representar (por exemplo, médicos donos de clínica), o país, o idioma e para quais textos vai usar. A skill pesquisa na internet, junta o que você trouxe — entrevistas, avaliações, materiais da empresa — e separa o que é evidência, o que é padrão recorrente, o que é inferência e o que é só hipótese. Se a pesquisa mostrar dois públicos diferentes no mesmo mercado, ela pede que você escolha um: cada skill-filha representa um público só. A `persona-<avatar>` tem três modos — falar do ponto de vista desse público, adaptar um texto para ele e avaliar se uma comunicação conversa com ele — e responde em JSON quando usada em automação.
+
+Ao adaptar um relatório técnico, preserva números, datas, rótulos e conclusões: não recalcula nem substitui a conclusão profissional. Não imita uma pessoa real, não inventa dados para dar realismo e não reforça afirmação enganosa ou sem prova. Exige pesquisa na internet para criar a primeira versão da persona; depois, só pesquisa de novo se você pedir. Os 10 casos de teste de comportamento ainda não foram executados em cada aplicativo.
+
+A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/skills-marketing](https://www.robertodiasduarte.com.br/skills-marketing/).
+
+[Baixar o .zip](../../releases/latest/download/persona-builder-by-rdd.zip)
+
 ## Modelo para estudo
 
 ### `consultor-simples-nacional-by-rdd`
@@ -88,7 +100,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
   O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
 
-Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd` ou `consultor-simples-nacional-by-rdd`.
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd`, `persona-builder-by-rdd` ou `consultor-simples-nacional-by-rdd`.
 
 <details>
 <summary>Prefere o comando direto?</summary>
