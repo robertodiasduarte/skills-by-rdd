@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "scope": "E001 V1",
+  "updated_at": "2026-10-03",
+  "sources": [
+    {
+      "id": "planalto",
+      "name": "Presidência da República / Planalto",
+      "url": "https://www.planalto.gov.br/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Fonte oficial prioritária para legislação e atos publicados no portal."
+    },
+    {
+      "id": "rfb-rtc",
+      "name": "Receita Federal — Reforma Tributária do Consumo",
+      "url": "https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-programas/programas-e-atividades/reforma-tributaria-do-consumo",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Legislação, orientações, manuais, documentos fiscais e notícias da RTC."
+    },
+    {
+      "id": "fazenda",
+      "name": "Ministério da Fazenda",
+      "url": "https://www.gov.br/fazenda/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Política, regulamentação e comunicados federais."
+    },
+    {
+      "id": "cgibs",
+      "name": "Comitê Gestor do IBS — CGIBS",
+      "url": "https://www.cgibs.gov.br/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Atos, portarias, orientações e implementação do IBS."
+    },
+    {
+      "id": "confaz",
+      "name": "CONFAZ",
+      "url": "https://www.confaz.fazenda.gov.br/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Atos e coordenação fazendária estadual."
+    },
+    {
+      "id": "camara",
+      "name": "Câmara dos Deputados",
+      "url": "https://www.camara.leg.br/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Tramitação legislativa e documentos oficiais."
+    },
+    {
+      "id": "senado",
+      "name": "Senado Federal",
+      "url": "https://www12.senado.leg.br/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Tramitação legislativa e documentos oficiais."
+    },
+    {
+      "id": "dou",
+      "name": "Diário Oficial da União",
+      "url": "https://www.in.gov.br/",
+      "category": "official_primary",
+      "active": true,
+      "approved": true,
+      "notes": "Publicação oficial de atos federais."
+    },
+    {
+      "id": "cfc",
+      "name": "Conselho Federal de Contabilidade — CFC",
+      "url": "https://cfc.org.br/",
+      "category": "institutional",
+      "active": true,
+      "approved": true,
+      "notes": "Orientações e repercussões para a profissão contábil."
+    },
+    {
+      "id": "fenacon",
+      "name": "FENACON",
+      "url": "https://fenacon.org.br/reforma-tributaria/",
+      "category": "institutional",
+      "active": true,
+      "approved": true,
+      "notes": "Conteúdo institucional para empresas contábeis e setor de serviços."
+    },
+    {
+      "id": "jota",
+      "name": "JOTA",
+      "url": "https://www.jota.info/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Cobertura especializada; distinguir reportagem, opinião e conteúdo patrocinado."
+    },
+    {
+      "id": "iob",
+      "name": "IOB Notícias",
+      "url": "https://noticias.iob.com.br/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Atualização fiscal e operacional."
+    },
+    {
+      "id": "contabeis",
+      "name": "Portal Contábeis",
+      "url": "https://www.contabeis.com.br/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Repercussão para contadores e empresas."
+    },
+    {
+      "id": "migalhas",
+      "name": "Migalhas",
+      "url": "https://www.migalhas.com.br/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Análises jurídicas e tributárias; atribuir interpretação e opinião."
+    },
+    {
+      "id": "thomson-reuters-br",
+      "name": "Thomson Reuters Brasil",
+      "url": "https://www.thomsonreuters.com.br/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Conteúdo técnico; separar conteúdo editorial de material comercial."
+    },
+    {
+      "id": "systax",
+      "name": "Systax",
+      "url": "https://www.systax.com.br/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Documentos fiscais, tecnologia e implementação."
+    },
+    {
+      "id": "poder360",
+      "name": "Poder360",
+      "url": "https://www.poder360.com.br/",
+      "category": "private_general",
+      "active": true,
+      "approved": true,
+      "notes": "Cobertura institucional e econômica."
+    },
+    {
+      "id": "legisweb",
+      "name": "LegisWeb",
+      "url": "https://www.legisweb.com.br/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Radar de atos; seguir para origem oficial."
+    },
+    {
+      "id": "portal-reforma-tributaria",
+      "name": "Portal da Reforma Tributária",
+      "url": "https://www.reformatributaria.com/",
+      "category": "private_specialized",
+      "active": true,
+      "approved": true,
+      "notes": "Cobertura dedicada à RTC; distinguir notícia de artigo/opinião e confirmar atos oficialmente."
+    }
+  ]
+}

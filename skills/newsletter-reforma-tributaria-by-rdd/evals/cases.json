@@ -1,0 +1,137 @@
+{
+  "version": "1.0",
+  "scope": "E001 V1",
+  "cases": [
+    {
+      "id": "weekly-accountants",
+      "type": "positive",
+      "input": "Semanal para contadores, com web disponível.",
+      "expected": [
+        "usar D-7 até agora",
+        "pesquisar oficiais e privadas aprovadas",
+        "selecionar no máximo 10 destaques",
+        "gerar Markdown e pacote editorial",
+        "incluir revisão humana"
+      ]
+    },
+    {
+      "id": "daily-business",
+      "type": "positive",
+      "input": "Diária para empresários.",
+      "expected": [
+        "usar D-1 até agora",
+        "linguagem simples",
+        "rastreabilidade por destaque"
+      ]
+    },
+    {
+      "id": "no-news",
+      "type": "positive",
+      "input": "Nenhuma novidade relevante na janela.",
+      "expected": [
+        "não reciclar notícias antigas",
+        "informar ausência de novidades",
+        "listar principais fontes consultadas"
+      ]
+    },
+    {
+      "id": "outside-window",
+      "type": "negative",
+      "input": "Página publicada há 20 dias aparece hoje no buscador em edição semanal.",
+      "expected": [
+        "excluir como novidade do período"
+      ]
+    },
+    {
+      "id": "private-normative-unverified",
+      "type": "negative",
+      "input": "Portal privado diz que obrigação mudou, sem fonte oficial localizada.",
+      "expected": [
+        "não tratar como regra confirmada",
+        "atribuir como análise se relevante",
+        "sinalizar falta de confirmação oficial"
+      ]
+    },
+    {
+      "id": "opinion-as-fact",
+      "type": "negative",
+      "input": "Artigo de opinião de tributarista.",
+      "expected": [
+        "identificar como opinião/análise",
+        "não converter em fato normativo"
+      ]
+    },
+    {
+      "id": "promotional",
+      "type": "negative",
+      "input": "Fornecedor publica anúncio de software citando RTC.",
+      "expected": [
+        "não selecionar como destaque promocional",
+        "buscar fonte independente/oficial do fato"
+      ]
+    },
+    {
+      "id": "duplicate",
+      "type": "negative",
+      "input": "Mesma notícia já usada na edição anterior, sem fato novo.",
+      "expected": [
+        "não repetir"
+      ]
+    },
+    {
+      "id": "duplicate-new-fact",
+      "type": "positive",
+      "input": "Mesma URL atualizada por novo ato relevante.",
+      "expected": [
+        "permitir somente com fato novo explicitado",
+        "registrar motivo no histórico"
+      ]
+    },
+    {
+      "id": "new-source",
+      "type": "negative",
+      "input": "Novo especialista é descoberto durante a busca.",
+      "expected": [
+        "não persistir como confiável",
+        "pedir confirmação explícita antes de adicionar"
+      ]
+    },
+    {
+      "id": "no-persistence",
+      "type": "degraded",
+      "input": "Web disponível, armazenamento indisponível.",
+      "expected": [
+        "gerar edição",
+        "declarar que deduplicação entre edições não foi comprovada",
+        "não alegar memória persistente"
+      ]
+    },
+    {
+      "id": "no-web",
+      "type": "blocked",
+      "input": "Sem ferramenta de pesquisa web.",
+      "expected": [
+        "não fingir pesquisa atual",
+        "informar limitação essencial"
+      ]
+    },
+    {
+      "id": "tax-calculation",
+      "type": "out_of_scope",
+      "input": "Calcule IBS e CBS da empresa.",
+      "expected": [
+        "recusar cálculo dentro desta skill",
+        "encaminhar para processo apropriado"
+      ]
+    },
+    {
+      "id": "auto-publish",
+      "type": "out_of_scope",
+      "input": "Publique diretamente no CMS.",
+      "expected": [
+        "não publicar automaticamente",
+        "entregar conteúdo revisável"
+      ]
+    }
+  ]
+}

@@ -52,6 +52,18 @@ A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/s
 
 [Baixar o .zip](../../releases/latest/download/skill-soul-builder-by-rdd.zip)
 
+### `newsletter-reforma-tributaria-by-rdd`
+
+**Pesquisa as novidades da Reforma Tributária do Consumo e monta a newsletter do seu escritório, com fonte, data e link de cada destaque.**
+
+Você escolhe o público (empresários ou contadores) e a janela: diária (do dia anterior até agora) ou semanal (dos últimos sete dias). A skill pesquisa primeiro as fontes oficiais, depois as institucionais e os portais privados aprovados, abre cada página para conferir a data de publicação e confronta toda afirmação normativa com a fonte oficial correspondente — sem ela, a informação entra só como análise atribuída. Entrega de 5 a 10 destaques em Markdown, mais título SEO, meta description, slug, tags e uma chamada curta para LinkedIn ou WhatsApp, marcados como sujeitos à revisão do contador antes da publicação.
+
+Exige pesquisa na internet no aplicativo. Não calcula tributos, não publica no site por você e não trata fonte nova como confiável sem a sua confirmação. Os 7 testes locais dos scripts foram executados e aprovados; os 14 casos de teste de comportamento ainda não foram executados em cada aplicativo.
+
+A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/skills-marketing](https://www.robertodiasduarte.com.br/skills-marketing/).
+
+[Baixar o .zip](../../releases/latest/download/newsletter-reforma-tributaria-by-rdd.zip)
+
 ## Modelo para estudo
 
 ### `consultor-simples-nacional-by-rdd`
@@ -76,7 +88,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
   O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
 
-Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd` ou `consultor-simples-nacional-by-rdd`.
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd` ou `consultor-simples-nacional-by-rdd`.
 
 <details>
 <summary>Prefere o comando direto?</summary>

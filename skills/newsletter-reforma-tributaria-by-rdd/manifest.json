@@ -1,0 +1,56 @@
+{
+  "name": "newsletter-reforma-tributaria-by-rdd",
+  "version": "1.0.0",
+  "perfil_pedido": "operacional",
+  "perfil_efetivo": "C",
+  "escopo": {
+    "id": "E001",
+    "revisao": 1,
+    "sha256": "a709b27c245eed19abdd3c98065a945caf643fb82f9033087de5fb3352c6397e"
+  },
+  "coverage": {
+    "consulta": "RTC Brasil; janela D-1 diária ou D-7 semanal; outro período apenas se explícito",
+    "calculo": "nao aplicavel"
+  },
+  "caminhos_implementados": [
+    "protocolo_pesquisa_web_e_verificacao",
+    "curadoria_editorial_instruida",
+    "ancoragem_e_politica_de_fontes",
+    "janela_temporal_local",
+    "cadastro_local_de_fontes",
+    "historico_local_de_publicacoes"
+  ],
+  "caminhos_liberados": [
+    "janela_temporal_local",
+    "cadastro_local_de_fontes",
+    "historico_local_de_publicacoes"
+  ],
+  "fontes": [
+    "oficiais prioritárias",
+    "institucionais reconhecidas",
+    "9 portais privados aprovados no E001 V1"
+  ],
+  "testes_escritos": [
+    "tests/test_scripts.py",
+    "evals/cases.json"
+  ],
+  "testes_executados": [
+    "7 testes unitarios locais executados e aprovados em 03/10/2026",
+    "smoke CLI: janela semanal, inicializacao/listagem de fontes e inicializacao/registro/checagem de historico",
+    "lint estrutural basico: pass=true, 20 arquivos, zero erros"
+  ],
+  "pending": [
+    "Cenários comportamentais ainda precisam ser executados no ambiente-alvo.",
+    "Persistência e agendamento dependem das capacidades do host.",
+    "Estrutura e disponibilidade de sites podem mudar."
+  ],
+  "o_que_ainda_nao_prova": [
+    "Não prova cobertura exaustiva da internet.",
+    "Não prova revisão tributária ou jurídica da newsletter.",
+    "Não prova autenticação da confirmação do escopo pelo host.",
+    "Não prova suporte nativo universal a skills ou schedulers."
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}
