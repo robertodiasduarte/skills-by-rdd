@@ -36,8 +36,8 @@
   "corte_catalogo_leitura": "2026-10-04",
   "audit": {
     "unit_tests": {
-      "executed": 106,
-      "passed": 105,
+      "executed": 108,
+      "passed": 107,
       "failed": 0,
       "skipped": 1
     },

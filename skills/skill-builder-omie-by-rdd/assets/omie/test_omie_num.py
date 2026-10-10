@@ -36,6 +36,7 @@ class Servidor:
     def __init__(self):
         self.paginas: list[dict] = []
         self.erro: tuple[int, dict] | None = None
+        self.bruto: str | None = None  # número cru a pôr no JSON (sem passar por float no servidor)
         self.chamadas: list[dict] = []
         dono = self
 
@@ -51,7 +52,10 @@ class Servidor:
                 else:
                     pagina = corpo["param"][0].get("nPagina", 1)
                     codigo, payload = 200, dono.paginas[pagina - 1]
-                dados = json.dumps(payload).encode()
+                texto = json.dumps(payload)
+                if dono.bruto is not None:
+                    texto = texto.replace('"__NUM__"', dono.bruto)
+                dados = texto.encode()
                 self.send_response(codigo)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(dados)))
@@ -140,6 +144,18 @@ class TotalTests(Base):
         self.srv.paginas = [pagina([titulo("1.234"), titulo(10)], 2, 1)]
         rc, out = self.totalizar()
         self.assert_sem_agregado(rc, out, "valor_nao_numerico")
+
+    def test_decimal_nao_passa_por_float(self):
+        # Em float, 0.1 + 0.2 não dá 0.3; vindo da API como texto JSON a soma tem de dar 0.3 exato.
+        self.srv.paginas = [pagina([titulo(0.1), titulo(0.2)], 2, 1)]
+        rc, out = self.totalizar()
+        self.assertEqual((rc, out["total"]), (0, "0.3"))
+        grande = "1234567890.123456789"  # 19 algarismos: além da precisão do float
+        self.srv.paginas = [{"nPagina": 1, "nTotPaginas": 1, "nTotRegistros": 1,
+                             "titulosEncontrados": [{"resumo": {"nValAberto": "__NUM__"}}]}]
+        self.srv.bruto = grande
+        rc, out = self.totalizar()
+        self.assertEqual((rc, out["total"]), (0, grande))
 
     def test_cinco_paginas_e_o_teto_exato(self):
         self.srv.paginas = [pagina([titulo(10)], 5, 5) for _ in range(5)]
@@ -260,6 +276,15 @@ class PoliticaTests(unittest.TestCase):
                            "--param", "{}", "--soma", "x"])
         self.assertEqual(rc, 5)
         self.assertIn("bloqueado", json.loads(saida.getvalue()))
+
+    def test_param_invalido_e_erro_de_uso(self):
+        saida = io.StringIO()
+        with mock_env({"OMIE_APP_KEY": "k", "OMIE_APP_SECRET": "s", "OMIE_BASE_URL": "http://127.0.0.1:9/api/v1/"}), \
+                contextlib.redirect_stdout(saida):
+            rc = num.main(["totalizar", "--servico", "financas/pesquisartitulos", "--metodo", "PesquisarLancamentos",
+                           "--param", '{"nRegPorPagina": "cem"}', "--soma", "x"])
+        self.assertEqual(rc, 64)
+        self.assertIn("erro_uso", json.loads(saida.getvalue()))
 
     def test_http_fora_de_localhost_e_recusado(self):
         with mock_env({"OMIE_BASE_URL": "http://app.omie.com.br/api/v1/"}), self.assertRaises(num.ConfigError):

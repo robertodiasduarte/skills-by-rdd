@@ -174,7 +174,8 @@ class Client:
             try:
                 self.calls += 1
                 with urllib.request.urlopen(req, timeout=60) as resp:
-                    data = json.loads(resp.read().decode("utf-8"))
+                    # parse_float=Decimal: nenhum valor passa por float antes da soma (achado R1 da rodada 4).
+                    data = json.loads(resp.read().decode("utf-8"), parse_float=Decimal)
                 if isinstance(data, dict) and "faultstring" in data:
                     raise ApiError(str(data.get("faultstring")))
                 self.consecutive_errors = 0
@@ -244,6 +245,8 @@ def get_path(rec, path: str):
 def to_decimal(v) -> Decimal | None:
     if v is None or isinstance(v, bool):
         return None
+    if isinstance(v, Decimal):
+        return v if v.is_finite() else None
     if isinstance(v, (int, float)):
         d = Decimal(str(v))
         return d if d.is_finite() else None
@@ -430,7 +433,7 @@ def main(argv=None) -> int:
         secrets = (key, secret)
         rc, out = totalizar(Client(key, secret), catalog, args.servico, args.metodo, param,
                             args.soma, args.agrupar)
-        print(json.dumps(out, ensure_ascii=False, indent=2))
+        print(json.dumps(out, ensure_ascii=False, indent=2, default=str))
         return rc
     except PolicyError as e:
         print(json.dumps({"bloqueado": str(e)}, ensure_ascii=False))
@@ -441,6 +444,10 @@ def main(argv=None) -> int:
     except ApiError as e:
         print(json.dumps({"erro_api": redact(str(e), secrets)}, ensure_ascii=False))
         return 4
+    except (ValueError, TypeError) as e:
+        # Ex.: "nRegPorPagina": "cem" no --param. Erro de uso, nunca traceback (achado A2 da rodada 4).
+        print(json.dumps({"erro_uso": redact(str(e), secrets)}, ensure_ascii=False))
+        return 64
 
 
 if __name__ == "__main__":
