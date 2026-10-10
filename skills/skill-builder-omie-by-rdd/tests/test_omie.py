@@ -38,7 +38,8 @@ Pré-requisito: no conector do Omie, `omie_executar` e `omie_executar_em_varias`
 
 def skill_md(perfil: str, corpo_extra: str = "", nao_usar: str = "faturar e inutilizar estão fora.") -> str:
     recusa = lo.RECUSA_OPERADOR if perfil == "operador" else lo.PROIBE_SOMA
-    conferencia = ("Conferência: 3 registros lidos de 3 informados pela Omie · soma direta = soma por grupo."
+    conferencia = ("Conferência: 3 registros lidos de 3 informados pela Omie · soma direta = soma por grupo.\n"
+                   'Rode `python3 "$SKILL_ROOT/scripts/omie_num.py" empresa`: ' + lo.MESMA_EMPRESA + "."
                    if perfil == "conferidor" else "")
     return f"""---
 name: omie-teste-by-rdd
@@ -249,6 +250,11 @@ class EscritaTests(TempDir):
         raiz = montar(self.tmp / "a", "operador", [("geral/clientes", "ListarClientes")], corpo)
         self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
 
+    def test_operacao_em_json_fora_do_catalogo(self):
+        corpo = 'Chame `omie_executar` com `{"call": "geral/auditoria", "op": "ListarAuditoriaAlteracoes"}`.'
+        raiz = montar(self.tmp / "a", "operador", [LEITURA], corpo)
+        self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
+
     def test_confirmado_sem_escrita(self):
         raiz = montar(self.tmp / "a", "operador", [LEITURA], 'Use `"confirmado": true`.')
         self.assertIn("CONFIRMADO_SEM_ESCRITA", self.erros(raiz))
@@ -292,6 +298,12 @@ class PerfilBundleTests(TempDir):
         skill = raiz / "SKILL.md"
         skill.write_text(skill.read_text(encoding="utf-8").replace("informados pela Omie", "da Omie"), encoding="utf-8")
         self.assertIn("CONFERENCIA_LITERAL_AUSENTE", lo.lint(raiz, None, CATALOGO))
+
+    def test_conferidor_sem_conferencia_de_empresa(self):
+        raiz = montar(self.tmp / "a", "conferidor", [LEITURA])
+        skill = raiz / "SKILL.md"
+        skill.write_text(skill.read_text(encoding="utf-8").replace(lo.MESMA_EMPRESA, "confira a empresa"), encoding="utf-8")
+        self.assertIn("CONFERIDOR_SEM_CONFERENCIA_DE_EMPRESA", lo.lint(raiz, None, CATALOGO))
 
     def test_conferidor_nao_grava(self):
         raiz = montar(self.tmp / "a", "conferidor", [LEITURA, INCLUIR], GATE)

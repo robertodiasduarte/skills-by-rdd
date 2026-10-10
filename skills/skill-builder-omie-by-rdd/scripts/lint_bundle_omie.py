@@ -35,6 +35,7 @@ _spec.loader.exec_module(omie_num)
 RECUSA_OPERADOR = "Este perfil não totaliza registros. Para somar com conferência, gere o perfil Conferidor."
 PROIBE_SOMA = "Nunca some, conte ou compare valores de cabeça: todo total sai do `scripts/omie_num.py`."
 LINHA_CONFERENCIA = ("registros lidos de", "informados pela Omie")
+MESMA_EMPRESA = "a empresa das chaves do `.env` precisa ser a mesma escolhida no conector"
 PASSOS_GATE = ("validar", "mostrar", "frase literal", "um por vez", "conferir o status", "não repetir")
 PREREQ_APROVACAO = "pedir aprovação"
 CONFIRMADO = '"confirmado": true'
@@ -42,6 +43,7 @@ CAMPOS_PERFIL = {"schema", "totaliza", "executa_python_com_rede", "perfil", "mul
                  "aprovacao_por_ferramenta", "mcp_disponivel"}
 APROVACAO = {"declarada_sim", "declarada_nao", "nao_perguntado"}
 OPERACAO_RE = re.compile(r"\b([a-z]+/[a-z0-9-]+):([A-Z][A-Za-z0-9]+)\b")
+OP_JSON_RE = re.compile(r"[\"']op[\"']\s*:\s*[\"']([A-Za-z][A-Za-z0-9]*)[\"']")
 FISCAL_RE = re.compile(r"(Faturar|Inutilizar)")
 
 
@@ -175,6 +177,9 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     metodos_declarados = {o for _, o in declaradas}
     if any(re.search(rf"\b{re.escape(m)}\b", tudo) for m in metodos_do_catalogo(catalogo) - metodos_declarados):
         erros.append("OPERACAO_NAO_DECLARADA")
+    # Forma JSON ("op": "Metodo"): vale para QUALQUER nome, inclusive fora do catálogo (achado R1 da rodada 2).
+    if set(OP_JSON_RE.findall(tudo)) - metodos_declarados:
+        erros.append("OPERACAO_NAO_DECLARADA")
 
     classes = {(c, o): classificar(catalogo, c, o) for c, o in declaradas}
     if "deprecated" in classes.values():
@@ -225,6 +230,8 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
             erros.append("SOMA_PELO_MODELO_NAO_PROIBIDA")
         if not all(p in skill for p in LINHA_CONFERENCIA):
             erros.append("CONFERENCIA_LITERAL_AUSENTE")
+        if MESMA_EMPRESA not in skill or "omie_num.py\" empresa" not in skill:
+            erros.append("CONFERIDOR_SEM_CONFERENCIA_DE_EMPRESA")
         reqs = manifest.get("requisitos", [])
         if "conector MCP Omie" not in reqs or not any("Python" in r for r in reqs):
             erros.append("REQUISITOS_INCOMPLETOS")

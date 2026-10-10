@@ -5,6 +5,7 @@ Derivado de consulta-omie-somente-leitura 1.0.0 (scripts/omie_consulta.py).
 Diferencas em references/omie/FONTES_OMIE.md (ancora omie_num) na skill geradora.
 
 Uso:
+  omie_num.py empresa      # empresa das chaves do .env (conferir com a escolhida no conector)
   omie_num.py totalizar --servico S --metodo M --param JSON --soma CAMPO [--agrupar CAMPO]
 
 Garantias por codigo:
@@ -46,6 +47,8 @@ NEVER = {"ObterProximoLote", "GerarBoleto", "GerarPix", "GerarQrCodePix", "Prorr
 PAGE_KEYS = [("pagina", "registros_por_pagina", "total_de_paginas", "total_de_registros"),
              ("nPagina", "nRegPorPagina", "nTotPaginas", "nTotRegistros")]
 RETRY_WAITS = (2, 4, 8)
+# A Omie responde listagem vazia como erro ("Nao existem registros para a pagina [1]!"): ausência é resposta.
+SEM_REGISTROS = re.compile(r"n[aã]o existem registros", re.I)
 MAX_CONSECUTIVE_ERRORS = 5
 NOTA = "Soma aritmetica dos valores retornados pela Omie; nao e analise contabil, tributaria ou financeira."
 
@@ -190,7 +193,9 @@ class Client:
                 if e.code == 425:
                     raise ApiError("Omie bloqueou temporariamente (HTTP 425, ~30 min). Aguarde antes de tentar de novo.")
                 low = msg.lower()
-                retriable = ("too many" in low or "proto_byebye" in low or e.code in (429, 502, 503, 504)
+                if "too many" in low or e.code == 429:
+                    raise ApiError("Limite de consumo da Omie atingido (too many requests). Pare e tente mais tarde.")
+                retriable = ("proto_byebye" in low or e.code in (502, 503, 504)
                              or (e.code == 500 and not fault))
                 if not retriable or attempt == len(self.waits):
                     break
@@ -265,7 +270,12 @@ def ler_paginas(client: Client, servico: str, metodo: str, param: dict):
     keys = page_keys_for(param)
     if keys and keys[1] in param:
         param[keys[1]] = min(int(param[keys[1]]), MAX_PER_PAGE)
-    first = client.call(servico, metodo, param)
+    try:
+        first = client.call(servico, metodo, param)
+    except ApiError as exc:
+        if not SEM_REGISTROS.search(str(exc)):
+            raise
+        return [[]], 0, False, None, param, keys
     keys = keys or page_keys_for(param, first)
     rec_key, records = find_records(first)
     paginas = [list(records)]
@@ -347,6 +357,19 @@ def totalizar(client: Client, catalog: dict, servico: str, metodo: str, param: d
     return 0, out
 
 
+# ---------------------------------------------------------------- empresa
+CAMPOS_EMPRESA = ("razao_social", "nome_fantasia", "cnpj")
+
+
+def empresa(client: Client, catalog: dict) -> dict:
+    """Empresa a que as chaves do .env dao acesso: o perfil Conferidor compara com a escolhida no conector."""
+    s = check_allowed(catalog, "geral/empresas", "ListarEmpresas")
+    resp = client.call(s, "ListarEmpresas", {"pagina": 1, "registros_por_pagina": 50})
+    _, registros = find_records(resp)
+    return {"empresas": [{k: r.get(k) for k in CAMPOS_EMPRESA if k in r} for r in registros],
+            "aviso": "Compare com a empresa escolhida no conector (omie_listar_apps). Diferente: pare."}
+
+
 # ---------------------------------------------------------------- cli
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Totalizacao somente-leitura na API do Omie, com conferencia.")
@@ -357,11 +380,27 @@ def main(argv=None) -> int:
     t.add_argument("--param", required=True, help="JSON do param (objeto)")
     t.add_argument("--soma", required=True)
     t.add_argument("--agrupar")
+    sub.add_parser("empresa")
     try:
         args = parser.parse_args(argv)
     except SystemExit:
         return 64
     secrets: tuple[str, ...] = ()
+    if args.cmd == "empresa":
+        try:
+            key, secret = load_credentials()
+            secrets = (key, secret)
+            print(json.dumps(empresa(Client(key, secret), load_catalog()), ensure_ascii=False, indent=2))
+            return 0
+        except PolicyError as e:
+            print(json.dumps({"bloqueado": str(e)}, ensure_ascii=False))
+            return 5
+        except ConfigError as e:
+            print(json.dumps({"erro_configuracao": str(e)}, ensure_ascii=False))
+            return 3
+        except ApiError as e:
+            print(json.dumps({"erro_api": redact(str(e), secrets)}, ensure_ascii=False))
+            return 4
     try:
         param = json.loads(args.param)
         if not isinstance(param, dict):

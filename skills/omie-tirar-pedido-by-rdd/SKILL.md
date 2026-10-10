@@ -79,7 +79,7 @@ Pré-requisito: no conector do Omie, `omie_executar` e `omie_executar_em_varias`
 | conector ausente | dizer que a skill precisa do conector do Omie e parar |
 | cliente ou produto não encontrado | dizer e parar; não cadastrar |
 | erro de campo obrigatório | `omie_descrever_operacao`, corrigir e mostrar o pedido de novo antes de pedir a frase |
-| erro ao incluir | mostrar a mensagem da Omie e parar; não tentar de novo |
+| erro ao incluir | mostrar a mensagem da Omie e parar; conferir com `produtos/pedido:ConsultarPedido` se nada foi gravado; corrigido o dado, voltar ao passo 2 do gate (mostrar de novo e pedir nova frase) — nunca reenviar sozinho |
 | "Too many requests" ou HTTP 425 | parar e informar (bloqueio de cerca de 30 minutos) |
 | dado que a Omie não trouxe | `nao disponivel` |
 

@@ -49,4 +49,5 @@ No escopo: `area` = `contabil`, `perfil_pedido` = `operacional`, `perfil_efetivo
 | Arquivos `.py` | nenhum | `scripts/omie_num.py`, `tests/test_omie_num.py` (cópias exatas dos assets) |
 | Pedido de soma | recusa literal: "Este perfil não totaliza registros. Para somar com conferência, gere o perfil Conferidor." | "Nunca some, conte ou compare valores de cabeça: todo total sai do `scripts/omie_num.py`." |
 | Total na resposta | — | com a linha "Conferência: N registros lidos de N informados pela Omie · soma direta = soma por grupo." |
+| Empresa | a do conector | a do conector **e** a das chaves do `.env` (`omie_num.py empresa`): precisam ser a mesma, senão nenhum total |
 | Escrita | gate literal, se o escopo tiver escrita | não grava nada nesta versão (só leitura) |

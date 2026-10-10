@@ -161,6 +161,12 @@ class TotalTests(Base):
         rc, out = self.totalizar()
         self.assert_sem_agregado(rc, out, "valor_nao_numerico")
 
+    def test_lista_vazia_da_omie_e_zero_com_conferencia(self):
+        self.srv.erro = (500, {"faultstring": "ERROR: Não existem registros para a página [1]!"})
+        rc, out = self.totalizar()
+        self.assertEqual((rc, out["status"], out["total"]), (0, "ok", "0"))
+        self.assertEqual((out["conferencia"]["lidos"], out["conferencia"]["informados"]), (0, 0))
+
     def test_sem_contagem_informada(self):
         self.srv.paginas = [{"titulosEncontrados": [titulo(1)]}]
         rc, out = self.totalizar()
@@ -184,6 +190,22 @@ class TotalTests(Base):
         self.assertEqual(out["grupos"], {"P": "5", "R": "12.5"})
         self.assertEqual(out["conferencia"]["particao"], "grupo")
         self.assertEqual(out["total"], "17.5")
+
+
+class EmpresaELimiteTests(Base):
+    def test_empresa_das_chaves(self):
+        self.srv.paginas = [{"pagina": 1, "total_de_paginas": 1, "registros": 1, "total_de_registros": 1,
+                             "empresas_cadastro": [{"razao_social": "Empresa Sintetica", "nome_fantasia": "Sintetica", "cnpj": "x"}]}]
+        out = num.empresa(self.cliente, self.catalogo)
+        self.assertEqual(out["empresas"][0]["razao_social"], "Empresa Sintetica")
+        self.assertEqual(self.srv.chamadas[0]["call"], "ListarEmpresas")
+
+    def test_too_many_para_sem_retentar(self):
+        self.cliente.waits = (0, 0, 0)
+        self.srv.erro = (429, {"faultstring": "Too many requests"})
+        with self.assertRaises(num.ApiError):
+            self.totalizar()
+        self.assertEqual(len(self.srv.chamadas), 1)
 
 
 class PoliticaTests(unittest.TestCase):

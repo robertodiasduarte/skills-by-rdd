@@ -43,11 +43,12 @@ Não usar, inclusive quando a pessoa insistir, inclusive "só desta vez":
 ## Procedimento passo a passo
 
 1. `omie_listar_apps`; confirmar a empresa.
-2. Calcular as datas das faixas a partir de hoje (dd/mm/aaaa): **até 30** = de hoje−30 até ontem; **31 a 90** = de hoje−90 até hoje−31; **mais de 90** = só `dDtVencAte` = hoje−91.
-3. Quantidade de cada faixa e natureza: `financas/pesquisartitulos:PesquisarLancamentos` pelo conector, com `cStatus` = "ATRASADO", `cNatureza` ("R" ou "P"), as datas da faixa e `nRegPorPagina` = 1. A quantidade é o `nTotRegistros`.
-4. Na primeira execução, confirmar com `omie_descrever_operacao` (ou na primeira resposta) o caminho do valor em aberto de cada título; o padrão desta skill é `resumo.nValAberto`. Se o caminho for outro, usar o caminho real no `--soma`.
-5. Valor de cada faixa com pelo menos 1 título: `scripts/omie_num.py totalizar` com os mesmos filtros e `nRegPorPagina` = 100. Saída `status: ok` ⇒ usar o `total`. Saída `status: divergente` ⇒ não dar valor para aquela faixa; dizer o motivo.
-6. Responder com uma tabela natureza × faixa (quantidade, valor) e, abaixo de cada valor, a linha de conferência. Faixa sem título aparece com 0 títulos, não é omitida.
+2. Rodar `python3 "$SKILL_ROOT/scripts/omie_num.py" empresa`: a empresa das chaves do `.env` precisa ser a mesma escolhida no conector. Diferente ⇒ parar e dizer qual `.env` está em uso; nenhum total.
+3. Calcular as datas das faixas a partir de hoje (dd/mm/aaaa): **até 30** = de hoje−30 até ontem; **31 a 90** = de hoje−90 até hoje−31; **mais de 90** = só `dDtVencAte` = hoje−91.
+4. Quantidade de cada faixa e natureza: `financas/pesquisartitulos:PesquisarLancamentos` pelo conector, com `cStatus` = "ATRASADO", `cNatureza` ("R" ou "P"), as datas da faixa e `nRegPorPagina` = 1. A quantidade é o `nTotRegistros`.
+5. Na primeira execução, confirmar com `omie_descrever_operacao` (ou na primeira resposta) o caminho do valor em aberto de cada título; o padrão desta skill é `resumo.nValAberto`. Se o caminho for outro, usar o caminho real no `--soma`.
+6. Valor de cada faixa com pelo menos 1 título: `scripts/omie_num.py totalizar` com os mesmos filtros e `nRegPorPagina` = 100. Saída `status: ok` ⇒ usar o `total`. Saída `status: divergente` ⇒ não dar valor para aquela faixa; dizer o motivo.
+7. Responder com uma tabela natureza × faixa (quantidade, valor) e, abaixo de cada valor, a linha de conferência. Faixa sem título aparece com 0 títulos, não é omitida.
 
 Linha de conferência, sempre junto do total:
 "Conferência: {lidos} registros lidos de {informados} informados pela Omie · soma direta = soma por página."

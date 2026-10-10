@@ -40,9 +40,10 @@ Não usar, inclusive quando a pessoa insistir, inclusive "só desta vez":
 ## Procedimento passo a passo
 
 1. `omie_listar_apps`; confirmar a empresa.
-2. {{passos aprovados, com operação `serviço:Método` e campos exatos}}.
-3. Quantidade: campo informado pela Omie (`nTotRegistros`), lido pelo MCP com 1 registro por página.
-4. Valor: `scripts/omie_num.py totalizar`. Saída `status: ok` ⇒ responder com o total e a linha de conferência. Saída `status: divergente` ⇒ não dar total; dizer o motivo e propor filtro mais estreito.
+2. Rodar `python3 "$SKILL_ROOT/scripts/omie_num.py" empresa`: a empresa das chaves do `.env` precisa ser a mesma escolhida no conector. Diferente ⇒ parar e dizer qual `.env` está em uso; nenhum total.
+3. {{passos aprovados, com operação `serviço:Método` e campos exatos}}.
+4. Quantidade: campo informado pela Omie (`nTotRegistros`), lido pelo MCP com 1 registro por página.
+5. Valor: `scripts/omie_num.py totalizar`. Saída `status: ok` ⇒ responder com o total e a linha de conferência. Saída `status: divergente` ⇒ não dar total; dizer o motivo e propor filtro mais estreito.
 
 Linha de conferência, sempre junto do total:
 "Conferência: {{lidos}} registros lidos de {{informados}} informados pela Omie · soma direta = soma por {{grupo|página}}."
