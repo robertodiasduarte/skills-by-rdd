@@ -46,6 +46,10 @@ elaborar uma peça jurídica, transmitir uma obrigação, acessar um sistema ou 
 a revisão de um profissional. Esses pedidos podem ser casos de uso da skill-filha,
 mas não mudam o objetivo desta entrevista.
 
+Não usar para criar skill que opera o ERP Omie pelo MCP oficial (consultar,
+somar ou gravar pedido, OS, título): isso é da `skill-builder-omie-by-rdd`,
+inclusive quando o pedido vier como “skill contábil”.
+
 Não criar um “especialista universal” com cobertura implícita das quatro áreas.
 Escolher uma área principal e explicitar as interfaces necessárias. Nomear os temas
 vizinhos excluídos. Não presumir jurisdição, regime, categoria, tribunal ou período.

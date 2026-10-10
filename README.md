@@ -38,6 +38,30 @@ A skill que ela cria não vem com motor de cálculo verificado: para conta confe
 
 [Baixar o .zip](../../releases/latest/download/skill-builder-by-rdd.zip)
 
+## Omie
+
+### `skill-builder-omie-by-rdd`
+
+**Cria skills que consultam e operam o ERP Omie pelo conector oficial, testadas na sua empresa antes da entrega.**
+
+Filha da `skill-builder-by-rdd`: mesma entrevista e mesma confirmação do escopo antes de gerar. Duas perguntas decidem o perfil da skill gerada. **Operador** mostra e grava (pedido, OS, tarefa) com um protocolo de confirmação literal e nunca soma valores. **Conferidor** soma por script e só entrega o total quando leu exatamente o que a Omie informou. Exige o conector MCP do Omie; o perfil Conferidor exige também Claude Code. Não gera skill que fatura ou inutiliza.
+
+A explicação passo a passo está em [robertodiasduarte.com.br/skills-omie](https://www.robertodiasduarte.com.br/skills-omie/).
+
+[Baixar o .zip](../../releases/latest/download/skill-builder-omie-by-rdd.zip)
+
+### `omie-atrasos-conferidos-by-rdd` (exemplo gerado pela filha)
+
+Títulos atrasados a receber e a pagar em três faixas, com quantidade informada pela Omie e valor somado por script com conferência. Perfil Conferidor.
+
+[Baixar o .zip](../../releases/latest/download/omie-atrasos-conferidos-by-rdd.zip)
+
+### `omie-tirar-pedido-by-rdd` (exemplo gerado pela filha)
+
+Monta o pedido de venda ditado, mostra na tela e só inclui com a frase literal de confirmação. Perfil Operador.
+
+[Baixar o .zip](../../releases/latest/download/omie-tirar-pedido-by-rdd.zip)
+
 ## Marketing
 
 ### `skill-soul-builder-by-rdd`

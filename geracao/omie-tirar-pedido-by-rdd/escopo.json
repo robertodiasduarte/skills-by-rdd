@@ -1,0 +1,77 @@
+{
+  "id": "OMIE-PED",
+  "revisao": 2,
+  "nome": "omie-tirar-pedido-by-rdd",
+  "area": "contabil",
+  "tema": "inclusão de pedido de venda no Omie com confirmação literal",
+  "objetivo": "montar o pedido de venda ditado pela pessoa, mostrar na tela e incluir no Omie só depois da frase literal de confirmação",
+  "publico": "dono ou vendedor de empresa que usa o Omie, ou o contador que opera por ela",
+  "jurisdicao": "Brasil",
+  "cobre": [
+    "achar o cliente por CNPJ, razão social ou nome fantasia",
+    "achar produtos, preço e saldo",
+    "achar a condição de pagamento",
+    "incluir o pedido na etapa 10 com o gate de escrita",
+    "conferir o pedido incluído"
+  ],
+  "recusa": [
+    "faturar o pedido ou emitir NF-e",
+    "inutilizar numeração",
+    "cadastrar cliente ou produto",
+    "dar desconto ou sugerir troca de produto",
+    "alterar ou excluir pedido existente",
+    "somar valores de vários pedidos"
+  ],
+  "periodo_consulta": "dados ao vivo no momento da execução",
+  "periodo_calculo": "nao aplicavel",
+  "entradas": [
+    "empresa (app_hash)",
+    "cliente",
+    "itens com quantidade e, se houver, preço",
+    "condição de pagamento"
+  ],
+  "saidas": [
+    "pedido montado na tela",
+    "número do pedido incluído",
+    "status conferido"
+  ],
+  "perfil_pedido": "operacional",
+  "processo_normativo": false,
+  "perfil_efetivo": "C",
+  "politica_internet": "sem_pesquisa",
+  "ferramentas": [
+    "mcp:omie_listar_apps",
+    "mcp:omie_descrever_operacao",
+    "mcp:omie_executar (leitura e IncluirPedido)"
+  ],
+  "revisao_humana": "a pessoa confere o pedido montado antes da frase literal",
+  "criterios_aceite": [
+    "nenhuma inclusão sem a frase CONFIRMO GRAVAR PEDIDO <cliente>",
+    "um pedido por frase",
+    "status conferido depois de incluir",
+    "faturar recusado"
+  ],
+  "materiais": [
+    {
+      "id": "M1",
+      "slot": "base",
+      "path": "references/omie/OPERACOES.md",
+      "sha256": "0f2780a2ed2bb92e6ea52fb05fccf91513cef5d5a6fcc504ea6b3cc83f4adae0",
+      "status": "utilizavel",
+      "titulo": "Operações do Omie — base de conhecimento",
+      "fonte": "skill-builder-omie-by-rdd 1.0.0 (guia de habilidades da Omie e catálogo de leitura)",
+      "localizador": "references/omie/OPERACOES.md",
+      "periodo": "corte 10/10/2026",
+      "papel": "contrato de operações e campos",
+      "conferido_por": "Roberto Dias Duarte (brainstorm 10/10/2026)",
+      "fonte_do_gabarito": "nao aplicavel"
+    }
+  ],
+  "lacunas": [
+    "o total do pedido mostrado na tela é o que a própria Omie devolve ao montar; a skill não soma itens"
+  ],
+  "restricoes": [
+    "perfil_omie:operador sha256:3435b41c-04e50462-dab41ce3-8a8920c4-c8351cc5-7b1c9d21-07f386be-f28a0d7f"
+  ],
+  "caminhos_calculo": []
+}

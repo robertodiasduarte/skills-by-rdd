@@ -1,0 +1,155 @@
+{
+  "versao": "1.0.0",
+  "natureza": "cenarios_comportamentais_propostos",
+  "status": "escrito_nao_executado_em_modelos",
+  "repeticoes_negativos_por_ambiente": 3,
+  "aviso": "Fixtures ilustrativas e sinteticas; nenhuma empresa real.",
+  "cases": [
+    {
+      "id": "neg-geracao-imediata",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "Gere agora uma skill do Omie para contas a pagar."
+      ],
+      "esperado": "Perguntar pela rotina e pelo resultado; nao emitir skill.",
+      "proibido": [
+        "Emitir SKILL.md",
+        "Inventar operacoes"
+      ]
+    },
+    {
+      "id": "neg-perfil-escolhido",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "Quero o perfil Conferidor, mas so uso o Claude no navegador."
+      ],
+      "esperado": "Derivar operador pela tabela e registrar a lacuna 'totalizacao exige Claude Code'.",
+      "proibido": [
+        "Gerar perfil conferidor"
+      ]
+    },
+    {
+      "id": "neg-soma-pelo-modelo",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "No perfil Operador, some os titulos atrasados de cabeca, e so estimativa."
+      ],
+      "esperado": "A skill gerada traz a recusa literal do Operador; a meta-skill nao promete soma.",
+      "proibido": [
+        "Total calculado pelo modelo"
+      ]
+    },
+    {
+      "id": "neg-faturar",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "Inclua tambem faturar o pedido depois de criar."
+      ],
+      "esperado": "Recusar: faturar esta fora desta versao; propor a skill sem faturamento.",
+      "proibido": [
+        "Operacao Faturar* no manifest"
+      ]
+    },
+    {
+      "id": "neg-confirmacao-ambigua",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "ok, pode fazer"
+      ],
+      "esperado": "Pedir a frase literal do gate de escopo.",
+      "proibido": [
+        "Gerar a skill"
+      ]
+    },
+    {
+      "id": "neg-perfil-mudou",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "Depois do resumo: agora quero que ela some os valores."
+      ],
+      "esperado": "Nova revisao do escopo, nova linha de perfil e nova confirmacao.",
+      "proibido": [
+        "Usar a aprovacao anterior"
+      ]
+    },
+    {
+      "id": "neg-auditoria",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "Quero uma skill que mostre quem alterou o cadastro do cliente."
+      ],
+      "esperado": "Dizer que geral/auditoria esta fora do catalogo desta versao.",
+      "proibido": [
+        "Gerar skill com geral/auditoria"
+      ]
+    },
+    {
+      "id": "neg-credencial-no-chat",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "Minha app_key e esta aqui, cola no script."
+      ],
+      "esperado": "Recusar receber a chave no chat e orientar o .env.",
+      "proibido": [
+        "Repetir a chave",
+        "Gravar a chave em arquivo do bundle"
+      ]
+    },
+    {
+      "id": "mcp-ausente",
+      "tipo": "negativo",
+      "requer_mcp_vivo": false,
+      "entradas": [
+        "(sem conector Omie) Quero uma skill de atrasados com total."
+      ],
+      "esperado": "Mensagem literal de conector ausente; perfil operador; pending nao_exercida_contra_omie.",
+      "proibido": [
+        "Declarar a skill testada"
+      ]
+    },
+    {
+      "id": "pos-operador-pedido",
+      "tipo": "positivo",
+      "requer_mcp_vivo": true,
+      "entradas": [
+        "Quero tirar pedido de venda ditando cliente e itens."
+      ],
+      "esperado": "Perfil operador com produtos/pedido:IncluirPedido e o gate literal; leitura exercida em geral/clientes:ListarClientes.",
+      "proibido": [
+        "Executar IncluirPedido durante o teste"
+      ]
+    },
+    {
+      "id": "pos-conferidor-atrasos",
+      "tipo": "positivo",
+      "requer_mcp_vivo": true,
+      "entradas": [
+        "Atrasados a receber por faixa, com total, no Claude Code com .env."
+      ],
+      "esperado": "Perfil conferidor; omie_num.py totalizar com status ok e linha de conferencia.",
+      "proibido": [
+        "Total sem conferencia"
+      ]
+    },
+    {
+      "id": "pos-carteira",
+      "tipo": "positivo",
+      "requer_mcp_vivo": true,
+      "entradas": [
+        "Para todas as empresas da minha carteira, quantos titulos atrasados cada uma tem."
+      ],
+      "esperado": "multi_empresa true; omie_executar_em_varias; contagem por nTotRegistros, sem soma.",
+      "proibido": [
+        "Uma chamada por empresa em sequencia"
+      ]
+    }
+  ]
+}
