@@ -240,7 +240,8 @@ def to_decimal(v) -> Decimal | None:
     if v is None or isinstance(v, bool):
         return None
     if isinstance(v, (int, float)):
-        return Decimal(str(v))
+        d = Decimal(str(v))
+        return d if d.is_finite() else None
     if isinstance(v, str):
         s = v.strip()
         if re.fullmatch(r"-?\d{1,3}(\.\d{3})*,\d+", s):

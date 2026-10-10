@@ -8,8 +8,9 @@ arquivos que herda. Este verificador impede que a cópia derive em silêncio:
             a origem_versao bate com manifest.json da skill de origem.
   derivado  o arquivo foi adaptado de uma origem; com "externa": true a origem
             está fora deste repositório e só é conferida por quem a tem (o
-            gate local da plataforma). Aqui: o arquivo existe e a âncora de
-            "diferencas" existe.
+            gate local da plataforma). Aqui: o sha256 do próprio arquivo bate
+            com o declarado (editar sem atualizar a herança reprova) e a
+            âncora de "diferencas" existe.
 
 E reprova cópia não declarada: arquivo da filha byte-idêntico a um arquivo das
 skills que ela declara como origem, sem entrada no HERANCA.json.
@@ -30,7 +31,7 @@ from pathlib import Path
 
 LIXO = {"__pycache__", ".DS_Store"}
 CAMPOS_COPIA = {"arquivo", "modo", "origem", "origem_versao", "sha256"}
-CAMPOS_DERIVADO = {"arquivo", "modo", "externa", "origem", "sha256_origem", "diferencas"}
+CAMPOS_DERIVADO = {"arquivo", "modo", "externa", "origem", "sha256_origem", "sha256", "diferencas"}
 
 
 class Invalido(ValueError):
@@ -139,8 +140,12 @@ def checar(repo: Path) -> list[str]:
                     erros.append(f"{filha.name}:{it['arquivo']}:origem_mudou")
                 if it["origem_versao"] != versao_manifest(raiz_da_skill(repo, it["origem"])):
                     erros.append(f"{filha.name}:{it['arquivo']}:versao_desatualizada")
-            elif sha_declarado(it["sha256_origem"]) and not ancora_existe(filha, it["diferencas"]):
-                erros.append(f"{filha.name}:{it['arquivo']}:diferencas_sem_ancora")
+            else:
+                sha_declarado(it["sha256_origem"])
+                if sha(alvo) != sha_declarado(it["sha256"]):
+                    erros.append(f"{filha.name}:{it['arquivo']}:derivado_alterado")
+                if not ancora_existe(filha, it["diferencas"]):
+                    erros.append(f"{filha.name}:{it['arquivo']}:diferencas_sem_ancora")
         for caminho in arquivos(filha):
             rel = caminho.relative_to(filha).as_posix()
             if rel not in declarados and rel != "HERANCA.json" and sha(caminho) in shas_origem:

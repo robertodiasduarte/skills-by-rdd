@@ -112,7 +112,8 @@
       "externa": true,
       "origem": "consulta-omie-somente-leitura@1.0.0:scripts/omie_consulta.py",
       "sha256_origem": "51502bb3-d3c0df2d-a3b92f46-a75087ed-b9788c50-cac8d2d7-c0f9b2ce-3b629fa7",
-      "diferencas": "references/omie/FONTES_OMIE.md#omie_num"
+      "diferencas": "references/omie/FONTES_OMIE.md#omie_num",
+      "sha256": "c66d3154-1c8aa98f-96a997a8-89aaf3a3-c3a14da7-0043046b-9833e0b8-09699cd7"
     },
     {
       "arquivo": "assets/omie/catalogo_leitura.json",
@@ -120,7 +121,8 @@
       "externa": true,
       "origem": "consulta-omie-somente-leitura@1.0.0:references/catalogo_leitura.json",
       "sha256_origem": "bd8ebb5a-45b3a693-2f2bcb1b-508ccffa-3b3cb027-2bccc757-4423e31a-d7aa323d",
-      "diferencas": "references/omie/FONTES_OMIE.md#omie_num"
+      "diferencas": "references/omie/FONTES_OMIE.md#omie_num",
+      "sha256": "bd8ebb5a-45b3a693-2f2bcb1b-508ccffa-3b3cb027-2bccc757-4423e31a-d7aa323d"
     }
   ]
 }

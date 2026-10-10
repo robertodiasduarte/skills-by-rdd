@@ -167,6 +167,17 @@ class PerfilTests(TempDir):
         with self.assertRaises(gate.GateError):
             gate.check_approval(trocado, aprovacao)
 
+    def test_cli_cruza_sidecar_com_o_bundle(self):
+        operador = dict(self.BASE, executa_python_com_rede=False, perfil="operador")
+        arq, esc = self.tmp / "perfil_omie.json", self.tmp / "escopo.json"
+        arq.write_text(json.dumps(operador), encoding="utf-8")
+        esc.write_text(json.dumps(self.escopo_com(operador)), encoding="utf-8")
+        raiz = montar(self.tmp / "b", "conferidor", [LEITURA])
+        r = subprocess.run([sys.executable, "-B", str(SCRIPTS / "lint_bundle_omie.py"), "--root", str(raiz),
+                            "--perfil-arquivo", str(arq), "--escopo", str(esc)], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("PERFIL_DIVERGENTE_DO_MANIFEST", json.loads(r.stdout)["errors"])
+
     def test_restricao_pela_cli(self):
         arq = self.tmp / "perfil_omie.json"
         arq.write_text(json.dumps(self.BASE), encoding="utf-8")
@@ -227,6 +238,15 @@ class EscritaTests(TempDir):
 
     def test_operacao_no_texto_nao_declarada(self):
         raiz = montar(self.tmp / "a", "operador", [LEITURA], "Depois chame `servicos/os:ListarOS`.")
+        self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
+
+    def test_metodo_citado_sem_endereco(self):
+        raiz = montar(self.tmp / "a", "operador", [("geral/clientes", "ListarClientes")], "Depois chame `IncluirPedido` na etapa 10.")
+        self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
+
+    def test_operacao_em_json_nao_declarada(self):
+        corpo = 'Chame `omie_executar` com `{"call": "produtos/pedido", "op": "IncluirPedido"}`.'
+        raiz = montar(self.tmp / "a", "operador", [("geral/clientes", "ListarClientes")], corpo)
         self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
 
     def test_confirmado_sem_escrita(self):

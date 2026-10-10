@@ -97,6 +97,10 @@ def checar_perfil(perfil: dict, escopo: dict) -> list[str]:
     return erros
 
 
+def metodos_do_catalogo(catalogo: dict) -> set[str]:
+    return {m for e in catalogo.values() for m in [*e.get("leitura", []), *e.get("bloqueados", {})]}
+
+
 def classificar(catalogo: dict, call: str, op: str) -> str:
     if call not in catalogo:
         return "fora_do_catalogo"
@@ -165,6 +169,11 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
         return sorted(set(erros + ["OPERACOES_NAO_DECLARADAS_NO_MANIFEST"]))
     declaradas = {(o["call"], o["op"]) for o in operacoes}
     if {(c, o) for c, o in OPERACAO_RE.findall(tudo)} - declaradas:
+        erros.append("OPERACAO_NAO_DECLARADA")
+    # Método citado só pelo nome (sem "serviço:"): qualquer nome de método do catálogo no texto precisa ser de
+    # uma operação declarada — senão uma gravação escapa do gate de escrita (achado R3 da review pós-build).
+    metodos_declarados = {o for _, o in declaradas}
+    if any(re.search(rf"\b{re.escape(m)}\b", tudo) for m in metodos_do_catalogo(catalogo) - metodos_declarados):
         erros.append("OPERACAO_NAO_DECLARADA")
 
     classes = {(c, o): classificar(catalogo, c, o) for c, o in declaradas}
@@ -248,12 +257,18 @@ def main(argv=None) -> int:
         if not args.root and not args.perfil_arquivo:
             raise Uso("informe --root e/ou --perfil-arquivo com --escopo")
         erros = []
+        perfil = args.perfil
         if args.perfil_arquivo:
             if not args.escopo:
                 raise Uso("--perfil-arquivo exige --escopo")
-            erros += checar_perfil(ler_json(args.perfil_arquivo), ler_json(args.escopo))
+            sidecar = ler_json(args.perfil_arquivo)
+            erros += checar_perfil(sidecar, ler_json(args.escopo))
+            # O perfil confirmado no escopo manda: o bundle entregue tem de ser desse perfil (achado R1 da review).
+            if perfil and perfil != sidecar.get("perfil"):
+                erros.append("PERFIL_DIVERGENTE_DO_ESCOPO")
+            perfil = sidecar.get("perfil")
         if args.root:
-            erros += lint(args.root, args.perfil, ler_json(args.catalogo)["servicos"])
+            erros += lint(args.root, perfil, ler_json(args.catalogo)["servicos"])
     except Uso as exc:
         print(json.dumps({"erro_uso": str(exc)}, ensure_ascii=False))
         return 64

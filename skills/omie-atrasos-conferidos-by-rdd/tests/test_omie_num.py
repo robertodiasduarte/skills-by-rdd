@@ -156,6 +156,11 @@ class TotalTests(Base):
         rc, out = self.totalizar()
         self.assert_sem_agregado(rc, out, "valor_nao_numerico")
 
+    def test_valor_infinito_nao_vira_total(self):
+        self.srv.paginas = [pagina([titulo(100), titulo(float("inf"))], 2, 1)]
+        rc, out = self.totalizar()
+        self.assert_sem_agregado(rc, out, "valor_nao_numerico")
+
     def test_sem_contagem_informada(self):
         self.srv.paginas = [{"titulosEncontrados": [titulo(1)]}]
         rc, out = self.totalizar()
@@ -187,7 +192,7 @@ class PoliticaTests(unittest.TestCase):
 
     def test_escrita_e_recusada(self):
         for servico, metodo in (("produtos/pedido", "IncluirPedido"),
-                                ("produtos/pedidovenda", "FaturarPedidoVenda"),
+                                ("produtos/pedidovendafat", "FaturarPedidoVenda"),
                                 ("servicos/os", "AlterarOS")):
             with self.subTest(metodo=metodo), self.assertRaises(num.PolicyError):
                 num.check_allowed(self.catalogo, servico, metodo)

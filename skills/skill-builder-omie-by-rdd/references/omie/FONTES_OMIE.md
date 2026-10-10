@@ -25,4 +25,4 @@ Mudou:
 - total só sai quando a API informou a contagem, os registros lidos batem com ela, nada foi truncado, todo valor do
   campo somado é numérico e a soma direta bate com a soma por grupo (ou por página). Qualquer falha ⇒
   `status: divergente`, exit 2, sem nenhum valor agregado na saída;
-- valor não numérico não é mais "ignorado e contado": reprova o total.
+- valor não numérico, ausente, infinito ou NaN não é mais "ignorado e contado": reprova o total.
