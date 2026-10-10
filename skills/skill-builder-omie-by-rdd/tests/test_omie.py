@@ -88,7 +88,8 @@ def montar(raiz: Path, perfil: str, operacoes: list[tuple[str, str]], corpo: str
     (raiz / "SKILL.md").write_text(skill_md(perfil, texto_ops + "\n" + corpo, nao_usar), encoding="utf-8")
     manifest = {
         "name": raiz.name, "version": "1.0.0", "perfil_omie": perfil,
-        "operacoes": [{"call": c, "op": o} for c, o in operacoes],
+        "operacoes": [{"call": c, "op": o} for c, o in operacoes]
+                      + ([{"call": "geral/empresas", "op": "ListarEmpresas"}] if perfil == "conferidor" else []),
         "requisitos": ["conector MCP Omie"] + (["Python 3.10+ com rede para app.omie.com.br"] if perfil == "conferidor" else []),
         "pending": [] if exercida else ["nao_exercida_contra_omie"],
     }
@@ -304,6 +305,13 @@ class PerfilBundleTests(TempDir):
         skill = raiz / "SKILL.md"
         skill.write_text(skill.read_text(encoding="utf-8").replace(lo.MESMA_EMPRESA, "confira a empresa"), encoding="utf-8")
         self.assertIn("CONFERIDOR_SEM_CONFERENCIA_DE_EMPRESA", lo.lint(raiz, None, CATALOGO))
+
+    def test_conferidor_sem_operacao_de_empresa(self):
+        raiz = montar(self.tmp / "a", "conferidor", [LEITURA])
+        m = json.loads((raiz / "manifest.json").read_text(encoding="utf-8"))
+        m["operacoes"] = [o for o in m["operacoes"] if o["op"] != "ListarEmpresas"]
+        (raiz / "manifest.json").write_text(json.dumps(m), encoding="utf-8")
+        self.assertIn("CONFERIDOR_SEM_OPERACAO_DE_EMPRESA", lo.lint(raiz, None, CATALOGO))
 
     def test_conferidor_nao_grava(self):
         raiz = montar(self.tmp / "a", "conferidor", [LEITURA, INCLUIR], GATE)

@@ -71,7 +71,7 @@ Testes do script (servidor simulado, sem acesso à Omie):
 |---|---|---|
 | exit 2, `truncado` | faixa com mais de 5 páginas (mais de 500 títulos) | dar só a quantidade e dizer que o valor exige filtro menor (por exemplo, período de vencimento mais curto) |
 | exit 2, `contagem` | lidos ≠ informados | repetir uma vez; persistindo, sem valor |
-| exit 2, `valor_nao_numerico` | caminho do valor errado ou título sem valor | rever o passo 4; sem valor |
+| exit 2, `valor_nao_numerico` | caminho do valor errado, título sem valor ou número em texto ambíguo | rever o passo 5 (caminho do valor); sem valor |
 | exit 2, `sem_contagem_informada` | resposta sem `nTotRegistros` | sem valor; informar |
 | exit 3 | `.env` ausente | orientar a criar; parar |
 | exit 4 | erro da API ou rede; HTTP 425 | parar e informar (bloqueio de cerca de 30 minutos) |

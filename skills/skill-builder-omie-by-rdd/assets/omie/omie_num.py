@@ -249,8 +249,14 @@ def to_decimal(v) -> Decimal | None:
         return d if d.is_finite() else None
     if isinstance(v, str):
         s = v.strip()
-        if re.fullmatch(r"-?\d{1,3}(\.\d{3})*,\d+", s):
+        if "," in s:
+            # Formato brasileiro: vírgula decimal, ponto opcional de milhar.
+            if not re.fullmatch(r"-?(\d{1,3}(\.\d{3})+|\d+),\d+", s):
+                return None
             s = s.replace(".", "").replace(",", ".")
+        elif re.fullmatch(r"-?\d{1,3}(\.\d{3})+", s):
+            # "1.234" pode ser mil duzentos e trinta e quatro (BR) ou um vírgula dois (US): ambíguo, sem total.
+            return None
         try:
             d = Decimal(s)
         except InvalidOperation:
@@ -268,12 +274,17 @@ def somar_particoes(particoes: list) -> Decimal:
 def ler_paginas(client: Client, servico: str, metodo: str, param: dict):
     param = dict(param)
     keys = page_keys_for(param)
-    if keys and keys[1] in param:
-        param[keys[1]] = min(int(param[keys[1]]), MAX_PER_PAGE)
+    # Teto de registros por página vale com ou sem a chave de número de página (achado R2 da rodada 3).
+    for k in PAGE_KEYS:
+        if k[1] in param:
+            param[k[1]] = min(int(param[k[1]]), MAX_PER_PAGE)
     try:
         first = client.call(servico, metodo, param)
     except ApiError as exc:
-        if not SEM_REGISTROS.search(str(exc)):
+        # Lista vazia só é zero quando a consulta começou na página 1: "não existem registros para a página [5]"
+        # diz só que a página 5 está vazia, não que não há registros (achado R1 da rodada 3).
+        inicio = int(param.get(keys[0], 1)) if keys else 1
+        if not SEM_REGISTROS.search(str(exc)) or inicio != 1:
             raise
         return [[]], 0, False, None, param, keys
     keys = keys or page_keys_for(param, first)
@@ -364,10 +375,14 @@ CAMPOS_EMPRESA = ("razao_social", "nome_fantasia", "cnpj")
 def empresa(client: Client, catalog: dict) -> dict:
     """Empresa a que as chaves do .env dao acesso: o perfil Conferidor compara com a escolhida no conector."""
     s = check_allowed(catalog, "geral/empresas", "ListarEmpresas")
-    resp = client.call(s, "ListarEmpresas", {"pagina": 1, "registros_por_pagina": 50})
+    resp = client.call(s, "ListarEmpresas", {"pagina": 1, "registros_por_pagina": MAX_PER_PAGE})
     _, registros = find_records(resp)
-    return {"empresas": [{k: r.get(k) for k in CAMPOS_EMPRESA if k in r} for r in registros],
-            "aviso": "Compare com a empresa escolhida no conector (omie_listar_apps). Diferente: pare."}
+    total = resp.get("total_de_registros") if isinstance(resp, dict) else None
+    out = {"empresas": [{k: r.get(k) for k in CAMPOS_EMPRESA if k in r} for r in registros],
+           "aviso": "Compare com a empresa escolhida no conector (omie_listar_apps). Diferente: pare."}
+    if isinstance(total, int) and total > len(registros):
+        out["truncado"] = f"{len(registros)} de {total} empresas listadas: confirme pelo CNPJ antes de seguir."
+    return out
 
 
 # ---------------------------------------------------------------- cli

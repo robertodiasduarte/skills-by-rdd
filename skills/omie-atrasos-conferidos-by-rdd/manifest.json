@@ -17,6 +17,10 @@
     {
       "call": "financas/pesquisartitulos",
       "op": "PesquisarLancamentos"
+    },
+    {
+      "call": "geral/empresas",
+      "op": "ListarEmpresas"
     }
   ],
   "requisitos": [

@@ -113,7 +113,7 @@
       "origem": "consulta-omie-somente-leitura@1.0.0:scripts/omie_consulta.py",
       "sha256_origem": "51502bb3-d3c0df2d-a3b92f46-a75087ed-b9788c50-cac8d2d7-c0f9b2ce-3b629fa7",
       "diferencas": "references/omie/FONTES_OMIE.md#omie_num",
-      "sha256": "0712cef3-8a4b8b61-b70ed63d-d1be47c8-f39c062f-d2768e20-7c6b6eae-03072ac6"
+      "sha256": "54058f0f-3a1321d5-912850f9-ae501690-5428831c-9180b92b-437c3a97-b4f61dea"
     },
     {
       "arquivo": "assets/omie/catalogo_leitura.json",

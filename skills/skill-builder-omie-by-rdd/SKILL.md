@@ -105,7 +105,8 @@ nova confirmação.
 - Operador: partir de [SKILL_OPERADOR](assets/omie/SKILL_OPERADOR.template.md). Nenhum arquivo `.py`.
 - Conferidor: partir de [SKILL_CONFERIDOR](assets/omie/SKILL_CONFERIDOR.template.md) e copiar **sem alterar**
   `assets/omie/omie_num.py` e `assets/omie/catalogo_leitura.json` para `scripts/`, `assets/omie/test_omie_num.py`
-  para `tests/` e `assets/omie/env.exemplo.txt` para `assets/`.
+  para `tests/` e `assets/omie/env.exemplo.txt` para `assets/`. O manifest declara também
+  `geral/empresas:ListarEmpresas`, a leitura que o `omie_num.py empresa` faz.
 - Com escrita (só Operador): o bloco "Gate de escrita" de [Padrão de escrita](references/omie/PADRAO_ESCRITA.md), literal.
 - Sempre: [Padrão de leitura](references/omie/PADRAO_LEITURA.md); `manifest.json` com `version`, `perfil_omie`,
   `operacoes` (`call` e `op` de cada uma), `requisitos` e `pending`; na pasta de referências da skill gerada,

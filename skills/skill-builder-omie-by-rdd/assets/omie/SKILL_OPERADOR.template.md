@@ -65,7 +65,7 @@ Pré-requisito: no conector do Omie, `omie_executar` e `omie_executar_em_varias`
 |---|---|
 | conector ausente | dizer que a skill precisa do conector do Omie e parar |
 | erro de campo obrigatório na leitura | `omie_descrever_operacao`, corrigir e repetir uma vez |
-| erro ao gravar | mostrar a mensagem da Omie e parar; corrigido o dado, voltar ao passo 2 do gate (mostrar de novo e pedir nova frase) — nunca reenviar sozinho |
+| erro ao gravar | mostrar a mensagem da Omie e parar; conferir com a operação de consulta se o documento foi gravado mesmo assim; corrigido o dado, voltar ao passo 2 do gate (mostrar de novo e pedir nova frase) — nunca reenviar sozinho |
 | "Too many requests" ou HTTP 425 | parar e informar (bloqueio de cerca de 30 minutos) |
 | lista vazia | dizer o período e o filtro usados; não é erro |
 | dado que a Omie não trouxe | `nao disponivel` |

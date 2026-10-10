@@ -127,6 +127,20 @@ class TotalTests(Base):
         self.assertEqual(out["conferencia"]["soma_direta"], out["conferencia"]["soma_por_particao"])
         self.assertEqual(out["conferencia"]["particao"], "pagina")
 
+    def test_formatos_de_texto(self):
+        casos = {"1.234,50": "1234.50", "1234,56": "1234.56", "10.5": "10.5", "-7": "-7"}
+        for entrada, esperado in casos.items():
+            with self.subTest(entrada=entrada):
+                self.assertEqual(str(num.to_decimal(entrada)), esperado)
+        for ambiguo in ("1.234", "10.500", "1,2,3", "abc"):
+            with self.subTest(ambiguo=ambiguo):
+                self.assertIsNone(num.to_decimal(ambiguo))
+
+    def test_milhar_sem_centavos_nao_vira_total(self):
+        self.srv.paginas = [pagina([titulo("1.234"), titulo(10)], 2, 1)]
+        rc, out = self.totalizar()
+        self.assert_sem_agregado(rc, out, "valor_nao_numerico")
+
     def test_cinco_paginas_e_o_teto_exato(self):
         self.srv.paginas = [pagina([titulo(10)], 5, 5) for _ in range(5)]
         rc, out = self.totalizar()
@@ -166,6 +180,18 @@ class TotalTests(Base):
         rc, out = self.totalizar()
         self.assertEqual((rc, out["status"], out["total"]), (0, "ok", "0"))
         self.assertEqual((out["conferencia"]["lidos"], out["conferencia"]["informados"]), (0, 0))
+
+    def test_lista_vazia_fora_da_pagina_1_nao_vira_zero(self):
+        self.srv.erro = (500, {"faultstring": "ERROR: Não existem registros para a página [5]!"})
+        param = dict(self.PARAM, nPagina=5)
+        with self.assertRaises(num.ApiError):
+            num.totalizar(self.cliente, self.catalogo, self.SERVICO, self.METODO, param, "resumo.nValAberto")
+
+    def test_teto_por_pagina_sem_chave_de_pagina(self):
+        self.srv.paginas = [pagina([titulo(1)], 1, 1)]
+        param = {"nRegPorPagina": 500, "cStatus": "ATRASADO"}
+        num.totalizar(self.cliente, self.catalogo, self.SERVICO, self.METODO, param, "resumo.nValAberto")
+        self.assertEqual(self.srv.chamadas[0]["param"][0]["nRegPorPagina"], 100)
 
     def test_sem_contagem_informada(self):
         self.srv.paginas = [{"titulosEncontrados": [titulo(1)]}]

@@ -232,6 +232,9 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
             erros.append("CONFERENCIA_LITERAL_AUSENTE")
         if MESMA_EMPRESA not in skill or "omie_num.py\" empresa" not in skill:
             erros.append("CONFERIDOR_SEM_CONFERENCIA_DE_EMPRESA")
+        if ("geral/empresas", "ListarEmpresas") not in declaradas:
+            # O `omie_num.py empresa` lê essa operação: o manifest declara tudo o que a skill executa.
+            erros.append("CONFERIDOR_SEM_OPERACAO_DE_EMPRESA")
         reqs = manifest.get("requisitos", [])
         if "conector MCP Omie" not in reqs or not any("Python" in r for r in reqs):
             erros.append("REQUISITOS_INCOMPLETOS")

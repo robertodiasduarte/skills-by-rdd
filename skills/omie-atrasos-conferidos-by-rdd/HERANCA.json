@@ -6,7 +6,7 @@
       "modo": "copia",
       "origem": "skills/skill-builder-omie-by-rdd/assets/omie/omie_num.py",
       "origem_versao": "1.0.0",
-      "sha256": "0712cef3-8a4b8b61-b70ed63d-d1be47c8-f39c062f-d2768e20-7c6b6eae-03072ac6"
+      "sha256": "54058f0f-3a1321d5-912850f9-ae501690-5428831c-9180b92b-437c3a97-b4f61dea"
     },
     {
       "arquivo": "scripts/catalogo_leitura.json",
@@ -20,7 +20,7 @@
       "modo": "copia",
       "origem": "skills/skill-builder-omie-by-rdd/assets/omie/test_omie_num.py",
       "origem_versao": "1.0.0",
-      "sha256": "a58373d7-d8298712-9a7b19fe-6db20086-b05f3c1f-6593225e-6c6166c0-a46e2238"
+      "sha256": "06c44389-c9cb395b-cebdc0c9-217cbc4e-8c0f357e-22e949a4-a0b3852b-291a8d9e"
     },
     {
       "arquivo": "assets/env.exemplo.txt",
