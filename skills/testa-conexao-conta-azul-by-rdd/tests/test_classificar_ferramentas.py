@@ -67,6 +67,10 @@ CASOS = [
     ("listar_clientes_ativos", "", "leitura", "ativo é adjetivo"),
     ("buscar_conciliacoes", "", "leitura", "conciliação é substantivo"),
     ("consultar_valor_liquido", "", "leitura", "líquido é adjetivo"),
+    # Review pós-build rodada 1 (kimi): 3ª pessoa de verbos exatos
+    ("listar_vendas", "Lista e fatura as vendas", "escrita", "fatura = 3ª pessoa de faturar"),
+    ("get_invoice", "Gets the invoice and patches its status", "escrita", "patches"),
+    ("listar_faturas", "", "leitura", "faturas (plural) é substantivo"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -88,9 +92,12 @@ class TestClassificador(unittest.TestCase):
 
     def test_cli_entrada_invalida(self):
         script = RAIZ / "scripts" / "classificar_ferramentas.py"
-        r = subprocess.run([sys.executable, "-I", "-B", str(script)], input='{"nome": "x"}', capture_output=True, text=True)
-        self.assertEqual(r.returncode, 2)
-        self.assertIn("erro", json.loads(r.stdout))
+        for entrada in ('{"nome": "x"}', '[{"nome": "x", "descricao": 123}]', '[{"nome": 1}]'):
+            with self.subTest(entrada=entrada):
+                r = subprocess.run([sys.executable, "-I", "-B", str(script)], input=entrada, capture_output=True, text=True)
+                self.assertEqual(r.returncode, 2)
+                self.assertIn("erro", json.loads(r.stdout))
+                self.assertNotIn("Traceback", r.stderr)
 
     def test_paridade_com_a_tabela_em_prosa(self):
         """CLASSIFICACAO_FERRAMENTAS.md é o que o modelo segue quando não pode rodar o script: tem de ser igual."""

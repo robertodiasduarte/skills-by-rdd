@@ -40,12 +40,12 @@ EXATOS_ESCRITA = (
     "pagar", "paga", "pague", "pagou",
     "registrar", "registra", "registre", "registrou",
     "lancar", "lanca", "lance", "lancou",
-    "faturar", "fature", "faturou",
+    "faturar", "fatura", "fature", "faturou",
     "arquivar", "arquiva", "arquive", "arquivou",
     "liquidar", "liquide", "liquidou",
     "conciliar", "concilia", "concilie", "conciliou",
     "ativar", "ative", "ativou", "inativar", "inative", "desativar", "desative",
-    "add", "adds", "set", "sets", "put", "puts", "post", "posts", "patch", "send", "sends",
+    "add", "adds", "set", "sets", "put", "puts", "post", "posts", "patch", "patches", "send", "sends",
     "pay", "pays", "issue", "issues", "mark", "marks", "void", "voids", "block", "blocks", "release", "releases",
 )
 RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch", "read")
@@ -109,8 +109,10 @@ def classificar(nome, descricao=""):
 def main():
     try:
         itens = json.load(sys.stdin)
-        if not isinstance(itens, list) or not all(isinstance(i, dict) and isinstance(i.get("nome"), str) for i in itens):
-            raise ValueError("esperada uma lista de objetos com 'nome'")
+        if not isinstance(itens, list) or not all(
+                isinstance(i, dict) and isinstance(i.get("nome"), str)
+                and (i.get("descricao") is None or isinstance(i.get("descricao"), str)) for i in itens):
+            raise ValueError("esperada uma lista de objetos com 'nome' (texto) e 'descricao' (texto, opcional)")
     except (ValueError, json.JSONDecodeError) as e:
         print(json.dumps({"erro": f"entrada inválida: {e}"}, ensure_ascii=False))
         return 2

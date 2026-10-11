@@ -134,6 +134,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "lance",
     "lancou",
     "faturar",
+    "fatura",
     "fature",
     "faturou",
     "arquivar",
@@ -163,6 +164,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "post",
     "posts",
     "patch",
+    "patches",
     "send",
     "sends",
     "pay",
@@ -251,6 +253,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 - Ferramenta de leitura com palavra de escrita na descrição (“Lista notas por data de **emissão**”) sai
   como escrita e não é testada. É o lado seguro: perde-se cobertura, nunca se escreve no ERP.
 - Nome sem nenhum verbo conhecido (`conta_azul_status`) sai indeterminado, mesmo que só leia.
+- `fatura` sozinho conta como verbo ("Lista e **fatura** as vendas"): "a fatura do cliente" também sai escrita. Lado seguro.
 - "e" também é conjunção: em "notas emitidas **e** canceladas", `canceladas` conta como escrita. Lado seguro.
 - Nenhuma lista de palavras é completa. Um verbo de escrita que não está nas listas, num nome que também tem
   verbo de leitura, sai como leitura. Por isso a bateria pede **1 registro** e nenhum parâmetro de criação, e o
