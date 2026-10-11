@@ -32,7 +32,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, Inexact, InvalidOperation, localcontext
 from pathlib import Path
 
 CATALOG_PATH = Path(__file__).resolve().parent / "catalogo_leitura.json"
@@ -115,15 +115,14 @@ def parse_env_file(path: Path) -> dict:
 
 
 def find_env_file(start: Path | None = None) -> Path | None:
+    """Só o .env da pasta do projeto (ou o de OMIE_ENV_FILE). Subir pelas pastas-pai poderia carregar a chave de
+    outra empresa sem ninguém perceber (achado A2 da rodada 5)."""
     explicit = os.environ.get("OMIE_ENV_FILE")
     if explicit:
         p = Path(explicit).expanduser()
         return p if p.is_file() else None
-    cur = (start or Path.cwd()).resolve()
-    for d in [cur, *cur.parents]:
-        if (d / ".env").is_file():
-            return d / ".env"
-    return None
+    cand = (start or Path.cwd()).resolve() / ".env"
+    return cand if cand.is_file() else None
 
 
 def load_credentials() -> tuple[str, str]:
@@ -347,6 +346,18 @@ def totalizar(client: Client, catalog: dict, servico: str, metodo: str, param: d
     if len(registros) != informados:
         return divergente("contagem")
 
+    # Precisão alta e arredondamento proibido: os dois caminhos não podem concordar num total já arredondado
+    # (achado R1 da rodada 5). Qualquer perda de dígito vira divergência.
+    with localcontext() as ctx:
+        ctx.prec = 200
+        ctx.traps[Inexact] = True
+        try:
+            return _somar(conf, mem, registros, valores, paginas, agrupar, divergente)
+        except Inexact:
+            return divergente("precisao")
+
+
+def _somar(conf, mem, registros, valores, paginas, agrupar, divergente):
     soma_direta = sum(valores, Decimal("0"))
     grupos: dict[str, Decimal] = {}
     if agrupar:

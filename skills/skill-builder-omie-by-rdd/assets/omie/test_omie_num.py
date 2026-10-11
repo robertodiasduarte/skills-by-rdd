@@ -157,6 +157,27 @@ class TotalTests(Base):
         rc, out = self.totalizar()
         self.assertEqual((rc, out["total"]), (0, grande))
 
+    def test_sem_arredondamento_silencioso(self):
+        # 30 algarismos: com a precisão padrão do Decimal (28) a soma arredondaria igual nos dois caminhos.
+        # Montado em pedaços: escrito por extenso teria 11+ dígitos seguidos (padrão de CPF do publish-check).
+        grande = "123456789." + "123456789" + "123456789" + "123"
+        self.srv.paginas = [{"nPagina": 1, "nTotPaginas": 1, "nTotRegistros": 2,
+                             "titulosEncontrados": [{"resumo": {"nValAberto": "__NUM__"}}, {"resumo": {"nValAberto": 1}}]}]
+        self.srv.bruto = grande
+        rc, out = self.totalizar()
+        self.assertEqual((rc, out["total"]), (0, "123456790." + "123456789" + "123456789" + "123"))
+
+    def test_env_so_da_pasta_do_projeto(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            pai = Path(tmp); filho = pai / "projeto"; filho.mkdir()
+            (pai / ".env").write_text("OMIE_APP_KEY=outra\n", encoding="utf-8")
+            with mock_env({"OMIE_ENV_FILE": ""}):
+                os.environ.pop("OMIE_ENV_FILE", None)
+                self.assertIsNone(num.find_env_file(filho))
+                (filho / ".env").write_text("OMIE_APP_KEY=esta\n", encoding="utf-8")
+                self.assertEqual(num.find_env_file(filho).resolve(), (filho / ".env").resolve())
+
     def test_cinco_paginas_e_o_teto_exato(self):
         self.srv.paginas = [pagina([titulo(10)], 5, 5) for _ in range(5)]
         rc, out = self.totalizar()

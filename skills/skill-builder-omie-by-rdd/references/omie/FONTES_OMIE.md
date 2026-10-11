@@ -25,6 +25,8 @@ Mudou:
 - total só sai quando a API informou a contagem, os registros lidos batem com ela, nada foi truncado, todo valor do
   campo somado é numérico e a soma direta bate com a soma por grupo (ou por página). Qualquer falha ⇒
   `status: divergente`, exit 2, sem nenhum valor agregado na saída;
+- o `.env` é lido só da pasta do projeto (ou de `OMIE_ENV_FILE`), nunca das pastas-pai;
+- a soma roda com precisão de 200 algarismos e arredondamento proibido (perda de dígito ⇒ divergência);
 - a resposta da API é lida com `parse_float=Decimal`: nenhum valor passa por `float` antes da soma;
 - número em texto: vírgula decimal brasileira é aceita ("1.234,50", "1234,56"); "1.234" sem vírgula é ambíguo e reprova;
 - valor não numérico, ausente, infinito ou NaN não é mais "ignorado e contado": reprova o total;
