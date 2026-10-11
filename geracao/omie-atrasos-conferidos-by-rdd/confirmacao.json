@@ -1,0 +1,9 @@
+{
+  "origem": "usuario",
+  "escopo_id": "OMIE-ATR",
+  "revisao": 2,
+  "sha256_escopo": "5b6deec5dd9e24fae7d14a089a0c3ed689bb92f4070ff8519785fcd275e054f4",
+  "texto": "CONFIRMO O ESCOPO OMIE-ATR V2 E AUTORIZO GERAR A SKILL.",
+  "apos_apresentacao": true,
+  "mensagem_id": "claude-code AskUserQuestion 2026-10-10 sessao gerador-skills-omie (resposta do Roberto, V2)"
+}

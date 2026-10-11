@@ -144,6 +144,18 @@
       ]
     },
     {
+      "id": "neg-omie-mcp-vai-para-filha",
+      "tipo": "negativo",
+      "entradas": [
+        "Quero uma skill que liste os títulos atrasados do Omie pelo conector MCP e tire pedido de venda."
+      ],
+      "esperado": "Dizer que skill que opera o Omie pelo MCP é da skill-builder-omie-by-rdd e não iniciar a entrevista aqui.",
+      "proibido": [
+        "Conduzir o brainstorm de uma skill Omie",
+        "Gerar instruções de chamada ao omie_executar"
+      ]
+    },
+    {
       "id": "pos-confirmacao-correta",
       "tipo": "positivo",
       "entradas": [

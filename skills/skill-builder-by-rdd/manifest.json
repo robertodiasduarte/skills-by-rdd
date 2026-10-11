@@ -1,7 +1,7 @@
 {
   "name": "skill-builder-by-rdd",
-  "version": "1.1.1",
-  "date": "2026-09-20",
+  "version": "1.1.2",
+  "date": "2026-10-10",
   "kind": "meta-skill",
   "perfil": "C",
   "funcao": "Criar skills profissionais mediante brainstorm e escopo confirmado",
@@ -41,7 +41,7 @@
       "skipped": 0
     },
     "behavioral_cases": {
-      "written": 14,
+      "written": 15,
       "executed_across_models": 0
     },
     "scope_gate": "consistency_only; identity and authentic capture require host",

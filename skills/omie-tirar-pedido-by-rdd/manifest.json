@@ -1,0 +1,54 @@
+{
+  "name": "omie-tirar-pedido-by-rdd",
+  "version": "1.0.0",
+  "date": "2026-10-10",
+  "perfil_omie": "operador",
+  "perfil_efetivo": "C",
+  "gerada_por": {
+    "name": "skill-builder-omie-by-rdd",
+    "version": "1.0.0"
+  },
+  "escopo": {
+    "id": "OMIE-PED",
+    "revisao": 2,
+    "confirmado_em": "2026-10-10"
+  },
+  "operacoes": [
+    {
+      "call": "geral/clientes",
+      "op": "ListarClientes"
+    },
+    {
+      "call": "estoque/resumo",
+      "op": "ObterEstoqueProduto"
+    },
+    {
+      "call": "geral/parcelas",
+      "op": "ListarParcelas"
+    },
+    {
+      "call": "produtos/pedido",
+      "op": "IncluirPedido"
+    },
+    {
+      "call": "produtos/pedido",
+      "op": "ConsultarPedido"
+    }
+  ],
+  "requisitos": [
+    "conector MCP Omie",
+    "omie_executar em 'pedir aprovação' no conector (recomendado)"
+  ],
+  "coverage": {
+    "consulta": "dados ao vivo",
+    "calculo": "nao aplicavel"
+  },
+  "pending": [
+    "nao_exercida_contra_omie",
+    "A inclusão (escrita) nunca é exercida pela meta-skill: só as leituras são testadas.",
+    "Cenários de evals/cases.json escritos, não executados em modelos."
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}

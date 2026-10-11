@@ -1,0 +1,63 @@
+{
+  "name": "skill-builder-omie-by-rdd",
+  "version": "1.0.0",
+  "date": "2026-10-10",
+  "kind": "meta-skill",
+  "parent": {
+    "name": "skill-builder-by-rdd",
+    "version": "1.1.2",
+    "heranca": "HERANCA.json"
+  },
+  "perfil": "C",
+  "funcao": "Criar skills que consultam e operam o ERP Omie pelo conector MCP oficial, mediante escopo confirmado",
+  "areas": [
+    "contabil"
+  ],
+  "coverage": {
+    "consulta_normativa": "nao aplicavel",
+    "calculo_profissional": "nao aplicavel",
+    "soma_aritmetica": "por script com conferencia (perfil Conferidor)"
+  },
+  "modes": [
+    "controle_conversacional",
+    "integrado_mcp_omie",
+    "execucao_local"
+  ],
+  "runtime": {
+    "python": "3.10+",
+    "third_party_dependencies": [],
+    "network_required": "so para o teste ao vivo e o omie_num.py (app.omie.com.br)"
+  },
+  "requisitos": [
+    "conector MCP Omie (https://api.omie.com.br/mcp)",
+    "Python 3.10+ com rede so para o perfil Conferidor"
+  ],
+  "corte_base_omie": "2026-10-10",
+  "corte_catalogo_leitura": "2026-10-04",
+  "audit": {
+    "unit_tests": {
+      "executed": 128,
+      "passed": 127,
+      "failed": 0,
+      "skipped": 1
+    },
+    "behavioral_cases": {
+      "written": 12,
+      "executed_across_models": 0
+    },
+    "scope_gate": "herdado; consistencia apenas, identidade depende do host",
+    "lint": "lint_bundle.py herdado + lint_bundle_omie.py (dominio)"
+  },
+  "pending": [
+    "Comportamento da entrevista ainda nao avaliado em modelos (cenarios escritos, nao executados).",
+    "Teste ao vivo depende do conector do usuario; a meta-skill nunca exerce escrita.",
+    "O lint prova a presenca do protocolo de escrita no texto, nao que o modelo do usuario o siga.",
+    "'Pedir aprovacao' no conector e declaracao do usuario, nao verificacao.",
+    "ChatGPT e Gemini nao testados.",
+    "geral/auditoria e operacoes posteriores a 04/10/2026 ficam fora ate o catalogo ser atualizado.",
+    "Faturar e inutilizar fora desta versao."
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}
