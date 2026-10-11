@@ -95,7 +95,7 @@ CASOS = [
     ("GetOrUpdateHTTPStatus", "", "escrita", "PascalCase + sigla: update"),
     ("obter_cliente", "O cliente é, quando necessário, atualizado", "escrita", "auxiliar longe do particípio"),
     ("obter_cliente", "The customer is, when needed, updated", "escrita", "auxiliar longe do particípio (EN)"),
-    ("listar_notas", "Lista as notas emitidas e canceladas no período", "leitura", "'e' é conjunção, não auxiliar"),
+    ("listar_notas", "Lista as notas emitidas e canceladas no período", "escrita", "canceladas não vem colado a substantivo (lado seguro)"),
     # Review pós-build rodada 4 (auditor): read como palavra exata e condicionais
     ("readd_customer", "", "indeterminada", "readd não é read"),
     ("readjust_prices", "", "indeterminada", "readjust não é read"),
@@ -104,6 +104,11 @@ CASOS = [
     ("get_customer", "Returns the customer; created if it doesn't exist", "escrita", "doesn't exist"),
     ("listar_clientes", "Lista clientes; cliente cadastrado quando necessário", "escrita", "quando necessário"),
     ("listar_notas", "Lista as notas emitidas", "leitura", "sem condição: particípio segue adjetivo"),
+    # Review pós-build rodada 5 (auditor): isenção de particípio vira lista de permissão
+    ("listar_clientes", "Lista clientes; cliente criado quando não encontrado", "escrita", "palavra de condição"),
+    ("obter_cliente_existente", "Devolve o cliente; cliente criado em caso contrário", "escrita", "condição no nome + descrição juntos"),
+    ("listar_clientes", "Lista os clientes cadastrados", "leitura", "cadastrados colado a clientes"),
+    ("listar_registros", "Lista registros já atualizados pelo sistema", "escrita", "atualizados não colado a substantivo"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -166,6 +171,8 @@ class TestClassificador(unittest.TestCase):
             "CONJUNCOES_NO_NOME": list(cf.CONJUNCOES_NO_NOME),
             "ANTES_DE_NOME_DE_CONTA": list(cf.ANTES_DE_NOME_DE_CONTA),
             "RADICAIS_CONDICIONAIS": list(cf.RADICAIS_CONDICIONAIS),
+            "PALAVRAS_DE_CONDICAO": list(cf.PALAVRAS_DE_CONDICAO),
+            "SUBSTANTIVOS_DO_DOMINIO": list(cf.SUBSTANTIVOS_DO_DOMINIO),
         })
 
     def test_regra_fail_closed_identica(self):

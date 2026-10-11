@@ -30,12 +30,15 @@ Leia o **nome** e a **descrição** separadamente (cada um tem as suas palavras)
 | 5 | nada casou | **indeterminada** |
 
 Duas exceções na regra 1, porque não são verbo:
-- **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita.
-  Palavra da lista de termos **exatos** de escrita nunca é tratada como particípio (`liquida` termina em -ida, mas é verbo).
-  Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; o texto tem um auxiliar em **qualquer** lugar
-  (`é criado`, `é, quando necessário, atualizado`, `is created` — voz passiva; `e` sem acento é conjunção e não conta); ou o texto fala em criar sob condição
-  (qualquer palavra que comece com `exist`, `inexist` ou `necessar` — `se não existir`, `caso inexistente`, `doesn't exist`, `quando necessário` — ou `automaticamente`, `if missing`, `needed`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
-  que é upsert). Auxiliares, marcadores e conjunções estão nas listas abaixo.
+- **Particípio** (`criado`, `emitidas`, `atualizados`) **conta como escrita**. Só é isento (adjetivo) quando TUDO vale:
+  1. vem **colado depois de um substantivo do domínio** (`notas emitidas`, `pagamentos realizados`, `clientes cadastrados`
+     — lista `SUBSTANTIVOS_DO_DOMINIO` abaixo);
+  2. não é a 1ª palavra do nome;
+  3. nome e descrição **juntos** não têm auxiliar (`é`, `são`, `foi`, `is`…) nem palavra de condição (`se`, `caso`,
+     `quando`, `if`, `when`…), nem palavra que comece com `exist`, `inexist` ou `necessar`, nem `automaticamente`,
+     `if missing`, `needed`;
+  4. não está a até 2 palavras de `ou`/`or` (`criado ou atualizado` é upsert).
+  Palavra da lista de termos **exatos** de escrita nunca é isenta (`liquida` termina em -ida, mas é verbo).
 - `pagar` e `receber` logo depois de `a` são nome de conta **só** quando antes vem `conta(s)`, `título(s)`,
   `valor(es)`, `lançamento(s)`, `parcela(s)`, `saldo(s)` ou `total(is)` (`contas a pagar`). `começa a pagar` é verbo.
 
@@ -341,6 +344,59 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "exist",
     "inexist",
     "necessar"
+  ],
+  "PALAVRAS_DE_CONDICAO": [
+    "se",
+    "caso",
+    "quando",
+    "senao",
+    "contrario",
+    "if",
+    "when",
+    "unless",
+    "otherwise"
+  ],
+  "SUBSTANTIVOS_DO_DOMINIO": [
+    "nota",
+    "notas",
+    "titulo",
+    "titulos",
+    "conta",
+    "contas",
+    "venda",
+    "vendas",
+    "pedido",
+    "pedidos",
+    "cliente",
+    "clientes",
+    "fornecedor",
+    "fornecedores",
+    "lancamento",
+    "lancamentos",
+    "pagamento",
+    "pagamentos",
+    "recebimento",
+    "recebimentos",
+    "parcela",
+    "parcelas",
+    "boleto",
+    "boletos",
+    "cobranca",
+    "cobrancas",
+    "fatura",
+    "faturas",
+    "produto",
+    "produtos",
+    "servico",
+    "servicos",
+    "contrato",
+    "contratos",
+    "documento",
+    "documentos",
+    "registro",
+    "registros",
+    "orcamento",
+    "orcamentos"
   ],
   "CONJUNCOES_ALTERNATIVA": [
     "ou",
