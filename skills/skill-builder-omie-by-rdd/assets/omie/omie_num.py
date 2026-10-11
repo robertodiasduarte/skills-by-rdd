@@ -50,6 +50,7 @@ RETRY_WAITS = (2, 4, 8)
 # A Omie responde listagem vazia como erro ("Nao existem registros para a pagina [1]!"): ausência é resposta.
 SEM_REGISTROS = re.compile(r"n[aã]o existem registros", re.I)
 MAX_CONSECUTIVE_ERRORS = 5
+CHAVES_SECRETAS = {"app_key", "app_secret", "omie_app_key", "omie_app_secret"}
 NOTA = "Soma aritmetica dos valores retornados pela Omie; nao e analise contabil, tributaria ou financeira."
 
 
@@ -314,7 +315,9 @@ def totalizar(client: Client, catalog: dict, servico: str, metodo: str, param: d
     mem = {
         "endpoint": base_url() + s + "/",
         "metodo": metodo,
-        "param": {k: v for k, v in param.items() if not (keys and k == keys[0])},
+        # Sem paginação e sem nenhuma chave de credencial, mesmo que tenha vindo no --param (achado R1 da rodada 6).
+        "param": {k: v for k, v in param.items()
+                  if not (keys and k == keys[0]) and k.lower() not in CHAVES_SECRETAS},
         "paginas_lidas": len(paginas),
         "campo_registros": rec_key,
         "campo_somado": soma,
@@ -444,7 +447,7 @@ def main(argv=None) -> int:
         secrets = (key, secret)
         rc, out = totalizar(Client(key, secret), catalog, args.servico, args.metodo, param,
                             args.soma, args.agrupar)
-        print(json.dumps(out, ensure_ascii=False, indent=2, default=str))
+        print(redact(json.dumps(out, ensure_ascii=False, indent=2, default=str), secrets))
         return rc
     except PolicyError as e:
         print(json.dumps({"bloqueado": str(e)}, ensure_ascii=False))

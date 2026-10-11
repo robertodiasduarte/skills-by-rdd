@@ -271,6 +271,16 @@ class EmpresaELimiteTests(Base):
         self.assertEqual(len(self.srv.chamadas), 1)
 
 
+class MemoriaTests(Base):
+    def test_memoria_nao_repete_credencial(self):
+        self.srv.paginas = [pagina([titulo(1)], 1, 1)]
+        param = dict(self.PARAM, app_key=CHAVE, app_secret=SEGREDO)
+        rc, out = num.totalizar(self.cliente, self.catalogo, self.SERVICO, self.METODO, param, "resumo.nValAberto")
+        self.assertEqual(rc, 0)
+        self.assertNotIn("app_key", out["memoria"]["param"])
+        self.assertNotIn(CHAVE, json.dumps(out, default=str))
+
+
 class PoliticaTests(unittest.TestCase):
     def setUp(self):
         self.catalogo = num.load_catalog()
