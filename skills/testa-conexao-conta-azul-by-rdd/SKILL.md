@@ -131,7 +131,7 @@ Só biblioteca padrão do Python 3; não acessa rede nem arquivos além do stdin
 ## Inventário do bundle
 
 - [references/COMO_FUNCIONA.md](references/COMO_FUNCIONA.md) — explicação em uma página para o contador.
-- [references/ESCOPO_CONFIRMADO.md](references/ESCOPO_CONFIRMADO.md) e [references/CONFIRMACAO.md](references/CONFIRMACAO.md) — escopo CA001 V1 e o registro da confirmação.
+- [references/ESCOPO_CONFIRMADO.md](references/ESCOPO_CONFIRMADO.md) e [references/CONFIRMACAO.md](references/CONFIRMACAO.md) — escopo CA001 V2 (vigente) e o registro da confirmação.
 - [references/RUNTIME_COMPATIBILITY.md](references/RUNTIME_COMPATIBILITY.md) — capacidades necessárias e onde roda.
 - [references/PRE_REQUISITOS.md](references/PRE_REQUISITOS.md), [references/BATERIA_TESTE.md](references/BATERIA_TESTE.md),
   [references/CLASSIFICACAO_FERRAMENTAS.md](references/CLASSIFICACAO_FERRAMENTAS.md), [references/CATALOGO_ERROS.md](references/CATALOGO_ERROS.md),
