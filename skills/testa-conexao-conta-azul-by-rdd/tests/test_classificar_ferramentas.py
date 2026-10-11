@@ -109,6 +109,10 @@ CASOS = [
     ("obter_cliente_existente", "Devolve o cliente; cliente criado em caso contrário", "escrita", "condição no nome + descrição juntos"),
     ("listar_clientes", "Lista os clientes cadastrados", "leitura", "cadastrados colado a clientes"),
     ("listar_registros", "Lista registros já atualizados pelo sistema", "escrita", "atualizados não colado a substantivo"),
+    # Review pós-build rodada 6 (codex): substantivo e particípio em trechos diferentes
+    ("listar_clientes", "Lista clientes. Criado um cliente de teste a cada chamada.", "escrita", "ponto separa"),
+    ("listar_notas", "Lista as notas, emitidas na hora", "escrita", "vírgula separa"),
+    ("listar_notas", "Lista as notas emitidas.", "leitura", "mesmo trecho"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]

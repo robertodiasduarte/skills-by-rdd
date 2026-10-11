@@ -115,6 +115,18 @@ def tokens(texto):
     return re.findall(r"[a-z0-9]+", s)
 
 
+def tokens_e_fronteiras(texto):
+    """Tokens e, para cada um, se ele abre um trecho novo (depois de . ; : ! ? , parênteses ou quebra de linha).
+    A isenção de particípio exige o substantivo no MESMO trecho (review rodada 6, codex: "Lista clientes.
+    Criado um cliente…" colava `clientes` + `criado` ao descartar o ponto)."""
+    toks, fronteiras = [], []
+    for trecho in re.split(r"[.;:!?,()\[\]\n]+", texto or ""):
+        for k, t in enumerate(tokens(trecho)):
+            toks.append(t)
+            fronteiras.append(k == 0)
+    return toks, fronteiras
+
+
 def _escrita(tok):
     return tok in EXATOS_ESCRITA or any(tok.startswith(r) for r in RADICAIS_ESCRITA)
 
@@ -128,14 +140,14 @@ def _condicional(toks):
                for t in toks)
 
 
-def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional):
+def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional, fronteiras):
     tok = toks[i]
     vizinhos = toks[max(0, i - 2):i] + toks[i + 1:i + 3]
     # Auxiliar em qualquer posição do texto = voz passiva (review rodadas 2 e 4, codex): sem janela de distância.
     # Forma EXATA da lista é verbo por definição: nunca isentar como particípio ("liquida" termina em -ida;
     # review rodada 3, codex).
     if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and tok.endswith(SUFIXOS_PARTICIPIO)
-            and i > 0 and toks[i - 1] in SUBSTANTIVOS_DO_DOMINIO
+            and i > 0 and not fronteiras[i] and toks[i - 1] in SUBSTANTIVOS_DO_DOMINIO
             and not tem_auxiliar and not condicional
             and not any(v in CONJUNCOES_ALTERNATIVA for v in vizinhos)):
         return False
@@ -145,13 +157,13 @@ def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional):
 
 
 def classificar(nome, descricao=""):
-    tn, td = tokens(nome), tokens(descricao)
+    (tn, fn), (td, fd) = tokens_e_fronteiras(nome), tokens_e_fronteiras(descricao)
     # Auxiliar e condição valem para nome e descrição JUNTOS (review rodada 5, A2: paridade com a prosa).
     aux = _tem_auxiliar(f"{nome} {descricao}")
     cond = _condicional(tn + td)
-    for toks, eh_nome in ((tn, True), (td, False)):
+    for toks, fr, eh_nome in ((tn, fn, True), (td, fd, False)):
         for i, tok in enumerate(toks):
-            if _escrita(tok) and _conta_como_verbo(toks, i, eh_nome and i == 0, aux, cond):
+            if _escrita(tok) and _conta_como_verbo(toks, i, eh_nome and i == 0, aux, cond, fr):
                 return "escrita", f"termo de escrita: {tok}"
     for tok in tn + td:
         if tok.startswith(RADICAL_INDETERMINADO):
