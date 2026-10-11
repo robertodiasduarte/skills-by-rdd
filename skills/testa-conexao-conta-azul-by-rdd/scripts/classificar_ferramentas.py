@@ -65,6 +65,14 @@ EXATOS_ESCRITA = (
     "drop", "drops", "clear", "clears", "reset", "resets", "move", "moves", "apply", "applies", "close", "closes",
     "run", "runs", "complete", "completes", "finalize", "finalizes", "charge", "charges",
 )
+# Particípio dos verbos que só existem como forma exata (review rodada 9, auditor A1): "boleto gerado", "bills are
+# paid". PT: derivado de cada infinitivo -ar da lista; EN: lista explícita (irregulares não se derivam).
+PARTICIPIOS_EN = (
+    "issued", "marked", "paid", "sent", "booked", "signed", "charged", "closed", "moved", "applied", "dropped",
+    "cleared", "ran", "added", "posted", "patched", "saved", "stored", "pushed", "voided", "blocked", "released",
+    "completed", "finalized",
+)
+PARTICIPIOS_IRREGULARES_PT = ("pago", "pagos", "pagas")
 RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch")
 # "read" é exato: como radical casava "readd" (re-add) e "readjust" (review rodada 4, auditor).
 EXATOS_LEITURA = ("get", "find", "ver", "show", "view", "read", "reads")
@@ -137,8 +145,14 @@ def tokens_e_fronteiras(texto):
     return toks, fronteiras
 
 
+PARTICIPIOS_DE_EXATOS = frozenset(
+    [v[:-2] + suf for v in EXATOS_ESCRITA if v.endswith("ar") and len(v) > 3 for suf in ("ado", "ada", "ados", "adas")]
+    + list(PARTICIPIOS_IRREGULARES_PT) + list(PARTICIPIOS_EN)
+)
+
+
 def _escrita(tok):
-    return tok in EXATOS_ESCRITA or any(tok.startswith(r) for r in RADICAIS_ESCRITA)
+    return tok in EXATOS_ESCRITA or tok in PARTICIPIOS_DE_EXATOS or any(tok.startswith(r) for r in RADICAIS_ESCRITA)
 
 
 def _leitura(tok):

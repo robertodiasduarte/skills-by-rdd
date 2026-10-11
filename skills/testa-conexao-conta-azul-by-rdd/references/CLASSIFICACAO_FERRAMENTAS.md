@@ -19,6 +19,9 @@ Leia o **nome** e a **descrição** separadamente (cada um tem as suas palavras)
 4. Compare **palavra a palavra**, nunca um pedaço do meio: `ver` não casa `reverter`, `get` não casa `forget`.
    - **Radical** casa o começo da palavra: `atualiz` casa `atualiza`, `atualizar`, `atualizacao`.
    - **Exato** casa só a palavra inteira: `gera` casa `gera`, mas não `geral`.
+   - O **particípio de um verbo exato** também é termo de escrita: de cada verbo exato terminado em `-ar` saem
+     `-ado`, `-ada`, `-ados`, `-adas` (`gerar` → `gerado`, `geradas`); mais `pago(s)`/`pagas` e os da lista `PARTICIPIOS_EN`
+     (`issued`, `paid`, `sent`…). Ele segue a mesma regra de isenção dos outros particípios.
 
 ## As regras, nesta ordem (a primeira que casar decide)
 
@@ -467,6 +470,37 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "saldos",
     "total",
     "totais"
+  ],
+  "PARTICIPIOS_EN": [
+    "issued",
+    "marked",
+    "paid",
+    "sent",
+    "booked",
+    "signed",
+    "charged",
+    "closed",
+    "moved",
+    "applied",
+    "dropped",
+    "cleared",
+    "ran",
+    "added",
+    "posted",
+    "patched",
+    "saved",
+    "stored",
+    "pushed",
+    "voided",
+    "blocked",
+    "released",
+    "completed",
+    "finalized"
+  ],
+  "PARTICIPIOS_IRREGULARES_PT": [
+    "pago",
+    "pagos",
+    "pagas"
   ]
 }
 ```

@@ -145,6 +145,13 @@ CASOS = [
     ("listar_clientes", "Lista os clientes e repassa um novo se não existir", "escrita", "avaliador ciclo 1: repassa"),
     ("listar_clientes", "Lista os clientes e compensa um novo se não existir", "escrita", "avaliador ciclo 1: compensa"),
     ("listar_clientes", "Devolve os clientes ativos", "leitura", "devolve = retorna (leitura), fica de fora de propósito"),
+    # Review pós-build rodada 9 (auditor A1): particípio de verbo só-exato
+    ("listar_boletos", "Lista os boletos; boleto gerado se não houver.", "escrita", "gerado + condição"),
+    ("list_bills", "Lists bills; overdue bills are paid automatically", "escrita", "paid + auxiliar"),
+    ("get_invoice", "Returns the invoice; one is issued if none exists", "escrita", "issued + auxiliar"),
+    ("listar_titulos", "Lista os títulos; título lançado na hora", "escrita", "lançado no singular"),
+    ("listar_boletos", "Lista os boletos gerados", "leitura", "plural colado a substantivo: adjetivo"),
+    ("listar_titulos", "Lista os títulos pagos", "leitura", "pagos colado a títulos: adjetivo"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -232,6 +239,8 @@ class TestClassificador(unittest.TestCase):
             "CONJUNCOES_ALTERNATIVA": list(cf.CONJUNCOES_ALTERNATIVA),
             "CONJUNCOES_NO_NOME": list(cf.CONJUNCOES_NO_NOME),
             "ANTES_DE_NOME_DE_CONTA": list(cf.ANTES_DE_NOME_DE_CONTA),
+            "PARTICIPIOS_EN": list(cf.PARTICIPIOS_EN),
+            "PARTICIPIOS_IRREGULARES_PT": list(cf.PARTICIPIOS_IRREGULARES_PT),
             "RADICAIS_CONDICIONAIS": list(cf.RADICAIS_CONDICIONAIS),
             "PALAVRAS_DE_CONDICAO": list(cf.PALAVRAS_DE_CONDICAO),
             "SUBSTANTIVOS_DO_DOMINIO": list(cf.SUBSTANTIVOS_DO_DOMINIO),
