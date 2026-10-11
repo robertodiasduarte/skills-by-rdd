@@ -21,7 +21,7 @@ auxiliar ("é criado", "is created" — voz passiva); a até 2 palavras de "ou"/
 ou se o texto fala em criar sob condição ("se não existir", "automaticamente", "if missing").
 Nome composto com conjunção ("listar_e_apagar", "get_or_reset") nunca é leitura: sai indeterminada se nenhum
 termo de escrita casou.
-"a pagar" e "a receber" são nome de conta ("contas a pagar"), não verbo.
+"a pagar" e "a receber" só são nome de conta logo depois de "contas", "títulos", "valores"…; "começa a pagar" é verbo.
 """
 import json
 import re
@@ -63,6 +63,9 @@ EXATOS_LEITURA = ("get", "find", "ver", "show", "view")
 RADICAL_INDETERMINADO = "baix"
 SUFIXOS_PARTICIPIO = ("ado", "ada", "ados", "adas", "ido", "ida", "idos", "idas")
 NOME_DE_CONTA = ("pagar", "receber")
+# "a pagar" só é nome de conta depois de um destes substantivos ("contas a pagar"); "começa a pagar" é verbo.
+ANTES_DE_NOME_DE_CONTA = ("conta", "contas", "titulo", "titulos", "valor", "valores", "lancamento", "lancamentos",
+                          "parcela", "parcelas", "saldo", "saldos", "total", "totais")
 # Particípio depois de auxiliar é voz passiva ("um novo cliente é criado"): verbo, não adjetivo.
 AUXILIARES = ("e", "sera", "serao", "sao", "foi", "foram", "fica", "ficam", "sendo", "ser", "seja", "sejam",
               "is", "are", "was", "were", "be", "been", "being", "gets")
@@ -99,11 +102,12 @@ def _condicional(toks):
 def _conta_como_verbo(toks, i, primeiro_do_nome):
     tok = toks[i]
     vizinhos = toks[max(0, i - 2):i] + toks[i + 1:i + 3]
+    # Auxiliar até 2 palavras antes: "é rapidamente atualizado" também é voz passiva (review rodada 2, codex).
     if (not primeiro_do_nome and tok.endswith(SUFIXOS_PARTICIPIO)
-            and not (i > 0 and toks[i - 1] in AUXILIARES) and not _condicional(toks)
+            and not any(t in AUXILIARES for t in toks[max(0, i - 2):i]) and not _condicional(toks)
             and not any(v in CONJUNCOES_ALTERNATIVA for v in vizinhos)):
         return False
-    if tok in NOME_DE_CONTA and i > 0 and toks[i - 1] == "a":
+    if tok in NOME_DE_CONTA and i > 1 and toks[i - 1] == "a" and toks[i - 2] in ANTES_DE_NOME_DE_CONTA:
         return False
     return True
 

@@ -82,6 +82,10 @@ CASOS = [
     ("get_or_frobnicate", "", "indeterminada", "nome composto com verbo desconhecido"),
     ("listar_cobrancas", "", "leitura", "cobranças é substantivo"),
     ("listar_agendamentos", "", "leitura", "agendamentos é substantivo"),
+    # Review pós-build rodada 2 (codex)
+    ("listar_titulos", "Lista os títulos e começa a pagar os vencidos", "escrita", "a pagar sem 'contas' antes é verbo"),
+    ("obter_cliente", "O cliente é rapidamente atualizado com os dados", "escrita", "advérbio entre auxiliar e particípio"),
+    ("listar_titulos_a_receber", "Lista os títulos a receber", "leitura", "títulos a receber é nome de conta"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -128,6 +132,7 @@ class TestClassificador(unittest.TestCase):
             "MARCADORES_CONDICIONAIS": list(cf.MARCADORES_CONDICIONAIS),
             "CONJUNCOES_ALTERNATIVA": list(cf.CONJUNCOES_ALTERNATIVA),
             "CONJUNCOES_NO_NOME": list(cf.CONJUNCOES_NO_NOME),
+            "ANTES_DE_NOME_DE_CONTA": list(cf.ANTES_DE_NOME_DE_CONTA),
         })
 
     def test_regra_fail_closed_identica(self):

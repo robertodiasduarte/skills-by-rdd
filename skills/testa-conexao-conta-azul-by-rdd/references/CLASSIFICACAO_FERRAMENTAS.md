@@ -25,11 +25,12 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 
 Duas exceções na regra 1, porque não são verbo:
 - **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita.
-  Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; vem logo depois de um auxiliar
+  Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; vem até 2 palavras depois de um auxiliar
   (`é criado`, `são removidos`, `is created` — voz passiva); ou o texto fala em criar sob condição
   (`se não existir`, `automaticamente`, `if missing`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
   que é upsert). Auxiliares, marcadores e conjunções estão nas listas abaixo.
-- `pagar` e `receber` logo depois de `a` são nome de conta (`contas a pagar`), não o verbo.
+- `pagar` e `receber` logo depois de `a` são nome de conta **só** quando antes vem `conta(s)`, `título(s)`,
+  `valor(es)`, `lançamento(s)`, `parcela(s)`, `saldo(s)` ou `total(is)` (`contas a pagar`). `começa a pagar` é verbo.
 
 Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 
@@ -332,6 +333,22 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "ou",
     "and",
     "or"
+  ],
+  "ANTES_DE_NOME_DE_CONTA": [
+    "conta",
+    "contas",
+    "titulo",
+    "titulos",
+    "valor",
+    "valores",
+    "lancamento",
+    "lancamentos",
+    "parcela",
+    "parcelas",
+    "saldo",
+    "saldos",
+    "total",
+    "totais"
   ]
 }
 ```
