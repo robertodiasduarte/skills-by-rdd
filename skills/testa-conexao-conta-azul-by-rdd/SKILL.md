@@ -18,10 +18,13 @@ Quando o usuário pedir "Teste minha conexão com a Conta Azul":
 
 1. Pergunte os 5 pré-requisitos numa única mensagem curta ([references/PRE_REQUISITOS.md](references/PRE_REQUISITOS.md)).
 2. Liste as ferramentas MCP da Conta Azul visíveis na sessão e classifique cada uma em leitura, escrita ou indeterminada.
-3. Chame só as de leitura, pedindo 1 registro por chamada ([references/BATERIA_TESTE.md](references/BATERIA_TESTE.md)).
-4. Entregue o relatório no modelo [assets/relatorio.template.md](assets/relatorio.template.md).
+3. Mostre a lista das ferramentas de leitura que vai chamar e espere o ok do usuário.
+4. Chame só as de leitura aprovadas, pedindo 1 registro por chamada ([references/BATERIA_TESTE.md](references/BATERIA_TESTE.md)).
+5. Entregue o relatório no modelo [assets/relatorio.template.md](assets/relatorio.template.md).
 
 REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; escrita e indeterminada nunca são chamadas, nem como teste.
+
+REGRA DE CONFIRMAÇÃO: antes da primeira chamada, mostre ao usuário a lista das ferramentas de leitura que serão chamadas (nome e descrição) e só chame depois do ok explícito dele; sem ok, nenhuma ferramenta é chamada.
 
 ## Quando usar / Quando não usar
 
@@ -61,18 +64,22 @@ Não são necessários e nunca devem ser pedidos: `client_id`, `client_secret`, 
    na mesma ordem. Em dúvida, indeterminada. `baix…` é sempre indeterminada: na Conta Azul, dar baixa é quitar.
 5. **Alerta de segurança.** Se houver escrita, diga quais ferramentas são e que elas **não** serão chamadas.
    Se houver indeterminadas, diga o mesmo.
-6. **Bateria de leitura.** Siga [references/BATERIA_TESTE.md](references/BATERIA_TESTE.md): empresa conectada,
+6. **Confirmação.** Mostre, numa mensagem, a lista das ferramentas de leitura que serão chamadas (nome e descrição,
+   na ordem da bateria) e pergunte se pode chamar. Se o usuário tirar alguma, ela não é chamada e o item fica
+   "não testado por escolha do usuário". Se ele não autorizar, entregue o relatório só com a classificação.
+7. **Bateria de leitura.** Siga [references/BATERIA_TESTE.md](references/BATERIA_TESTE.md): empresa conectada,
    depois pessoas, financeiro e vendas, 1 registro cada, só com ferramenta de leitura. Antes de cada chamada,
    confira de novo a classe da ferramenta.
-7. **Erros.** Traduza cada erro por [references/CATALOGO_ERROS.md](references/CATALOGO_ERROS.md). Erro fora do
+8. **Erros.** Traduza cada erro por [references/CATALOGO_ERROS.md](references/CATALOGO_ERROS.md). Erro fora do
    catálogo: mostre a mensagem sem valores nem identificadores e diga que não está catalogado.
-8. **Relatório.** Preencha [assets/relatorio.template.md](assets/relatorio.template.md): só o nome da empresa e
+9. **Relatório.** Preencha [assets/relatorio.template.md](assets/relatorio.template.md): só o nome da empresa e
    contagens, nunca valores, CPF ou CNPJ de terceiros ou descrição de lançamentos. Termine com como revogar.
 
 ## Validações e checklist de qualidade
 
 Antes de entregar o relatório, confira:
 - nenhuma ferramenta de escrita ou indeterminada foi chamada;
+- nenhuma ferramenta foi chamada antes do ok do usuário à lista, nem fora da lista aprovada;
 - cada chamada pediu 1 registro quando a ferramenta aceita limite;
 - o relatório não traz valor, CPF, CNPJ de terceiro, nome de cliente ou lançamento;
 - todo vermelho tem causa provável e próximo passo, pela chave do catálogo quando houver;

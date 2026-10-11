@@ -82,9 +82,9 @@ A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/s
 
 **Testa, só com leitura, se o MCP da Conta Azul instalado no seu aplicativo funciona — e diz o que fazer em cada erro.**
 
-Você pede "Teste minha conexão com a Conta Azul." no Claude Desktop ou no ChatGPT Desktop. A skill confere os pré-requisitos (empresa na Conta Azul Pro, quem autoriza, autenticador), separa cada ferramenta do MCP em leitura, escrita ou indeterminada e chama só as de leitura: a empresa conectada e um registro de pessoas, financeiro e vendas. O relatório sai verde, amarelo ou vermelho por item, com a causa provável e o próximo passo para os erros conhecidos (`invalid_grant`, 401, 429, conta Mais sem permissão, API antiga).
+Você pede "Teste minha conexão com a Conta Azul." no Claude Desktop ou no ChatGPT Desktop. A skill confere os pré-requisitos (empresa na Conta Azul Pro, quem autoriza, autenticador), separa cada ferramenta do MCP em leitura, escrita ou indeterminada mostra a lista das ferramentas de leitura que vai chamar e, com o seu ok, chama só essas: a empresa conectada e um registro de pessoas, financeiro e vendas. O relatório sai verde, amarelo ou vermelho por item, com a causa provável e o próximo passo para os erros conhecidos (`invalid_grant`, 401, 429, conta Mais sem permissão, API antiga).
 
-Não pede nem aceita senha, token ou `client_secret`, não chama ferramenta de escrita nem como teste, não instala o MCP e não analisa os seus dados: mostra só o nome da empresa e contagens. Os testes locais do classificador foram executados e aprovados; os 7 casos de teste de comportamento ainda não foram executados em cada aplicativo.
+Não pede nem aceita senha, token ou `client_secret`, não chama ferramenta de escrita nem como teste, não instala o MCP e não analisa os seus dados: mostra só o nome da empresa e contagens. Os testes locais do classificador foram executados e aprovados; os 8 casos de teste de comportamento ainda não foram executados em cada aplicativo.
 
 O que é preciso para conectar, passo a passo, está em [robertodiasduarte.com.br/conta-azul](https://www.robertodiasduarte.com.br/conta-azul/).
 

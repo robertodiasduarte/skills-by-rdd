@@ -1,6 +1,9 @@
 # Bateria de teste e critério de cor
 
-Só ferramentas classificadas como **leitura** entram aqui (ver `CLASSIFICACAO_FERRAMENTAS.md`).
+Só ferramentas classificadas como **leitura** entram aqui (ver `CLASSIFICACAO_FERRAMENTAS.md`), e só depois do ok
+do usuário à lista.
+
+REGRA DE CONFIRMAÇÃO: antes da primeira chamada, mostre ao usuário a lista das ferramentas de leitura que serão chamadas (nome e descrição) e só chame depois do ok explícito dele; sem ok, nenhuma ferramenta é chamada.
 Cada chamada pede o mínimo: **1 registro** quando a ferramenta aceitar tamanho de página ou limite.
 
 | Item | Como testar | Verde | Amarelo | Vermelho |
@@ -22,9 +25,10 @@ Cada chamada pede o mínimo: **1 registro** quando a ferramenta aceitar tamanho 
 
 1. Pré-requisitos (uma pergunta).
 2. Descobrir e classificar as ferramentas.
-3. Empresa conectada.
-4. Pessoas, financeiro, vendas — só os módulos que tiverem ferramenta de leitura.
-5. Relatório (modelo em `assets/relatorio.template.md`).
+3. Mostrar a lista das ferramentas de leitura que serão chamadas e esperar o ok (sem ok, pular para o relatório).
+4. Empresa conectada.
+5. Pessoas, financeiro, vendas — só os módulos que tiverem ferramenta de leitura.
+6. Relatório (modelo em `assets/relatorio.template.md`).
 
 Erro em um item não interrompe os outros, exceto `http_401` ou `invalid_grant` na empresa conectada:
 sem autorização válida, os demais itens ficam "não testado" e o relatório diz por quê.

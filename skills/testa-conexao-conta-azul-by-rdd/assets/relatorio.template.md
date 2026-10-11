@@ -14,7 +14,8 @@
 **Fornecedor provável:** {MCP local | conector remoto | não identificado} — {frase da tabela de fornecedores}
 
 **Ferramentas por classe**
-- Leitura (chamadas no teste): {lista de nomes}
+- Leitura aprovadas por você e chamadas: {lista de nomes}
+- Leitura retiradas por você (não chamadas): {lista de nomes ou —}
 - Escrita (não chamadas): {lista de nomes}
 - Indeterminadas (não chamadas): {lista de nomes}
 

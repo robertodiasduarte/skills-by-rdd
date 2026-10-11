@@ -150,6 +150,15 @@ class TestClassificador(unittest.TestCase):
         i_aux, i_camel, i_acento = md.find("Antes de mexer no texto"), md.find("camelCase"), md.find("tire os acentos")
         self.assertTrue(0 <= i_aux < i_camel < i_acento, (i_aux, i_camel, i_acento))
 
+    def test_regra_de_confirmacao(self):
+        """Escopo CA001 V2: nenhuma chamada antes do ok do usuário à lista (mesma linha nos 2 arquivos + E8)."""
+        regra = lambda p: [l.strip() for l in p.read_text(encoding="utf-8").splitlines() if l.strip().startswith("REGRA DE CONFIRMAÇÃO:")]
+        a, b = regra(RAIZ / "SKILL.md"), regra(RAIZ / "references" / "BATERIA_TESTE.md")
+        self.assertEqual(len(a), 1)
+        self.assertEqual(a, b)
+        casos = {c["id"]: c for c in json.loads((RAIZ / "evals" / "cases.json").read_text(encoding="utf-8"))["cases"]}
+        self.assertEqual(casos["E8"]["chamadas_antes_do_ok_esperadas"], 0)
+
     def test_cli_deterministico(self):
         entrada = json.dumps([{"nome": n, "descricao": d} for n, d, _, _ in CASOS], ensure_ascii=False)
         script = RAIZ / "scripts" / "classificar_ferramentas.py"

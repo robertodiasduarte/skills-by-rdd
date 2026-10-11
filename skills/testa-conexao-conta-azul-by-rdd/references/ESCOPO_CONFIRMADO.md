@@ -1,7 +1,8 @@
-# Escopo confirmado — CA001 V1
+# Escopo confirmado — CA001 V2
 
-Confirmado em 11/10/2026 com a frase `CONFIRMO O ESCOPO CA001 V1 E AUTORIZO GERAR A SKILL.`
+Confirmado em 11/10/2026 com a frase `CONFIRMO O ESCOPO CA001 V2 E AUTORIZO GERAR A SKILL.`
 (registro em `references/CONFIRMACAO.md`). Perfil pedido: operacional. Perfil efetivo: **C**.
+A V1 foi confirmada antes, no mesmo dia; a V2 acrescentou a confirmação do usuário antes de qualquer chamada.
 
 **Objetivo.** Verificar se a conexão MCP com a Conta Azul de uma empresa funciona, só com leitura, e explicar
 ao contador o que fazer em cada falha.
@@ -13,7 +14,7 @@ ao contador o que fazer em cada falha.
 1. Conferir pré-requisitos: Pro × Mais, app de computador, autenticador e autorização da empresa
 2. Descobrir as ferramentas MCP da Conta Azul na sessão e o fornecedor provável
 3. Classificar cada ferramenta em leitura, escrita ou indeterminada e alertar quando houver escrita
-4. Rodar a bateria só com ferramentas de leitura: empresa conectada e 1 registro por módulo
+4. Mostrar as ferramentas de leitura e chamar só após o ok do usuário: empresa e 1 registro por módulo
 5. Emitir relatório verde, amarelo ou vermelho por item, com causa provável e próximo passo
 6. Traduzir os erros do catálogo: código expirado, invalid_grant, 401, 429, conta Mais, API antiga
 7. Sem MCP visível, orientar a instalação pelo passo a passo da página /conta-azul/
@@ -49,5 +50,5 @@ ao contador o que fazer em cada falha.
 - Execução de script no ChatGPT Desktop: a provar nos casos E1–E7.
 
 ## Revisão humana
-O contador decide se usa o MCP; a skill só informa. Os 7 casos de avaliação são rodados por Roberto nos 2 apps
-antes da publicação.
+O contador aprova a lista de ferramentas antes de qualquer chamada e decide se usa o MCP; a skill só informa.
+Os 8 casos de avaliação são rodados por Roberto nos 2 apps antes da publicação.
