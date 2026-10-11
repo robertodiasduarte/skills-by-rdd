@@ -1,0 +1,454 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "skill": {
+    "name": "icp-contabilidade-beatriz-exemplo",
+    "display_name": "ICP Beatriz — exemplo de contabilidade",
+    "short_description": "Exemplo de jornada médica e decisões de marketing"
+  },
+  "company": {
+    "name": "Empresa ilustrativa de contabilidade",
+    "context": "Empresa fictícia para demonstrar a geração. Nenhuma empresa real ou oferta foi identificada (E00/D01).",
+    "offers": [
+      "A investigar; as propostas em prioridades são hipóteses, não serviços disponíveis."
+    ],
+    "differentiators": [],
+    "delivery_limits": [
+      "Não há operação validada para prometer tarefas, prazos ou resultados.",
+      "A preferência por delegar não elimina participação, autorizações ou obrigações necessárias."
+    ],
+    "commercial_context": "Preço, região, margem e capacidade desconhecidos (D01)."
+  },
+  "icp": {
+    "label": "Médica recém-formada iniciando plantões por PJ, no contexto ilustrativo relatado",
+    "persona_name": "Beatriz",
+    "kind": "hibrido",
+    "fit_criteria": [
+      "Hipótese: procura reduzir esforço administrativo associado ao início de recebimentos por PJ (H01).",
+      "Adequação comercial da empresa a investigar (D01)."
+    ],
+    "exclusion_criteria": [
+      "Não generalizar a médicos com outros vínculos, momentos de carreira ou objetivos.",
+      "Fases sem necessidade demonstrada não implicam oportunidade comercial."
+    ],
+    "roles": [
+      "Beatriz é a persona do exemplo; quem decide, paga, influencia ou autoriza tarefas ainda não foi informado."
+    ]
+  },
+  "evidence": [
+    {
+      "id": "E00",
+      "claim": "Empresa, oferta e recorte abaixo são ilustrativos; não há empresa real identificada.",
+      "status": "exemplo",
+      "source": "Construção didática desta meta skill a partir do pedido do usuário em 11/10/2026.",
+      "confidence": "nao_avaliada"
+    },
+    {
+      "id": "E01",
+      "claim": "A história começa na escolha da medicina, passa por anos de cursinho e seis anos de graduação dedicados à medicina.",
+      "status": "exemplo",
+      "source": "Exemplo fornecido pelo usuário em 11/10/2026; não é entrevista com cliente.",
+      "confidence": "nao_avaliada"
+    },
+    {
+      "id": "E02",
+      "claim": "Na formatura, o exemplo menciona o orgulho da família.",
+      "status": "exemplo",
+      "source": "Exemplo fornecido pelo usuário em 11/10/2026.",
+      "confidence": "nao_avaliada"
+    },
+    {
+      "id": "E03",
+      "claim": "Nos primeiros plantões remunerados, Beatriz recebe por PJ e não conhece impostos, empresas ou contabilidade.",
+      "status": "exemplo",
+      "source": "Exemplo fornecido pelo usuário em 11/10/2026; circunstância desta narrativa, não regra da profissão.",
+      "confidence": "nao_avaliada"
+    },
+    {
+      "id": "E04",
+      "claim": "Ela quer receber sua remuneração sem se preocupar com cálculos, obrigações, conta bancária, comprovante de renda e IRPF; contabilidade é percebida como problema.",
+      "status": "exemplo",
+      "source": "Exemplo fornecido pelo usuário em 11/10/2026; desejo descrito, não promessa viável de serviço.",
+      "confidence": "nao_avaliada"
+    },
+    {
+      "id": "E05",
+      "claim": "Depois dos plantões, o exemplo inclui residência.",
+      "status": "exemplo",
+      "source": "Exemplo fornecido pelo usuário em 11/10/2026; regime de renda durante residência não informado.",
+      "confidence": "nao_avaliada"
+    },
+    {
+      "id": "H01",
+      "claim": "Redução de esforço administrativo e transparência de pendências podem ser uma proposta relevante para esta narrativa.",
+      "status": "hipotese",
+      "source": "Inferência da skill sobre E03/E04; exige conversa com clientes e validação da operação.",
+      "confidence": "baixa"
+    },
+    {
+      "id": "H02",
+      "claim": "Marcos de carreira podem alterar prioridades, formatos de contato e serviço; nenhuma preferência de canal foi demonstrada.",
+      "status": "hipotese",
+      "source": "Inferência da skill sobre E01/E02/E05.",
+      "confidence": "baixa"
+    },
+    {
+      "id": "D01",
+      "claim": "Não há dados de preço, capacidade, região, oferta existente, canais, histórico de vendas ou entrevistas reais.",
+      "status": "desconhecido",
+      "source": "Dados não fornecidos no pedido.",
+      "confidence": "nao_avaliada"
+    }
+  ],
+  "voice": {
+    "terms": [],
+    "avoid": [
+      "Jargão que transfere trabalho técnico ao cliente sem necessidade.",
+      "Promessas de salário garantido, zero impostos ou participação zero sem comprovação."
+    ],
+    "quotes": [],
+    "synthetic_examples": [
+      "Proposta de linguagem, não depoimento: Quero receber pelos meus plantões e entender o que depende de mim, sem ter de aprender contabilidade para isso."
+    ]
+  },
+  "journey": [
+    {
+      "id": "escolha",
+      "label": "Escolher medicina",
+      "context": "História anterior à relação com contabilidade; exemplo do usuário.",
+      "actions": [
+        "Decide estudar medicina."
+      ],
+      "thinking": [],
+      "emotions": [],
+      "jobs": {
+        "functional": [],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "A decisão de seguir medicina.",
+      "barriers": [],
+      "touchpoints": [],
+      "success": "Hipótese: definir caminho de formação; necessidade contábil não demonstrada.",
+      "transitions": [
+        {
+          "to": "cursinho",
+          "when": "Sequência do exemplo; condição concreta e variações a investigar."
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "H02"
+      ]
+    },
+    {
+      "id": "cursinho",
+      "label": "Anos de cursinho",
+      "context": "Fase de preparação, sem demanda contábil informada.",
+      "actions": [
+        "Passa anos no cursinho."
+      ],
+      "thinking": [],
+      "emotions": [],
+      "jobs": {
+        "functional": [],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "Busca de ingresso na graduação.",
+      "barriers": [],
+      "touchpoints": [],
+      "success": "Hipótese: ingressar em medicina; não presumir oportunidade de venda de contabilidade.",
+      "transitions": [
+        {
+          "to": "graduacao",
+          "when": "Sequência do exemplo; condição concreta e variações a investigar."
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "H02"
+      ]
+    },
+    {
+      "id": "graduacao",
+      "label": "Seis anos dedicados à medicina",
+      "context": "Fase de formação; eventual atenção disponível a investigar.",
+      "actions": [
+        "Vive uma graduação de seis anos centrada na medicina."
+      ],
+      "thinking": [],
+      "emotions": [],
+      "jobs": {
+        "functional": [],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "Entrada na graduação.",
+      "barriers": [],
+      "touchpoints": [],
+      "success": "Hipótese: concluir a formação; ajuda administrativa só se houver necessidade concreta.",
+      "transitions": [
+        {
+          "to": "formatura",
+          "when": "Sequência do exemplo; condição concreta e variações a investigar."
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "H02"
+      ]
+    },
+    {
+      "id": "formatura",
+      "label": "Formatura e reconhecimento",
+      "context": "Marco da narrativa, antes do primeiro pagamento por PJ.",
+      "actions": [
+        "Forma-se em medicina."
+      ],
+      "thinking": [],
+      "emotions": [
+        "O exemplo menciona orgulho da família; o sentimento da Beatriz não foi especificado."
+      ],
+      "jobs": {
+        "functional": [],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "Conclusão da graduação.",
+      "barriers": [],
+      "touchpoints": [],
+      "success": "Reconhecimento mencionado; próximo desafio profissional a investigar.",
+      "transitions": [
+        {
+          "to": "primeiro-pj",
+          "when": "Sequência do exemplo; condição concreta e variações a investigar."
+        }
+      ],
+      "evidence_ids": [
+        "E02",
+        "H02"
+      ]
+    },
+    {
+      "id": "primeiro-pj",
+      "label": "Primeiros plantões remunerados por PJ",
+      "context": "Circunstância específica do exemplo, sem generalização sobre vínculos médicos.",
+      "actions": [
+        "Começa a ser remunerada nos plantões.",
+        "Recebe por PJ nesta narrativa."
+      ],
+      "thinking": [
+        "Na narrativa, a contabilidade é percebida como problema, não como solução."
+      ],
+      "emotions": [],
+      "jobs": {
+        "functional": [
+          "Receber sua remuneração.",
+          "Hipótese: delegar tarefas administrativas que o serviço realmente possa assumir."
+        ],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "Início de remuneração por PJ; episódio exato que produz demanda ainda não foi relatado.",
+      "barriers": [
+        "Pouco conhecimento de empresas, impostos e contabilidade na narrativa.",
+        "Hipótese: contratação que exija aprender e operar tudo pode aumentar esforço."
+      ],
+      "touchpoints": [],
+      "success": "Desejo informado: receber a remuneração e reduzir a carga administrativa; participação necessária a investigar.",
+      "transitions": [
+        {
+          "to": "rotina",
+          "when": "Sequência do exemplo; condição concreta e variações a investigar."
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "H01",
+        "D01"
+      ]
+    },
+    {
+      "id": "rotina",
+      "label": "Rotina após começar a receber",
+      "context": "Fase analítica proposta para investigar experiência após compra; não há contratação ou uso relatado.",
+      "actions": [],
+      "thinking": [],
+      "emotions": [],
+      "jobs": {
+        "functional": [
+          "Hipótese: manter recebimentos e tarefas administrativas organizados."
+        ],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "Hipótese: repetição de pagamentos e necessidade de rotina; a validar.",
+      "barriers": [
+        "Oferta, operação e obrigações concretas não foram informadas."
+      ],
+      "touchpoints": [],
+      "success": "Hipótese: visibilidade simples de valores e pendências, com obrigações e participação claramente definidas.",
+      "transitions": [
+        {
+          "to": "residencia",
+          "when": "Sequência do exemplo; condição concreta e variações a investigar."
+        }
+      ],
+      "evidence_ids": [
+        "E04",
+        "H01",
+        "D01"
+      ]
+    },
+    {
+      "id": "residencia",
+      "label": "Residência",
+      "context": "Marco posterior mencionado; sequência e regime de remuneração não generalizáveis.",
+      "actions": [
+        "Segue para residência no exemplo."
+      ],
+      "thinking": [],
+      "emotions": [],
+      "jobs": {
+        "functional": [],
+        "emotional": [],
+        "social": []
+      },
+      "trigger": "Ingresso na residência; circunstâncias a investigar.",
+      "barriers": [
+        "Regime de renda, disponibilidade e necessidades nessa fase não informados."
+      ],
+      "touchpoints": [],
+      "success": "Hipótese: adequar apoio à nova rotina e renda; não presumir continuidade de PJ.",
+      "transitions": [],
+      "evidence_ids": [
+        "E05",
+        "H02",
+        "D01"
+      ]
+    }
+  ],
+  "decisions": {
+    "alternatives": [
+      "Hipóteses a investigar: improvisar, pedir ajuda a alguém ou contratar outro prestador."
+    ],
+    "criteria": [
+      "Hipótese: pouco esforço para a cliente e clareza do serviço (H01)."
+    ],
+    "forces": {
+      "push": [
+        "Hipótese: tarefas administrativas atrapalham o resultado desejado (H01)."
+      ],
+      "pull": [
+        "Hipótese: apoio que assuma trabalho e mantenha clareza (H01)."
+      ],
+      "anxiety": [
+        "Hipóteses a investigar: desconhecimento do escopo e da participação necessária."
+      ],
+      "habit": []
+    },
+    "objections": [
+      {
+        "statement": "Hipótese de fala: Não quero mais uma coisa para administrar.",
+        "underlying_concern": "Hipótese: o serviço acrescentar trabalho em vez de assumi-lo; a validar.",
+        "evidence_ids": [
+          "E04",
+          "H01"
+        ]
+      }
+    ]
+  },
+  "priorities": [
+    {
+      "activity": "digital",
+      "stage_id": "primeiro-pj",
+      "opportunity": "Hipótese: testar mensagem sobre o início de recebimento por PJ e clareza do próximo passo; canais e oferta ainda desconhecidos.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "H01",
+        "D01"
+      ]
+    },
+    {
+      "activity": "relacionamento",
+      "stage_id": "rotina",
+      "opportunity": "Hipótese: resumo útil de recebimentos/pendências e ajuda em mudanças de carreira, se a operação conseguir entregar; frequência a testar.",
+      "evidence_ids": [
+        "E04",
+        "H01",
+        "D01"
+      ]
+    },
+    {
+      "activity": "funil",
+      "stage_id": "primeiro-pj",
+      "opportunity": "Hipótese: passagem por diagnóstico de contexto e escopo, depois proposta clara e primeira entrega de valor; evitar etapa técnica desnecessária.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "H01"
+      ]
+    },
+    {
+      "activity": "eventos",
+      "stage_id": "formatura",
+      "opportunity": "Hipótese: encontro aplicado sobre o primeiro recebimento profissional; formato e agenda a validar, sem pressionar toda pessoa recém-formada a comprar.",
+      "evidence_ids": [
+        "E02",
+        "E03",
+        "H02",
+        "D01"
+      ]
+    },
+    {
+      "activity": "produtos",
+      "stage_id": "primeiro-pj",
+      "opportunity": "Hipótese de serviço: assistência administrativa e contábil com visão simples do que está resolvido e do que requer ação; escopo, responsabilidade e preço a confirmar.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "H01",
+        "D01"
+      ]
+    },
+    {
+      "activity": "vendas",
+      "stage_id": "primeiro-pj",
+      "opportunity": "Hipótese: explicar resultado e participação necessária com demonstração do processo, em linguagem comum; não prometer eliminação de obrigações.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "H01"
+      ]
+    },
+    {
+      "activity": "objecoes",
+      "stage_id": "primeiro-pj",
+      "opportunity": "Hipótese: investigar se a preocupação é ter de aprender/operar tarefas contábeis; responder com escopo demonstrável e esforço real.",
+      "evidence_ids": [
+        "E04",
+        "H01"
+      ]
+    },
+    {
+      "activity": "digital",
+      "stage_id": "cursinho",
+      "opportunity": "Sem oferta contábil adequada demonstrada nesta fase; não transformar retrospectiva biográfica em obrigação de anunciar.",
+      "evidence_ids": [
+        "E01",
+        "D01"
+      ]
+    }
+  ],
+  "research_gaps": [
+    "Identificar empresa real, oferta, limites, região e contexto comercial.",
+    "Entrevistar clientes sobre episódios de primeiro pagamento, contratação e desistência.",
+    "Identificar decisor, pagador, influenciadores e a participação necessária.",
+    "Investigar linguagem literal, canais, rotina e objeções reais.",
+    "Confirmar diferenças entre remuneração de plantões e residência.",
+    "Testar necessidade, operação, percepção de valor e pagamento sem tratar simulação como validação."
+  ]
+}

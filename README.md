@@ -100,6 +100,24 @@ A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/s
 
 [Baixar o .zip](../../releases/latest/download/persona-builder-by-rdd.zip)
 
+### `icp-builder-by-rdd`
+
+**Entrevista você sobre clientes reais e cria uma skill que pensa como o seu cliente ideal.**
+
+ICP é o cliente que a sua empresa atende bem, em que circunstância e com que viabilidade comercial. A skill conduz uma entrevista — uma pergunta por vez, sem pesquisar na internet —, reconstrói a jornada desse cliente, da vida antes da necessidade à compra e ao uso, e marca cada afirmação como relatada, observada, hipótese, desconhecida ou exemplo. O resultado vai para um `perfil.json` (`draft`, com as lacunas listadas, ou `ready`, quando há contexto suficiente para usar — não é validação de mercado) e vira uma skill-filha gerada por script. A skill-filha personifica o cliente (sempre como simulação, nunca como depoimento), orienta, revisa e simula conversas em sete atividades: campanha, relacionamento, funil, eventos, produtos, vendas e objeções.
+
+Exige um aplicativo que execute Python 3 e crie arquivos; sem isso, você recebe a síntese e o perfil em texto, não o pacote da skill-filha. Não inventa idade, renda, emoção ou depoimento, não promete resultado de venda e não publica nada por você. Os 9 testes do gerador foram executados e aprovados; os cenários de personificação ainda não foram executados em cada aplicativo.
+
+A explicação passo a passo, com o exemplo abaixo, está em [robertodiasduarte.com.br/skills-marketing/icp](https://www.robertodiasduarte.com.br/skills-marketing/icp/).
+
+[Baixar o .zip](../../releases/latest/download/icp-builder-by-rdd.zip)
+
+### `icp-contabilidade-beatriz-exemplo` (exemplo gerado pela `icp-builder-by-rdd`)
+
+A skill-filha que a ICP Builder gerou a partir de uma história ilustrativa: uma médica recém-formada que começa a receber plantões como pessoa jurídica, atendida por uma empresa de contabilidade fictícia. Mostra o que você recebe — jornada em sete fases, tabela de evidências e oportunidades por atividade —, com tudo marcado como exemplo ou hipótese. Não é pesquisa sobre médicas nem resultado de uma empresa real.
+
+[Baixar o .zip](../../releases/latest/download/icp-contabilidade-beatriz-exemplo.zip)
+
 ## Modelo para estudo
 
 ### `consultor-simples-nacional-by-rdd`
@@ -124,7 +142,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
   O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
 
-Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd`, `persona-builder-by-rdd` ou `consultor-simples-nacional-by-rdd`.
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd`, `persona-builder-by-rdd`, `icp-builder-by-rdd`, `icp-contabilidade-beatriz-exemplo` ou `consultor-simples-nacional-by-rdd`.
 
 <details>
 <summary>Prefere o comando direto?</summary>

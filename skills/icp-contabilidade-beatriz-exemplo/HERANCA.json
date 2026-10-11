@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "itens": [
+    {
+      "arquivo": "references/metodos/digital.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/digital.md",
+      "origem_versao": "1.0.0",
+      "sha256": "e3e5d391-d9a78c75-2e214880-5122c96b-26a4647e-b252f1f6-c4bd76ed-f3976da8"
+    },
+    {
+      "arquivo": "references/metodos/eventos.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/eventos.md",
+      "origem_versao": "1.0.0",
+      "sha256": "4ee34c9f-d5e8b5af-e1da106c-c3cbd742-85ea9ade-1ba88b44-fe19cf88-d208bb8d"
+    },
+    {
+      "arquivo": "references/metodos/experimentacao.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/experimentacao.md",
+      "origem_versao": "1.0.0",
+      "sha256": "13f597e2-358aa7ea-ba75135f-9aeacba4-4c5d4b29-acaa0a6f-1cd2d34c-c64b7d49"
+    },
+    {
+      "arquivo": "references/metodos/fontes.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/fontes.md",
+      "origem_versao": "1.0.0",
+      "sha256": "ffef6048-48c2ef14-84145bba-da0eb930-9d11c653-7d560aab-705abf2c-b35756b7"
+    },
+    {
+      "arquivo": "references/metodos/fundamentos.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/fundamentos.md",
+      "origem_versao": "1.0.0",
+      "sha256": "8c2bb7f6-eb1d386e-cf1433c1-6280da4a-f437b1dd-5187b857-83ce9a9f-131d622e"
+    },
+    {
+      "arquivo": "references/metodos/funil.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/funil.md",
+      "origem_versao": "1.0.0",
+      "sha256": "cc204da3-7be251eb-f8b0e37f-86bec9ee-bbef39ae-0ce836cb-999ac63f-33fcc457"
+    },
+    {
+      "arquivo": "references/metodos/objecoes.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/objecoes.md",
+      "origem_versao": "1.0.0",
+      "sha256": "f638ddf9-a2c52cb5-e5e3dbf6-6bcd42df-90f3e508-0b75fd38-580b6e3e-298cfceb"
+    },
+    {
+      "arquivo": "references/metodos/personificacao.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/personificacao.md",
+      "origem_versao": "1.0.0",
+      "sha256": "0182259e-08b92308-ba7ed907-4520c9ff-40fbf7c6-acc33d31-50f5c73e-ad5fcf26"
+    },
+    {
+      "arquivo": "references/metodos/pesquisa.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/pesquisa.md",
+      "origem_versao": "1.0.0",
+      "sha256": "ffb4dfee-a4c18a47-b4509e1c-8d44e221-51e772cd-afb11689-8a01f07e-8aacc7d0"
+    },
+    {
+      "arquivo": "references/metodos/produtos.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/produtos.md",
+      "origem_versao": "1.0.0",
+      "sha256": "09562a95-a4316b09-7a3d8d4a-6c70caab-92d671bb-9f7e5786-32f32fd2-2912a354"
+    },
+    {
+      "arquivo": "references/metodos/relacionamento.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/relacionamento.md",
+      "origem_versao": "1.0.0",
+      "sha256": "d5cf5e8b-b0cea6b0-4a28d72b-98b65a45-946853af-e597264e-f397c2b2-85633da6"
+    },
+    {
+      "arquivo": "references/metodos/vendas.md",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/references/metodos/vendas.md",
+      "origem_versao": "1.0.0",
+      "sha256": "98557e9a-6e5c3f71-e0236ca2-3b970d74-ddef0b29-a86b5f11-ab028e0d-7b134f7a"
+    }
+  ]
+}
