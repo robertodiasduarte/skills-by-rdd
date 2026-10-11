@@ -16,6 +16,7 @@ Regras, nesta ordem:
 
 Casamento POR TOKEN, nunca por pedaço de palavra: "ver" não casa "reverter".
 Radical casa o início do token ("atualiz" casa "atualiza", "atualizacao"); exato casa só o token inteiro.
+Prefixo "re"/"des" + termo de escrita também é escrita ("reemite", "desconcilia", "refatura"), salvo as exceções.
 Nome e descrição são quebrados também em camelCase ("listOrCreateCustomer" = list, or, create, customer).
 Particípio ("criado", "emitidas") conta como verbo de escrita. Só é isento (adjetivo) quando TUDO vale: vem colado
 depois de um substantivo do domínio ("notas emitidas", "pagamentos realizados"); não é o 1º token do nome; nome e
@@ -44,6 +45,9 @@ RADICAIS_ESCRITA = (
     "register", "authoriz", "attach", "archiv", "revok", "reconcil", "activat", "deactivat", "refund",
     "merg", "restor", "settl", "overwrit", "push", "destroy", "purg", "eras", "chang", "replac", "renam", "assign", "enabl", "disabl",
     "reopen", "schedul", "trigger", "execut", "publish", "renew", "rotat", "invalidat", "unlink", "disconnect",
+    # Avaliador ciclo 2: verbos cuja forma sem prefixo é substantivo ambíguo ("classificação", "configuração").
+    "reclassific", "redefin", "reconfigur", "reexport", "retific", "deslig", "relig", "desfaz", "desfez", "desfeit",
+    "escrev", "append", "migrat",
 )
 EXATOS_ESCRITA = (
     "gera", "gerar", "gere", "gerou", "geram", "geracao",
@@ -64,6 +68,9 @@ EXATOS_ESCRITA = (
     "assina", "assinar", "assine", "assinou", "rateia", "ratear", "rateie", "rateou", "posta", "postar", "postou",
     "drop", "drops", "clear", "clears", "reset", "resets", "move", "moves", "apply", "applies", "close", "closes",
     "run", "runs", "complete", "completes", "finalize", "finalizes", "charge", "charges",
+    # Avaliador ciclo 2. Só as formas verbais: "publicação" e "configurações" continuam leitura.
+    "publicar", "publica", "publique", "publicou", "configurar", "configura", "configure", "configurou", "configures",
+    "migrar", "migra", "migre", "migrou", "unificar", "unifica", "unifique", "unificou", "unify", "unifies",
 )
 # Particípio dos verbos que só existem como forma exata (review rodada 9, auditor A1): "boleto gerado", "bills are
 # paid". PT: derivado de cada infinitivo -ar da lista; EN: lista explícita (irregulares não se derivam).
@@ -73,6 +80,10 @@ PARTICIPIOS_EN = (
     "completed", "finalized",
 )
 PARTICIPIOS_IRREGULARES_PT = ("pago", "pagos", "pagas")
+# Prefixo + termo de escrita = escrita (avaliador ciclo 2: "reemite", "desconcilia", "refatura", "reprocessa" saíam
+# leitura). O resto da palavra precisa de 3 letras ou mais. Exceções: palavras de leitura que o prefixo pegaria.
+PREFIXOS_DE_ESCRITA = ("re", "des")
+EXCECOES_DE_PREFIXO = ("descobre", "remark", "remarks")
 RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch")
 # "read" é exato: como radical casava "readd" (re-add) e "readjust" (review rodada 4, auditor).
 EXATOS_LEITURA = ("get", "find", "ver", "show", "view", "read", "reads")
@@ -151,8 +162,21 @@ PARTICIPIOS_DE_EXATOS = frozenset(
 )
 
 
+def _sem_prefixo(tok):
+    """O resto da palavra depois de cada prefixo de escrita que ela tem (vazio se é exceção ou o resto é curto)."""
+    if tok in EXCECOES_DE_PREFIXO:
+        return []
+    return [tok[len(p):] for p in PREFIXOS_DE_ESCRITA if tok.startswith(p) and len(tok) - len(p) >= 3]
+
+
+def _exato_de_escrita(tok):
+    return tok in EXATOS_ESCRITA or any(_exato_de_escrita(r) for r in _sem_prefixo(tok))
+
+
 def _escrita(tok):
-    return tok in EXATOS_ESCRITA or tok in PARTICIPIOS_DE_EXATOS or any(tok.startswith(r) for r in RADICAIS_ESCRITA)
+    if tok in EXATOS_ESCRITA or tok in PARTICIPIOS_DE_EXATOS or any(tok.startswith(r) for r in RADICAIS_ESCRITA):
+        return True
+    return any(_escrita(r) for r in _sem_prefixo(tok))
 
 
 def _leitura(tok):
@@ -169,8 +193,8 @@ def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional, fron
     vizinhos = toks[max(0, i - 2):i] + toks[i + 1:i + 3]
     # Auxiliar em qualquer posição do texto = voz passiva (review rodadas 2 e 4, codex): sem janela de distância.
     # Forma EXATA da lista é verbo por definição: nunca isentar como particípio ("liquida" termina em -ida;
-    # review rodada 3, codex).
-    if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and (tok.endswith(SUFIXOS_PARTICIPIO) or tok in PARTICIPIOS_DE_EXATOS)
+    # review rodada 3, codex). Vale também com prefixo ("reliquida"; avaliador ciclo 2).
+    if (not primeiro_do_nome and not _exato_de_escrita(tok) and (tok.endswith(SUFIXOS_PARTICIPIO) or tok in PARTICIPIOS_DE_EXATOS)
             and i > 0 and not fronteiras[i] and toks[i - 1] in SUBSTANTIVOS_DO_DOMINIO
             # Plural nos dois (review rodada 7, A3): listagem descreve "notas emitidas"; "cliente criado" no
             # singular costuma ser o resultado da própria operação.

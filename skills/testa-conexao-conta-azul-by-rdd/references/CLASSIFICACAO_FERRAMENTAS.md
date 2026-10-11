@@ -22,6 +22,10 @@ Leia o **nome** e a **descrição** separadamente (cada um tem as suas palavras)
    - O **particípio de um verbo exato** também é termo de escrita: de cada verbo exato terminado em `-ar` saem
      `-ado`, `-ada`, `-ados`, `-adas` (`gerar` → `gerado`, `geradas`); mais `pago(s)`/`pagas` e os da lista `PARTICIPIOS_EN`
      (`issued`, `paid`, `sent`…). Ele segue a mesma regra de isenção dos outros particípios.
+   - **Prefixo `re` ou `des`:** se a palavra começa por um deles e o **resto** (3 letras ou mais) casa um termo de
+     escrita pelas regras acima, a palavra inteira é termo de escrita: `reemite` (`emit`), `desconcilia` (`concilia`),
+     `refatura` (`fatura`), `reprocessa` (`process`). Não vale para as palavras da lista `EXCECOES_DE_PREFIXO`
+     (`descobre` é leitura). O resto com prefixo de forma exata conta como forma exata (`reliquida` nunca é isenta).
 
 ## As regras, nesta ordem (a primeira que casar decide)
 
@@ -188,7 +192,20 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "rotat",
     "invalidat",
     "unlink",
-    "disconnect"
+    "disconnect",
+    "reclassific",
+    "redefin",
+    "reconfigur",
+    "reexport",
+    "retific",
+    "deslig",
+    "relig",
+    "desfaz",
+    "desfez",
+    "desfeit",
+    "escrev",
+    "append",
+    "migrat"
   ],
   "EXATOS_ESCRITA": [
     "gera",
@@ -315,7 +332,26 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "finalize",
     "finalizes",
     "charge",
-    "charges"
+    "charges",
+    "publicar",
+    "publica",
+    "publique",
+    "publicou",
+    "configurar",
+    "configura",
+    "configure",
+    "configurou",
+    "configures",
+    "migrar",
+    "migra",
+    "migre",
+    "migrou",
+    "unificar",
+    "unifica",
+    "unifique",
+    "unificou",
+    "unify",
+    "unifies"
   ],
   "RADICAIS_LEITURA": [
     "list",
@@ -501,6 +537,15 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "pago",
     "pagos",
     "pagas"
+  ],
+  "PREFIXOS_DE_ESCRITA": [
+    "re",
+    "des"
+  ],
+  "EXCECOES_DE_PREFIXO": [
+    "descobre",
+    "remark",
+    "remarks"
   ]
 }
 ```
@@ -516,6 +561,12 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 - `fatura` sozinho conta como verbo ("Lista e **fatura** as vendas"): "a fatura do cliente" também sai escrita. Lado seguro.
 - Texto com auxiliar em qualquer lugar ("as notas **são** emitidas e listadas") faz todo particípio dele contar como escrita. Lado seguro.
 - `devolve` fica de fora de propósito: em API quer dizer "retorna" (leitura).
+- `recebe`/`receber` ficam de fora de propósito: "contas a receber" e "recebimentos" são leitura. Uma ferramenta que
+  "recebe o pagamento" num nome de leitura sai como leitura.
+- `link`/`links` ficam de fora: "links de pagamento" é leitura na Conta Azul.
+- `publica` também é adjetivo ("chave pública") e conta como verbo: lado seguro.
+- Só os prefixos `re` e `des` são lidos. Com outro prefixo (`un`, `in`, `pré`), o verbo só é pego se a palavra inteira
+  estiver nas listas: `unlink` está, `unblock` não. Num nome de leitura, "Lista e unblock…" sai como leitura.
 - Nenhuma lista de palavras é completa. Um verbo de escrita que não está nas listas, num nome que também tem
   verbo de leitura, sai como leitura. Por isso a bateria pede **1 registro** e nenhum parâmetro de criação, e o
   relatório lista todas as ferramentas chamadas: confira a lista antes de usar o MCP no dia a dia.

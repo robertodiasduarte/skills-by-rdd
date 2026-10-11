@@ -6,6 +6,8 @@
 - Antes de qualquer chamada, mostra a lista das ferramentas de leitura e espera o ok do usuário (escopo V2).
 - Classificação de ferramentas MCP em leitura, escrita ou indeterminada por palavra inteira ou radical, nunca por
   pedaço de palavra; verbo de escrita na descrição vence o nome; `baix…` sempre indeterminada; regra fail-closed.
+- Prefixo `re`/`des` + termo de escrita conta como escrita (`reemite`, `desconcilia`, `refatura`), com exceções
+  listadas (`descobre`); `recebe` e `links` ficam de fora de propósito ("contas a receber", "links de pagamento").
 - Bateria só de leitura (empresa conectada; pessoas, financeiro e vendas com 1 registro).
 - Catálogo com 8 erros conhecidos, conferidos em 10/10/2026.
 - Casos comportamentais E1–E8 escritos; execução nos aplicativos pendente (ver manifest.json).
