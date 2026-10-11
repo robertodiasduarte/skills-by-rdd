@@ -103,7 +103,9 @@ def _conta_como_verbo(toks, i, primeiro_do_nome):
     tok = toks[i]
     vizinhos = toks[max(0, i - 2):i] + toks[i + 1:i + 3]
     # Auxiliar até 2 palavras antes: "é rapidamente atualizado" também é voz passiva (review rodada 2, codex).
-    if (not primeiro_do_nome and tok.endswith(SUFIXOS_PARTICIPIO)
+    # Forma EXATA da lista é verbo por definição: nunca isentar como particípio ("liquida" termina em -ida;
+    # review rodada 3, codex).
+    if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and tok.endswith(SUFIXOS_PARTICIPIO)
             and not any(t in AUXILIARES for t in toks[max(0, i - 2):i]) and not _condicional(toks)
             and not any(v in CONJUNCOES_ALTERNATIVA for v in vizinhos)):
         return False

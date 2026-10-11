@@ -86,6 +86,8 @@ CASOS = [
     ("listar_titulos", "Lista os títulos e começa a pagar os vencidos", "escrita", "a pagar sem 'contas' antes é verbo"),
     ("obter_cliente", "O cliente é rapidamente atualizado com os dados", "escrita", "advérbio entre auxiliar e particípio"),
     ("listar_titulos_a_receber", "Lista os títulos a receber", "leitura", "títulos a receber é nome de conta"),
+    # Review pós-build rodada 3 (codex): forma exata terminada em -ida/-ado não é particípio
+    ("consultar_titulos", "Consulta títulos; liquida os vencidos", "escrita", "liquida sem auxiliar antes"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]

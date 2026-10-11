@@ -25,6 +25,7 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 
 Duas exceções na regra 1, porque não são verbo:
 - **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita.
+  Palavra da lista de termos **exatos** de escrita nunca é tratada como particípio (`liquida` termina em -ida, mas é verbo).
   Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; vem até 2 palavras depois de um auxiliar
   (`é criado`, `são removidos`, `is created` — voz passiva); ou o texto fala em criar sob condição
   (`se não existir`, `automaticamente`, `if missing`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
