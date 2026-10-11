@@ -84,6 +84,13 @@
       "origem": "skills/icp-builder-by-rdd/references/metodos/vendas.md",
       "origem_versao": "1.0.0",
       "sha256": "98557e9a-6e5c3f71-e0236ca2-3b970d74-ddef0b29-a86b5f11-ab028e0d-7b134f7a"
+    },
+    {
+      "arquivo": "references/perfil.json",
+      "modo": "copia",
+      "origem": "skills/icp-builder-by-rdd/assets/exemplo-beatriz.json",
+      "origem_versao": "1.0.0",
+      "sha256": "b5ed34c1-dffb2b17-5a7b1a22-896033c6-8e73be7f-add60ca2-3d5105c9-6e614f1e"
     }
   ]
 }
