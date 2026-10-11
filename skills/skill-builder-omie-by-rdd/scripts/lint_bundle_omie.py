@@ -43,17 +43,23 @@ CAMPOS_PERFIL = {"schema", "totaliza", "executa_python_com_rede", "perfil", "mul
                  "aprovacao_por_ferramenta", "mcp_disponivel"}
 APROVACAO = {"declarada_sim", "declarada_nao", "nao_perguntado"}
 OPERACAO_RE = re.compile(r"\b([a-z]+/[a-z0-9-]+):([A-Z][A-Za-z0-9]+)\b")
-# Verbo de escrita em CamelCase citado solto, mesmo fora do catálogo (achado R1 do 2º revisor, rodada 7).
-VERBO_ESCRITA_RE = re.compile(r"\b(?:Incluir|Alterar|Excluir|Lancar|Cancelar|Concluir|Baixar|Faturar|Inutilizar|Upsert|"
-                              r"Associar|Trocar|Devolver|Gerar|Ativar|Suspender|Conciliar|Duplicar|Adicionar|Reabrir|Estornar)"
-                              r"[A-Z][A-Za-z0-9]*\b")
+# Verbo de escrita em CamelCase citado solto, mesmo fora do catálogo (achado R1 do 2º revisor, rodada 7). A lista
+# fixa daquela rodada virou PISO: o conjunto que vale é o derivado do catálogo em verbos_de_escrita() (achado A,
+# ciclo 3: AtualizarPedido, ReverterBaixaTitulo, ImportarPedidoXml, ProrrogarTitulo e ReenviarPedido passavam).
+VERBOS_ESCRITA_PISO = frozenset({"Incluir", "Alterar", "Excluir", "Lancar", "Cancelar", "Concluir", "Baixar", "Faturar",
+                                 "Inutilizar", "Upsert", "Associar", "Trocar", "Devolver", "Gerar", "Ativar", "Suspender",
+                                 "Conciliar", "Duplicar", "Adicionar", "Reabrir", "Estornar"})
+VERBO_INICIAL_RE = re.compile(r"[A-Z][a-z0-9]*")
 OP_JSON_RE = re.compile(r"[\"']op[\"']\s*:\s*[\"']([A-Za-z][A-Za-z0-9]*)[\"']")
 FISCAL_RE = re.compile(r"(Faturar|Inutilizar)")
 RADICAL_FISCAL_RE = re.compile(r"fatur|inutiliz", re.I)
 NAO_USAR_RE = re.compile(r"^\s*n[ãa]o usar", re.I)
 TITULO_QUANDO_USAR = "## Quando usar / Quando não usar"
-# Os mesmos binários que o lint_bundle.py herdado aceita (só dentro de assets/); todo o resto tem de ser UTF-8.
-BINARIOS_PERMITIDOS = {".pdf", ".xlsx", ".docx", ".pptx", ".png", ".jpg", ".jpeg"}
+# Skill Omie não tem razão para levar PDF ou Office, e esses formatos escondem texto (inclusive comprimido): reprovam em
+# qualquer lugar do pacote (achado h8, ciclo 3). Só imagem em assets/, e com a assinatura do formato no início
+# (PDF renomeado para .png não passa); todo o resto tem de ser UTF-8.
+BINARIOS_PROIBIDOS = {".pdf", ".xlsx", ".docx", ".pptx"}
+ASSINATURA_IMAGEM = {".png": b"\x89PNG\r\n\x1a\n", ".jpg": b"\xff\xd8\xff", ".jpeg": b"\xff\xd8\xff"}
 
 
 class Uso(ValueError):
@@ -123,6 +129,24 @@ def classificar(catalogo: dict, call: str, op: str) -> str:
     return "escrita"
 
 
+def verbos_de_escrita(catalogo: dict) -> set[str]:
+    """Verbo inicial (1ª palavra CamelCase) de todo método que classificar() não dá como leitura — escrita ou
+    deprecated, em qualquer serviço do catálogo —, menos os verbos de leitura da regra de nome do omie_num.py
+    (READ_PREFIX/READ_EXACT, importados), mais o piso fixo."""
+    leitura = {VERBO_INICIAL_RE.match(m).group(0) for m in (*omie_num.READ_PREFIX, *omie_num.READ_EXACT)}
+    derivados = {VERBO_INICIAL_RE.match(op).group(0)
+                 for call, entrada in catalogo.items()
+                 for op in [*entrada.get("leitura", []), *entrada.get("bloqueados", {})]
+                 if classificar(catalogo, call, op) != "leitura"}
+    # name_rule_allows(v + "X"): um verbo que a regra de nome deixaria passar como prefixo é de leitura.
+    return {v for v in derivados if v not in leitura and not omie_num.name_rule_allows(v + "X")} | VERBOS_ESCRITA_PISO
+
+
+def verbo_de_escrita_re(catalogo: dict) -> re.Pattern:
+    alternativas = "|".join(sorted(map(re.escape, verbos_de_escrita(catalogo)), key=len, reverse=True))
+    return re.compile(rf"\b(?:{alternativas})[A-Z][A-Za-z0-9]*\b")
+
+
 def gate_de_escrita_ok(texto: str) -> bool:
     bloco = re.search(r"^### Gate de escrita\s*$(.*?)(?=^#{2,3} |\Z)", texto, re.M | re.S)
     if not bloco:
@@ -140,17 +164,26 @@ COPIAS_DOS_ASSETS = {"scripts/omie_num.py": "omie_num.py",
                      "tests/test_omie_num.py": "test_omie_num.py"}
 
 
-def textos(raiz: Path) -> tuple[str, list[str]]:
+def textos(raiz: Path) -> tuple[str, list[str], list[str]]:
     """Texto de TODO arquivo do pacote: qualquer arquivo pode instruir o modelo (achado AT-004 do avaliador:
     escrita num assets/roteiro.md citado pelo SKILL.md passava). Fica de fora só o manifest.json (é a própria
     declaração) e as cópias exatas dos assets. Arquivo que não é UTF-8 válido sem byte nulo (UTF-16, latin-1…)
-    não é pulado como binário: volta na 2ª lista, salvo binário permitido em assets/ (achado h7, ciclo 2)."""
-    partes, nao_utf8 = [], []
+    não é pulado como binário: volta na 2ª lista, salvo imagem em assets/ (achado h7, ciclo 2). PDF/Office em
+    qualquer lugar, e imagem sem a assinatura do formato, voltam na 3ª lista (achado h8, ciclo 3)."""
+    partes, nao_utf8, proibidos = [], [], []
     for p in sorted(raiz.rglob("*")):
         rel = p.relative_to(raiz)
         if not p.is_file() or {"__pycache__", ".git"} & set(rel.parts) or rel.as_posix() == "manifest.json":
             continue
         dados = p.read_bytes()
+        sufixo = p.suffix.lower()
+        if sufixo in BINARIOS_PROIBIDOS:
+            proibidos.append(rel.as_posix())
+            continue
+        imagem_em_assets = rel.parts[0] == "assets" and sufixo in ASSINATURA_IMAGEM
+        if imagem_em_assets and not dados.startswith(ASSINATURA_IMAGEM[sufixo]):
+            proibidos.append(rel.as_posix())
+            continue
         asset = COPIAS_DOS_ASSETS.get(rel.as_posix())
         if asset and dados == (ASSETS / asset).read_bytes():
             continue
@@ -160,9 +193,9 @@ def textos(raiz: Path) -> tuple[str, list[str]]:
             texto = None
         if texto is not None and "\0" not in texto:
             partes.append(texto)
-        elif not (rel.parts[0] == "assets" and p.suffix.lower() in BINARIOS_PERMITIDOS):
+        elif not imagem_em_assets:
             nao_utf8.append(rel.as_posix())
-    return "\n".join(partes), nao_utf8
+    return "\n".join(partes), nao_utf8, proibidos
 
 
 def fronteira_fiscal(skill: str) -> list[str]:
@@ -207,7 +240,9 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     skill_path, manifest_path = raiz / "SKILL.md", raiz / "manifest.json"
     if not skill_path.is_file() or not manifest_path.is_file():
         return ["SKILL_OU_MANIFEST_AUSENTE"]
-    tudo, nao_utf8 = textos(raiz)
+    tudo, nao_utf8, proibidos = textos(raiz)
+    if proibidos:
+        erros.append("BINARIO_NAO_PERMITIDO_NA_SKILL_OMIE")
     if nao_utf8:
         erros.append("TEXTO_NAO_UTF8")
         if "SKILL.md" in nao_utf8:
@@ -241,7 +276,7 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     # Forma JSON ("op": "Metodo"): vale para QUALQUER nome, inclusive fora do catálogo (achado R1 da rodada 2).
     if set(OP_JSON_RE.findall(tudo)) - metodos_declarados:
         erros.append("OPERACAO_NAO_DECLARADA")
-    if set(VERBO_ESCRITA_RE.findall(tudo)) - metodos_declarados:
+    if set(verbo_de_escrita_re(catalogo).findall(tudo)) - metodos_declarados:
         erros.append("OPERACAO_NAO_DECLARADA")
 
     classes = {(c, o): classificar(catalogo, c, o) for c, o in declaradas}
