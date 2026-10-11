@@ -48,6 +48,8 @@ RADICAIS_ESCRITA = (
     # Avaliador ciclo 2: verbos cuja forma sem prefixo é substantivo ambíguo ("classificação", "configuração").
     "reclassific", "redefin", "reconfigur", "reexport", "retific", "deslig", "relig", "desfaz", "desfez", "desfeit",
     "escrev", "append", "migrat",
+    # Avaliador ciclo 3.
+    "inutiliz", "suspend", "rejeit", "reject", "renegoci", "unsubscrib", "subscrib",
 )
 EXATOS_ESCRITA = (
     "gera", "gerar", "gere", "gerou", "geram", "geracao",
@@ -71,6 +73,19 @@ EXATOS_ESCRITA = (
     # Avaliador ciclo 2. Só as formas verbais: "publicação" e "configurações" continuam leitura.
     "publicar", "publica", "publique", "publicou", "configurar", "configura", "configure", "configurou", "configures",
     "migrar", "migra", "migre", "migrou", "unificar", "unifica", "unifique", "unificou", "unify", "unifies",
+    # Avaliador ciclo 3. Fora de propósito, porque a forma é também substantivo: "reserva", "copia", "emails", "start".
+    "manifestar", "manifesta", "manifeste", "manifestou", "protestar", "protesta", "proteste", "protestou",
+    "negativar", "negativa", "negative", "negativou", "creditar", "credita", "credite", "creditou",
+    "debitar", "debita", "debite", "debitou", "conceder", "concede", "concedeu", "abater", "abate", "abateu",
+    "reservar", "reservou", "copiar", "copiou", "movimentar", "movimenta", "movimente", "movimentou",
+    "associar", "associa", "associe", "associou", "classificar", "classifica", "classifique", "classificou",
+    "categorizar", "categoriza", "categorize", "categorizou", "categorizes", "efetivar", "efetiva", "efetive",
+    "efetivou", "aceitar", "aceita", "aceite", "aceitou", "recusar", "recusa", "recuse", "recusou",
+    "iniciar", "inicia", "inicie", "iniciou", "mover", "movem", "moveu",
+    "lock", "locks", "fix", "fixes", "ship", "ships", "starts",
+    # Em inglês, forma exata: o radical pegaria o substantivo ("termination", "notifications", "refresh token").
+    "adjust", "adjusts", "notify", "notifies", "terminate", "terminates", "amend", "amends", "invite", "invites",
+    "increment", "increments", "fulfill", "fulfills", "refreshes",
 )
 # Particípio dos verbos que só existem como forma exata (review rodada 9, auditor A1): "boleto gerado", "bills are
 # paid". PT: derivado de cada infinitivo -ar da lista; EN: lista explícita (irregulares não se derivam).

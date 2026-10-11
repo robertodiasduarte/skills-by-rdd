@@ -8,6 +8,8 @@
   pedaço de palavra; verbo de escrita na descrição vence o nome; `baix…` sempre indeterminada; regra fail-closed.
 - Prefixo `re`/`des` + termo de escrita conta como escrita (`reemite`, `desconcilia`, `refatura`), com exceções
   listadas (`descobre`); `recebe` e `links` ficam de fora de propósito ("contas a receber", "links de pagamento").
+- Mais 70 formas verbais de escrita (suspende, inutiliza, protesta, credita, debita, refreshes…). A confirmação passa a
+  avisar que a lista de palavras não prova "só leitura" e pede para o usuário ler a descrição de cada ferramenta.
 - Bateria só de leitura (empresa conectada; pessoas, financeiro e vendas com 1 registro).
 - Catálogo com 8 erros conhecidos, conferidos em 10/10/2026.
 - Casos comportamentais E1–E8 escritos; execução nos aplicativos pendente (ver manifest.json).

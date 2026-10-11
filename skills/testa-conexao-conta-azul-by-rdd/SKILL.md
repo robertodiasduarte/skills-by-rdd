@@ -67,6 +67,8 @@ Não são necessários e nunca devem ser pedidos: `client_id`, `client_secret`, 
 6. **Confirmação.** Mostre, numa mensagem, a lista das ferramentas de leitura que serão chamadas (nome e descrição,
    na ordem da bateria) e pergunte se pode chamar. Se o usuário tirar alguma, ela não é chamada e o item fica
    "não testado por escolha do usuário". Se ele não autorizar, entregue o relatório só com a classificação.
+   Avise que a separação é feita por lista de palavras e não prova que a ferramenta só lê: se alguma descrição
+   falar em outra ação além de ler, ele deve tirá-la da lista.
 7. **Bateria de leitura.** Siga [references/BATERIA_TESTE.md](references/BATERIA_TESTE.md): empresa conectada,
    depois pessoas, financeiro e vendas, 1 registro cada, só com ferramenta de leitura. Antes de cada chamada,
    confira de novo a classe da ferramenta.

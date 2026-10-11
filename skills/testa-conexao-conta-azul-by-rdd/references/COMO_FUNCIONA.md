@@ -11,7 +11,8 @@ se ele funciona com a empresa do seu cliente, sem correr o risco de lançar, alt
 2. Olha as ferramentas que o MCP oferece e separa cada uma em **leitura**, **escrita** ou **indeterminada**.
    Na dúvida, indeterminada. "Baixa" é sempre indeterminada: na Conta Azul, dar baixa é quitar.
 3. Mostra a lista das ferramentas de leitura que vai chamar e **espera o seu ok**. Se alguma parecer escrever no
-   ERP, tire da lista: ela não é chamada.
+   ERP, tire da lista: ela não é chamada. A separação é feita por uma lista de palavras e não pega todo verbo:
+   **leia a descrição** de cada ferramenta antes de dar o ok.
 4. Chama **só** as de leitura aprovadas: a empresa conectada e 1 registro de pessoas, financeiro e vendas.
 5. Entrega um relatório verde, amarelo ou vermelho por item, com a causa provável e o próximo passo.
 
