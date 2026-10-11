@@ -115,6 +115,20 @@ class TestClassificador(unittest.TestCase):
             with self.subTest(nome=nome, desc=desc):
                 self.assertEqual(cf.classificar(nome, desc)[0], esperado, porque)
 
+    def test_auxiliar_em_unicode_decomposto(self):
+        """Review rodada 5 (codex): 'é' em NFD (e + acento combinante) tem de contar como auxiliar."""
+        import unicodedata
+        for forma in ("NFC", "NFD"):
+            with self.subTest(forma=forma):
+                d = unicodedata.normalize(forma, "O cliente é, quando possível, atualizado")
+                self.assertEqual(cf.classificar("obter_cliente", d)[0], "escrita")
+
+    def test_prosa_segue_a_ordem_do_script(self):
+        """Review rodada 5 (codex): a prosa tem de mandar ler o auxiliar e o camelCase ANTES de tirar acento e caixa."""
+        md = (RAIZ / "references" / "CLASSIFICACAO_FERRAMENTAS.md").read_text(encoding="utf-8")
+        i_aux, i_camel, i_acento = md.find("Antes de mexer no texto"), md.find("camelCase"), md.find("tire os acentos")
+        self.assertTrue(0 <= i_aux < i_camel < i_acento, (i_aux, i_camel, i_acento))
+
     def test_cli_deterministico(self):
         entrada = json.dumps([{"nome": n, "descricao": d} for n, d, _, _ in CASOS], ensure_ascii=False)
         script = RAIZ / "scripts" / "classificar_ferramentas.py"

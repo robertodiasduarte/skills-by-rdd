@@ -92,7 +92,9 @@ def _separar_camel(texto):
 
 
 def _tem_auxiliar(texto):
-    return any(t in AUXILIARES for t in re.findall(r"\w+", _separar_camel(texto).lower()))
+    # NFC antes de procurar: "é" decomposto (e + acento combinante) viraria "e" e passaria (review rodada 5, codex).
+    s = unicodedata.normalize("NFC", _separar_camel(texto).lower())
+    return any(t in AUXILIARES for t in re.findall(r"\w+", s))
 
 
 def tokens(texto):

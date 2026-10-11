@@ -7,10 +7,15 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 
 ## Como ler o nome e a descrição
 
-1. Junte o **nome** e a **descrição** da ferramenta, em minúsculas e sem acento.
-2. Quebre em palavras: tudo que não é letra ou número separa (`listar_contas_a_pagar` vira `listar`, `contas`, `a`, `pagar`),
-   e a troca de minúscula para maiúscula também (`listOrCreateCustomer` vira `list`, `or`, `create`, `customer`).
-3. Compare **palavra a palavra**, nunca um pedaço do meio: `ver` não casa `reverter`, `get` não casa `forget`.
+Leia o **nome** e a **descrição** separadamente (cada um tem as suas palavras), sempre nesta ordem:
+
+1. **Antes de mexer no texto**, veja se ele tem um auxiliar de voz passiva — `é`, `são`, `foi`, `será`, `is`, `was`…
+   (lista `AUXILIARES` abaixo). Leia **com acento**: `é` é verbo, `e` é conjunção e não conta.
+2. Separe as palavras grudadas em camelCase: a troca de minúscula para maiúscula separa
+   (`listOrCreateCustomer` vira `list`, `Or`, `Create`, `Customer`).
+3. Só então passe para minúsculas e tire os acentos, e quebre em palavras: tudo que não é letra ou número separa
+   (`listar_contas_a_pagar` vira `listar`, `contas`, `a`, `pagar`).
+4. Compare **palavra a palavra**, nunca um pedaço do meio: `ver` não casa `reverter`, `get` não casa `forget`.
    - **Radical** casa o começo da palavra: `atualiz` casa `atualiza`, `atualizar`, `atualizacao`.
    - **Exato** casa só a palavra inteira: `gera` casa `gera`, mas não `geral`.
 
