@@ -38,6 +38,30 @@ A skill que ela cria não vem com motor de cálculo verificado: para conta confe
 
 [Baixar o .zip](../../releases/latest/download/skill-builder-by-rdd.zip)
 
+## Omie
+
+### `skill-builder-omie-by-rdd`
+
+**Cria skills que consultam e operam o ERP Omie pelo conector oficial, testadas na sua empresa antes da entrega.**
+
+Filha da `skill-builder-by-rdd`: mesma entrevista e mesma confirmação do escopo antes de gerar. Duas perguntas decidem o perfil da skill gerada. **Operador** mostra e grava (pedido, OS, tarefa) com um protocolo de confirmação literal e nunca soma valores. **Conferidor** soma por script e só entrega o total quando leu exatamente o que a Omie informou. Exige o conector MCP do Omie; o perfil Conferidor exige também Claude Code. Não gera skill que fatura ou inutiliza.
+
+A explicação passo a passo está em [robertodiasduarte.com.br/skills-omie](https://www.robertodiasduarte.com.br/skills-omie/).
+
+[Baixar o .zip](../../releases/latest/download/skill-builder-omie-by-rdd.zip)
+
+### `omie-atrasos-conferidos-by-rdd` (exemplo gerado pela filha)
+
+Títulos atrasados a receber e a pagar em três faixas, com quantidade informada pela Omie e valor somado por script com conferência. Perfil Conferidor.
+
+[Baixar o .zip](../../releases/latest/download/omie-atrasos-conferidos-by-rdd.zip)
+
+### `omie-tirar-pedido-by-rdd` (exemplo gerado pela filha)
+
+Monta o pedido de venda ditado, mostra na tela e só inclui com a frase literal de confirmação. Perfil Operador.
+
+[Baixar o .zip](../../releases/latest/download/omie-tirar-pedido-by-rdd.zip)
+
 ## Marketing
 
 ### `skill-soul-builder-by-rdd`
@@ -76,19 +100,23 @@ A explicação passo a passo, com exemplos, está em [robertodiasduarte.com.br/s
 
 [Baixar o .zip](../../releases/latest/download/persona-builder-by-rdd.zip)
 
-## Conexões com sistemas
+### `icp-builder-by-rdd`
 
-### `testa-conexao-conta-azul-by-rdd`
+**Entrevista você sobre clientes reais e cria uma skill que pensa como o seu cliente ideal.**
 
-**Testa, só com leitura, se o MCP da Conta Azul instalado no seu aplicativo funciona — e diz o que fazer em cada erro.**
+ICP é o cliente que a sua empresa atende bem, em que circunstância e com que viabilidade comercial. A skill conduz uma entrevista — uma pergunta por vez, sem pesquisar na internet —, reconstrói a jornada desse cliente, da vida antes da necessidade à compra e ao uso, e marca cada afirmação como relatada, observada, hipótese, desconhecida ou exemplo. O resultado vai para um `perfil.json` (`draft`, com as lacunas listadas, ou `ready`, quando há contexto suficiente para usar — não é validação de mercado) e vira uma skill-filha gerada por script. A skill-filha personifica o cliente (sempre como simulação, nunca como depoimento), orienta, revisa e simula conversas em sete atividades: campanha, relacionamento, funil, eventos, produtos, vendas e objeções.
 
-Você pede "Teste minha conexão com a Conta Azul." no Claude Desktop ou no ChatGPT Desktop. A skill confere os pré-requisitos (empresa na Conta Azul Pro, quem autoriza, autenticador), separa cada ferramenta do MCP em leitura, escrita ou indeterminada mostra a lista das ferramentas de leitura que vai chamar e, com o seu ok, chama só essas: a empresa conectada e um registro de pessoas, financeiro e vendas. O relatório sai verde, amarelo ou vermelho por item, com a causa provável e o próximo passo para os erros conhecidos (`invalid_grant`, 401, 429, conta Mais sem permissão, API antiga).
+Exige um aplicativo que execute Python 3 e crie arquivos; sem isso, você recebe a síntese e o perfil em texto, não o pacote da skill-filha. Não inventa idade, renda, emoção ou depoimento, não promete resultado de venda e não publica nada por você. Os 9 testes do gerador foram executados e aprovados; os cenários de personificação ainda não foram executados em cada aplicativo.
 
-Não pede nem aceita senha, token ou `client_secret`, não chama ferramenta de escrita nem como teste, não instala o MCP e não analisa os seus dados: mostra só o nome da empresa e contagens. Os testes locais do classificador foram executados e aprovados; os 8 casos de teste de comportamento ainda não foram executados em cada aplicativo.
+A explicação passo a passo, com o exemplo abaixo, está em [robertodiasduarte.com.br/skills-marketing/icp](https://www.robertodiasduarte.com.br/skills-marketing/icp/).
 
-O que é preciso para conectar, passo a passo, está em [robertodiasduarte.com.br/conta-azul](https://www.robertodiasduarte.com.br/conta-azul/).
+[Baixar o .zip](../../releases/latest/download/icp-builder-by-rdd.zip)
 
-[Baixar o .zip](../../releases/latest/download/testa-conexao-conta-azul-by-rdd.zip)
+### `icp-contabilidade-beatriz-exemplo` (exemplo gerado pela `icp-builder-by-rdd`)
+
+A skill-filha que a ICP Builder gerou a partir de uma história ilustrativa: uma médica recém-formada que começa a receber plantões como pessoa jurídica, atendida por uma empresa de contabilidade fictícia. Mostra o que você recebe — jornada em sete fases, tabela de evidências e oportunidades por atividade —, com tudo marcado como exemplo ou hipótese. Não é pesquisa sobre médicas nem resultado de uma empresa real.
+
+[Baixar o .zip](../../releases/latest/download/icp-contabilidade-beatriz-exemplo.zip)
 
 ## Modelo para estudo
 
@@ -114,7 +142,7 @@ Baixe o `.zip` da [última Release](../../releases/latest).
 
   O agente descobre o repositório e roda o instalador sozinho. Ele pede sua autorização antes de executar — aprove e pronto. A skill cai em `.claude/skills/` (Claude Code) ou `.agents/skills/` (Codex); peça a instalação global para tê-la em todos os projetos.
 
-Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd`, `persona-builder-by-rdd`, `testa-conexao-conta-azul-by-rdd` ou `consultor-simples-nacional-by-rdd`.
+Troque o nome da skill pela que quiser: `parsing-chunking-by-rdd`, `prompt-builder-by-rdd`, `skill-builder-by-rdd`, `skill-soul-builder-by-rdd`, `newsletter-reforma-tributaria-by-rdd`, `persona-builder-by-rdd`, `icp-builder-by-rdd`, `icp-contabilidade-beatriz-exemplo` ou `consultor-simples-nacional-by-rdd`.
 
 <details>
 <summary>Prefere o comando direto?</summary>

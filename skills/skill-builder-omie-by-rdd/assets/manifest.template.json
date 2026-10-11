@@ -1,0 +1,29 @@
+{
+  "name": "preencher-nome-aprovado",
+  "version": "1.0.0",
+  "perfil_pedido": "nao disponivel",
+  "perfil_efetivo": "C",
+  "escopo": {
+    "id": "nao disponivel",
+    "revisao": 0,
+    "sha256": "nao disponivel"
+  },
+  "coverage": {
+    "consulta": "nao disponivel",
+    "calculo": "nao aplicavel"
+  },
+  "caminhos_implementados": [],
+  "caminhos_liberados": [],
+  "fontes": [],
+  "testes_escritos": [],
+  "testes_executados": [],
+  "pending": [
+    "Preencher com limitações reais; não afirmar validação ainda não executada."
+  ],
+  "o_que_ainda_nao_prova": [
+    "Autoria da aprovação, validade jurídica e suporte nativo universal."
+  ],
+  "author": "Roberto Dias Duarte",
+  "license": "MIT",
+  "methodology": "Metodologia de Roberto Dias Duarte"
+}
