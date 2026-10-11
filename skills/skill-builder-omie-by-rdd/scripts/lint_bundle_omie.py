@@ -23,6 +23,7 @@ import importlib.util
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 AQUI = Path(__file__).resolve().parent
@@ -50,6 +51,15 @@ VERBOS_ESCRITA_PISO = frozenset({"Incluir", "Alterar", "Excluir", "Lancar", "Can
                                  "Inutilizar", "Upsert", "Associar", "Trocar", "Devolver", "Gerar", "Ativar", "Suspender",
                                  "Conciliar", "Duplicar", "Adicionar", "Reabrir", "Estornar"})
 VERBO_INICIAL_RE = re.compile(r"[A-Z][a-z0-9]*")
+# Rede geral, sem lista de verbos (três listas foram derrotadas em sequência; ciclo 4 do avaliador: SalvarPedido,
+# TransferirEstoque, EnviarNFe… passavam). Todo token em CamelCase — começa por maiúscula e tem uma maiúscula logo
+# depois de uma minúscula, a forma de todos os métodos da Omie — é tratado como operação e precisa estar declarado
+# em manifest.json › operacoes. Campo da Omie (nValAberto, cNatureza: começa minúsculo) e sigla (CNPJ, NFe,
+# SKILL_ROOT: sem minúscula seguida de maiúscula) não casam. Única saída: a lista FECHADA abaixo, de nomes próprios.
+CAMELCASE_RE = re.compile(r"(?<![A-Za-z0-9])[A-Z][A-Za-z0-9]*[a-z][A-Z][A-Za-z0-9]*(?![A-Za-z0-9])")
+# Marcas citadas pela filha (ChatGPT, WordPress) e as óbvias de skill; NaN é o valor que o omie_num.py recusa no total.
+NOMES_PROPRIOS_PERMITIDOS = frozenset({"ChatGPT", "GitHub", "OpenAI", "JavaScript", "PowerPoint", "WhatsApp",
+                                       "LinkedIn", "YouTube", "WordPress", "NaN"})
 OP_JSON_RE = re.compile(r"[\"']op[\"']\s*:\s*[\"']([A-Za-z][A-Za-z0-9]*)[\"']")
 FISCAL_RE = re.compile(r"(Faturar|Inutilizar)")
 RADICAL_FISCAL_RE = re.compile(r"fatur|inutiliz", re.I)
@@ -145,6 +155,14 @@ def verbos_de_escrita(catalogo: dict) -> set[str]:
 def verbo_de_escrita_re(catalogo: dict) -> re.Pattern:
     alternativas = "|".join(sorted(map(re.escape, verbos_de_escrita(catalogo)), key=len, reverse=True))
     return re.compile(rf"\b(?:{alternativas})[A-Z][A-Za-z0-9]*\b")
+
+
+def camelcase_nao_declarados(texto: str, metodos_declarados: set[str]) -> set[str]:
+    """Nomes em CamelCase do texto que não são método declarado nem nome próprio da lista fechada. Antes de
+    procurar, normaliza NFKC (letra de largura total vira ASCII) e tira os caracteres de formatação invisíveis
+    (categoria Cf: espaço de largura zero, hífen suave), que partiriam o nome sem mudar o que o modelo lê."""
+    visivel = "".join(c for c in unicodedata.normalize("NFKC", texto) if unicodedata.category(c) != "Cf")
+    return set(CAMELCASE_RE.findall(visivel)) - metodos_declarados - NOMES_PROPRIOS_PERMITIDOS
 
 
 def gate_de_escrita_ok(texto: str) -> bool:
@@ -277,6 +295,9 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     if set(OP_JSON_RE.findall(tudo)) - metodos_declarados:
         erros.append("OPERACAO_NAO_DECLARADA")
     if set(verbo_de_escrita_re(catalogo).findall(tudo)) - metodos_declarados:
+        erros.append("OPERACAO_NAO_DECLARADA")
+    # Rede geral (fail-closed): qualquer CamelCase fora das declaradas e da lista fechada de nomes próprios.
+    if camelcase_nao_declarados(tudo, metodos_declarados):
         erros.append("OPERACAO_NAO_DECLARADA")
 
     classes = {(c, o): classificar(catalogo, c, o) for c, o in declaradas}

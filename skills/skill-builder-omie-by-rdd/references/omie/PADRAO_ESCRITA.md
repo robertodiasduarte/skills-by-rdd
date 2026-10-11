@@ -35,6 +35,9 @@ resposta em `perfil_omie.json › aprovacao_por_ferramenta` (declaração, não 
 
 O lint lê **todo arquivo de texto** do pacote (não só o `SKILL.md`): operação citada em qualquer lugar — referência,
 roteiro em `assets/`, cenário — conta como instrução e precisa estar declarada.
+Todo nome em CamelCase no pacote (maiúscula inicial e uma maiúscula logo depois de minúscula, como `SalvarPedido`) é
+tratado como operação e tem de estar declarado em `manifest.json › operacoes`, salvo a lista fechada de nomes próprios
+do lint (`NOMES_PROPRIOS_PERMITIDOS`); campo da Omie (`nValAberto`) e sigla (`CNPJ`, `NFe`) não contam.
 Decisão fail-closed: skill Omie não leva PDF nem documento Office (`.pdf`, `.xlsx`, `.docx`, `.pptx`), em nenhuma pasta,
 porque esses formatos escondem texto que o lint não lê — o pacote reprova em `BINARIO_NAO_PERMITIDO_NA_SKILL_OMIE`;
 só imagem (`.png`, `.jpg`, `.jpeg`) em `assets/`, com a assinatura do formato no início do arquivo.

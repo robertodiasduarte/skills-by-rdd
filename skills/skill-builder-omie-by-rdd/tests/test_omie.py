@@ -338,6 +338,59 @@ class EscritaTests(TempDir):
         self.assertEqual(excecoes, [])
 
 
+class CamelCaseTests(TempDir):
+    """AT-004, ciclo 4 do avaliador: listas de verbos foram derrotadas 3 vezes. Regra estrutural: todo nome em
+    CamelCase no pacote é tratado como operação e precisa estar declarado, salvo a lista fechada de nomes próprios."""
+    SOLTOS = ("ProcessarLote", "TransferirEstoque", "EnviarNFe", "ConfirmarEntrega", "AprovarPedido",
+              "AjustarEstoque", "RegistrarPagamento", "SalvarPedido", "GravarPedido")
+    CALLS = ("SalvarPedido", "TransferirEstoque", "ProcessarLote")
+    FRASE_SOLTA = "Quando a pessoa pedir, chame {nome} pelo conector `omie_executar`."
+    FRASE_CALL = '```json\n{{"call": "{nome}", "param": [{{}}]}}\n```\nEnvie com `omie_executar`.'
+
+    def rodar_com(self, nome_dir: str, texto: str):
+        raiz = montar(self.tmp / nome_dir, "conferidor", [LEITURA])
+        (raiz / "references").mkdir(exist_ok=True)
+        (raiz / "references" / "COMO_FUNCIONA.md").write_text("# Como funciona\n\n" + texto + "\n", encoding="utf-8")
+        r = subprocess.run([sys.executable, "-B", str(SCRIPTS / "lint_bundle_omie.py"), "--root", str(raiz),
+                            "--perfil", "conferidor"], capture_output=True, text=True)
+        return r.returncode, json.loads(r.stdout)["errors"]
+
+    def test_nome_solto_fora_do_catalogo_reprova(self):
+        for nome in self.SOLTOS:
+            with self.subTest(nome=nome):
+                self.assertNotIn(nome, lo.metodos_do_catalogo(CATALOGO))
+                rc, erros = self.rodar_com("solto-" + nome, self.FRASE_SOLTA.format(nome=nome))
+                self.assertEqual(rc, 2, erros)
+                self.assertIn("OPERACAO_NAO_DECLARADA", erros)
+
+    def test_payload_rest_call_fora_do_catalogo_reprova(self):
+        for nome in self.CALLS:
+            with self.subTest(nome=nome):
+                rc, erros = self.rodar_com("call-" + nome, self.FRASE_CALL.format(nome=nome))
+                self.assertEqual(rc, 2, erros)
+                self.assertIn("OPERACAO_NAO_DECLARADA", erros)
+
+    def test_campo_minusculo_e_sigla_nao_disparam(self):
+        texto = ("Some `nValAberto` por `cNatureza` e confira `nTotRegistros`; o campo nCodCliente vem na resposta.\n"
+                 "CNPJ, NF, NF-e, NFe, NFS-e, CT-e, MCP, PIX, `SKILL_ROOT`, OMIE_APP_KEY e CONFIRMO não são operações.")
+        self.assertEqual(self.rodar_com("campos", texto), (0, []))
+
+    def test_nome_proprio_da_lista_fechada_nao_dispara(self):
+        self.assertIn("ChatGPT", lo.NOMES_PROPRIOS_PERMITIDOS)
+        self.assertEqual(self.rodar_com("chatgpt", "Funciona no Claude e no ChatGPT com o conector da Omie."), (0, []))
+
+    def test_camelcase_escondido_por_caractere_invisivel_reprova(self):
+        rc, erros = self.rodar_com("invisivel", self.FRASE_SOLTA.format(nome="Salvar​Pedido"))
+        self.assertEqual(rc, 2, erros)
+        self.assertIn("OPERACAO_NAO_DECLARADA", erros)
+
+    def test_texto_fixo_dos_templates_nao_dispara(self):
+        for nome in ("SKILL_OPERADOR.template.md", "SKILL_CONFERIDOR.template.md"):
+            with self.subTest(nome):
+                texto = (ASSETS / nome).read_text(encoding="utf-8")
+                self.assertEqual(lo.camelcase_nao_declarados(texto, set()), set())
+
+
 class PerfilBundleTests(TempDir):
     def test_operador_com_script(self):
         raiz = montar(self.tmp / "a", "operador", [LEITURA])
@@ -543,6 +596,19 @@ class ExemplosAdulteradosTests(TempDir):
         rc, erros = self.rodar(self.conferidor_com_frase("ReabrirPedido"), "conferidor")
         self.assertEqual(rc, 2)
         self.assertIn("OPERACAO_NAO_DECLARADA", erros)
+
+    # Ciclo 4 do avaliador: a mesma sonda dele, na cópia real do exemplo Conferidor (sem gate e sem confirmado).
+    def test_ciclo4_sonda_do_avaliador_no_exemplo_real_reprova(self):
+        frases = [(n, CamelCaseTests.FRASE_SOLTA.format(nome=n)) for n in CamelCaseTests.SOLTOS]
+        frases += [(n, CamelCaseTests.FRASE_CALL.format(nome=n)) for n in CamelCaseTests.CALLS]
+        for i, (nome, frase) in enumerate(frases):
+            with self.subTest(nome=nome, forma="call" if '"call"' in frase else "solto"):
+                raiz = Path(shutil.copytree(EXEMPLOS / "omie-atrasos-conferidos-by-rdd", self.tmp / f"c4-{i}"))
+                ref = raiz / "references" / "COMO_FUNCIONA.md"
+                ref.write_text(ref.read_text(encoding="utf-8") + "\n" + frase + "\n", encoding="utf-8")
+                rc, erros = self.rodar(raiz, "conferidor")
+                self.assertEqual(rc, 2, erros)
+                self.assertIn("OPERACAO_NAO_DECLARADA", erros)
 
     @staticmethod
     def pdf_minimo(texto: str) -> bytes:
