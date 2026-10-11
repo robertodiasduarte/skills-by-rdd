@@ -19,14 +19,16 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 |---|---|---|
 | 1 | alguma palavra do nome ou da descrição casa um termo de **escrita** | **escrita** |
 | 2 | alguma palavra do nome ou da descrição começa por `baix` | **indeterminada** (na Conta Azul, dar baixa é quitar) |
-| 3 | alguma palavra do **nome** casa um termo de **leitura** | **leitura** |
-| 4 | nada casou | **indeterminada** |
+| 3 | o **nome** tem conjunção depois da 1ª palavra (`listar_e_apagar`, `get_or_reset`) | **indeterminada** (duas ações num nome só) |
+| 4 | alguma palavra do **nome** casa um termo de **leitura** | **leitura** |
+| 5 | nada casou | **indeterminada** |
 
 Duas exceções na regra 1, porque não são verbo:
 - **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita.
   Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; vem logo depois de um auxiliar
   (`é criado`, `são removidos`, `is created` — voz passiva); ou o texto fala em criar sob condição
-  (`se não existir`, `automaticamente`, `if missing`). Os auxiliares e os marcadores estão nas listas abaixo.
+  (`se não existir`, `automaticamente`, `if missing`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
+  que é upsert). Auxiliares, marcadores e conjunções estão nas listas abaixo.
 - `pagar` e `receber` logo depois de `a` são nome de conta (`contas a pagar`), não o verbo.
 
 Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
@@ -91,6 +93,22 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "transfer",
     "mescl",
     "restaur",
+    "apag",
+    "destru",
+    "limp",
+    "substitu",
+    "renov",
+    "encerr",
+    "finaliz",
+    "conclu",
+    "dispar",
+    "vincul",
+    "desvincul",
+    "habilit",
+    "desabilit",
+    "ajust",
+    "corrig",
+    "execut",
     "creat",
     "updat",
     "insert",
@@ -112,7 +130,26 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "deactivat",
     "refund",
     "merg",
-    "restor"
+    "restor",
+    "destroy",
+    "purg",
+    "eras",
+    "chang",
+    "replac",
+    "renam",
+    "assign",
+    "enabl",
+    "disabl",
+    "reopen",
+    "schedul",
+    "trigger",
+    "execut",
+    "publish",
+    "renew",
+    "rotat",
+    "invalidat",
+    "unlink",
+    "disconnect"
   ],
   "EXATOS_ESCRITA": [
     "gera",
@@ -149,12 +186,34 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "concilie",
     "conciliou",
     "ativar",
+    "ativa",
     "ative",
     "ativou",
     "inativar",
+    "inativa",
     "inative",
+    "inativou",
     "desativar",
+    "desativa",
     "desative",
+    "desativou",
+    "liquida",
+    "zerar",
+    "zera",
+    "zere",
+    "zerou",
+    "trocar",
+    "troca",
+    "troque",
+    "trocou",
+    "agendar",
+    "agenda",
+    "agende",
+    "agendou",
+    "cobrar",
+    "cobra",
+    "cobre",
+    "cobrou",
     "add",
     "adds",
     "set",
@@ -178,7 +237,27 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "block",
     "blocks",
     "release",
-    "releases"
+    "releases",
+    "drop",
+    "drops",
+    "clear",
+    "clears",
+    "reset",
+    "resets",
+    "move",
+    "moves",
+    "apply",
+    "applies",
+    "close",
+    "closes",
+    "run",
+    "runs",
+    "complete",
+    "completes",
+    "finalize",
+    "finalizes",
+    "charge",
+    "charges"
   ],
   "RADICAIS_LEITURA": [
     "list",
@@ -243,6 +322,16 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "automatically",
     "missing",
     "absent"
+  ],
+  "CONJUNCOES_ALTERNATIVA": [
+    "ou",
+    "or"
+  ],
+  "CONJUNCOES_NO_NOME": [
+    "e",
+    "ou",
+    "and",
+    "or"
   ]
 }
 ```
@@ -253,6 +342,8 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 - Ferramenta de leitura com palavra de escrita na descrição (“Lista notas por data de **emissão**”) sai
   como escrita e não é testada. É o lado seguro: perde-se cobertura, nunca se escreve no ERP.
 - Nome sem nenhum verbo conhecido (`conta_azul_status`) sai indeterminado, mesmo que só leia.
+- `ativa`, `liquida`, `agenda`, `cobra`, `troca` contam como verbo mesmo quando são adjetivo ou substantivo
+  ("conta ativa", "a agenda do dia"): lado seguro.
 - `fatura` sozinho conta como verbo ("Lista e **fatura** as vendas"): "a fatura do cliente" também sai escrita. Lado seguro.
 - "e" também é conjunção: em "notas emitidas **e** canceladas", `canceladas` conta como escrita. Lado seguro.
 - Nenhuma lista de palavras é completa. Um verbo de escrita que não está nas listas, num nome que também tem

@@ -71,6 +71,17 @@ CASOS = [
     ("listar_vendas", "Lista e fatura as vendas", "escrita", "fatura = 3ª pessoa de faturar"),
     ("get_invoice", "Gets the invoice and patches its status", "escrita", "patches"),
     ("listar_faturas", "", "leitura", "faturas (plural) é substantivo"),
+    # Review pós-build rodada 2 (fable): 3ª pessoa, verbos que faltavam, upsert, nome composto
+    ("listar_clientes", "Lista os clientes e desativa os inativos", "escrita", "desativa"),
+    ("listar_titulos", "Lista e liquida os títulos vencidos", "escrita", "liquida"),
+    ("consultar_conta", "Consulta a conta e ativa o acesso à API", "escrita", "ativa"),
+    ("listar_e_apagar_duplicados", "", "escrita", "apagar"),
+    ("get_or_reset_token", "Gets the token; resets it when expired", "escrita", "reset"),
+    ("obter_cliente", "Cliente criado ou atualizado conforme os dados informados", "escrita", "upsert: particípio perto de ou"),
+    ("listar_e_xpto_registros", "", "indeterminada", "nome composto com verbo desconhecido"),
+    ("get_or_frobnicate", "", "indeterminada", "nome composto com verbo desconhecido"),
+    ("listar_cobrancas", "", "leitura", "cobranças é substantivo"),
+    ("listar_agendamentos", "", "leitura", "agendamentos é substantivo"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -115,6 +126,8 @@ class TestClassificador(unittest.TestCase):
             "NOME_DE_CONTA": list(cf.NOME_DE_CONTA),
             "AUXILIARES": list(cf.AUXILIARES),
             "MARCADORES_CONDICIONAIS": list(cf.MARCADORES_CONDICIONAIS),
+            "CONJUNCOES_ALTERNATIVA": list(cf.CONJUNCOES_ALTERNATIVA),
+            "CONJUNCOES_NO_NOME": list(cf.CONJUNCOES_NO_NOME),
         })
 
     def test_regra_fail_closed_identica(self):

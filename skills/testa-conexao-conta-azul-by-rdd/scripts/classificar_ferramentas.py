@@ -10,14 +10,17 @@ As listas e a ordem das regras são as de references/CLASSIFICACAO_FERRAMENTAS.m
 Regras, nesta ordem:
   1. Um token do nome ou da descrição casa um termo de escrita            -> escrita
   2. Um token do nome ou da descrição começa por "baix" (baixa = quitação) -> indeterminada
-  3. Um token do NOME casa um termo de leitura                            -> leitura
-  4. Qualquer outro caso                                                  -> indeterminada
+  3. O NOME tem conjunção depois da 1ª palavra (listar_e_…, get_or_…)    -> indeterminada
+  4. Um token do NOME casa um termo de leitura                            -> leitura
+  5. Qualquer outro caso                                                  -> indeterminada
 
 Casamento POR TOKEN, nunca por pedaço de palavra: "ver" não casa "reverter".
 Radical casa o início do token ("atualiz" casa "atualiza", "atualizacao"); exato casa só o token inteiro.
 Particípio adjetivo ("notas emitidas") não conta como verbo de escrita, exceto: no 1º token do nome; depois de
-auxiliar ("é criado", "is created" — voz passiva); ou se o texto fala em criar sob condição ("se não existir",
-"automaticamente", "if missing").
+auxiliar ("é criado", "is created" — voz passiva); a até 2 palavras de "ou"/"or" ("criado ou atualizado" — upsert);
+ou se o texto fala em criar sob condição ("se não existir", "automaticamente", "if missing").
+Nome composto com conjunção ("listar_e_apagar", "get_or_reset") nunca é leitura: sai indeterminada se nenhum
+termo de escrita casou.
 "a pagar" e "a receber" são nome de conta ("contas a pagar"), não verbo.
 """
 import json
@@ -30,10 +33,12 @@ RADICAIS_ESCRITA = (
     "cancel", "emit", "emiss", "quit", "revert", "revers", "convert", "convers", "envi", "adicion",
     "estorn", "aprov", "confirm", "transmit", "salv", "grav", "import", "duplic", "reabr", "fech",
     "marc", "sincron", "autoriz", "anex", "revog", "anul", "bloque", "liber", "reembols", "transfer",
-    "mescl", "restaur",
+    "mescl", "restaur", "apag", "destru", "limp", "substitu", "renov", "encerr", "finaliz", "conclu",
+    "dispar", "vincul", "desvincul", "habilit", "desabilit", "ajust", "corrig", "execut",
     "creat", "updat", "insert", "upsert", "modif", "writ", "submit", "approv", "generat", "upload", "sync",
     "register", "authoriz", "attach", "archiv", "revok", "reconcil", "activat", "deactivat", "refund",
-    "merg", "restor",
+    "merg", "restor", "destroy", "purg", "eras", "chang", "replac", "renam", "assign", "enabl", "disabl",
+    "reopen", "schedul", "trigger", "execut", "publish", "renew", "rotat", "invalidat", "unlink", "disconnect",
 )
 EXATOS_ESCRITA = (
     "gera", "gerar", "gere", "gerou", "geram", "geracao",
@@ -44,9 +49,14 @@ EXATOS_ESCRITA = (
     "arquivar", "arquiva", "arquive", "arquivou",
     "liquidar", "liquide", "liquidou",
     "conciliar", "concilia", "concilie", "conciliou",
-    "ativar", "ative", "ativou", "inativar", "inative", "desativar", "desative",
+    "ativar", "ativa", "ative", "ativou", "inativar", "inativa", "inative", "inativou",
+    "desativar", "desativa", "desative", "desativou", "liquida",
+    "zerar", "zera", "zere", "zerou", "trocar", "troca", "troque", "trocou",
+    "agendar", "agenda", "agende", "agendou", "cobrar", "cobra", "cobre", "cobrou",
     "add", "adds", "set", "sets", "put", "puts", "post", "posts", "patch", "patches", "send", "sends",
     "pay", "pays", "issue", "issues", "mark", "marks", "void", "voids", "block", "blocks", "release", "releases",
+    "drop", "drops", "clear", "clears", "reset", "resets", "move", "moves", "apply", "applies", "close", "closes",
+    "run", "runs", "complete", "completes", "finalize", "finalizes", "charge", "charges",
 )
 RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch", "read")
 EXATOS_LEITURA = ("get", "find", "ver", "show", "view")
@@ -59,6 +69,11 @@ AUXILIARES = ("e", "sera", "serao", "sao", "foi", "foram", "fica", "ficam", "sen
 # Descrição que fala em criar sob condição ("se não existir", "automaticamente", "if missing"):
 # nenhum particípio dela é isento.
 MARCADORES_CONDICIONAIS = ("automaticamente", "automatically", "missing", "absent")
+# Particípio a até 2 palavras de "ou"/"or" = alternativa de ação ("criado ou atualizado": upsert), não adjetivo.
+CONJUNCOES_ALTERNATIVA = ("ou", "or")
+# Nome composto com conjunção ("listar_e_apagar", "get_or_reset") junta duas ações: nunca é leitura, mesmo
+# que o 2º verbo não esteja nas listas (fecha a classe "verbo de escrita fora da lista" no nome).
+CONJUNCOES_NO_NOME = ("e", "ou", "and", "or")
 
 
 def tokens(texto):
@@ -83,8 +98,10 @@ def _condicional(toks):
 
 def _conta_como_verbo(toks, i, primeiro_do_nome):
     tok = toks[i]
+    vizinhos = toks[max(0, i - 2):i] + toks[i + 1:i + 3]
     if (not primeiro_do_nome and tok.endswith(SUFIXOS_PARTICIPIO)
-            and not (i > 0 and toks[i - 1] in AUXILIARES) and not _condicional(toks)):
+            and not (i > 0 and toks[i - 1] in AUXILIARES) and not _condicional(toks)
+            and not any(v in CONJUNCOES_ALTERNATIVA for v in vizinhos)):
         return False
     if tok in NOME_DE_CONTA and i > 0 and toks[i - 1] == "a":
         return False
@@ -100,6 +117,8 @@ def classificar(nome, descricao=""):
     for tok in tn + td:
         if tok.startswith(RADICAL_INDETERMINADO):
             return "indeterminada", f"'{tok}': baixa na Conta Azul é quitação"
+    if any(tok in CONJUNCOES_NO_NOME for tok in tn[1:]):
+        return "indeterminada", "nome composto (duas ações): não é leitura"
     for tok in tn:
         if _leitura(tok):
             return "leitura", f"termo de leitura no nome: {tok}"
