@@ -156,6 +156,17 @@ class TestClassificador(unittest.TestCase):
             with self.subTest(nome=nome, desc=desc):
                 self.assertEqual(cf.classificar(nome, desc)[0], esperado, porque)
 
+    def test_nfc_e_nfd_dao_a_mesma_classe(self):
+        """Review rodada 9 (codex): 'lança' com ç decomposto não pode virar 'lanc' + 'a'."""
+        import unicodedata
+        for nome, desc, _esp, _porque in CASOS:
+            with self.subTest(nome=nome, desc=desc):
+                nfc = cf.classificar(unicodedata.normalize("NFC", nome), unicodedata.normalize("NFC", desc))[0]
+                nfd = cf.classificar(unicodedata.normalize("NFD", nome), unicodedata.normalize("NFD", desc))[0]
+                self.assertEqual(nfc, nfd)
+        d = unicodedata.normalize("NFD", "Lista os títulos e lança um débito.")
+        self.assertEqual(cf.classificar("listar_titulos", d)[0], "escrita")
+
     def test_auxiliar_em_unicode_decomposto(self):
         """Review rodada 5 (codex): 'é' em NFD (e + acento combinante) tem de contar como auxiliar."""
         import unicodedata

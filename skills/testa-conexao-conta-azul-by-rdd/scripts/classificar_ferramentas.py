@@ -125,8 +125,12 @@ def tokens_e_fronteiras(texto):
     outro sinal (ponto, vírgula, travessão, hífen, barra, aspas, parênteses, quebra de linha…) separa.
     A isenção de particípio exige o substantivo no MESMO trecho (review rodadas 6 e 7, codex: o ponto e depois
     o travessão colavam `clientes` + `criado`; lista de sinais vira regra por exclusão)."""
+    # Sem marcas combinantes ANTES de separar: em NFD o acento (U+0327, U+0301…) não é \w e cortaria "lança" em
+    # "lanc" + "a" (review rodada 9, codex). Acento sai aqui de qualquer jeito: tokens() compara sem acento.
+    s = unicodedata.normalize("NFKD", texto or "")
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
     toks, fronteiras = [], []
-    for trecho in re.split(r"[^\w \t]+", texto or ""):
+    for trecho in re.split(r"[^\w \t]+", s):
         for k, t in enumerate(tokens(trecho)):
             toks.append(t)
             fronteiras.append(k == 0)
@@ -166,6 +170,9 @@ def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional, fron
 
 
 def classificar(nome, descricao=""):
+    # Uma forma canônica na entrada: NFC e NFD do mesmo texto têm de dar a mesma classe.
+    nome = unicodedata.normalize("NFC", nome or "")
+    descricao = unicodedata.normalize("NFC", descricao or "")
     (tn, fn), (td, fd) = tokens_e_fronteiras(nome), tokens_e_fronteiras(descricao)
     # Auxiliar e condição valem para nome e descrição JUNTOS (review rodada 5, A2: paridade com a prosa).
     aux = _tem_auxiliar(f"{nome} {descricao}")
