@@ -170,7 +170,7 @@ def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional, fron
     # Auxiliar em qualquer posição do texto = voz passiva (review rodadas 2 e 4, codex): sem janela de distância.
     # Forma EXATA da lista é verbo por definição: nunca isentar como particípio ("liquida" termina em -ida;
     # review rodada 3, codex).
-    if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and tok.endswith(SUFIXOS_PARTICIPIO)
+    if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and (tok.endswith(SUFIXOS_PARTICIPIO) or tok in PARTICIPIOS_DE_EXATOS)
             and i > 0 and not fronteiras[i] and toks[i - 1] in SUBSTANTIVOS_DO_DOMINIO
             # Plural nos dois (review rodada 7, A3): listagem descreve "notas emitidas"; "cliente criado" no
             # singular costuma ser o resultado da própria operação.
