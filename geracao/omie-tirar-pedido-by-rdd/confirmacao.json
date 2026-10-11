@@ -1,9 +1,0 @@
-{
-  "origem": "usuario",
-  "escopo_id": "OMIE-PED",
-  "revisao": 2,
-  "sha256_escopo": "65e4271b86a3a3bfabc5c9088f356d806a303826d6804b50672c53b4498cc901",
-  "texto": "CONFIRMO O ESCOPO OMIE-PED V2 E AUTORIZO GERAR A SKILL.",
-  "apos_apresentacao": true,
-  "mensagem_id": "claude-code AskUserQuestion 2026-10-10 sessao gerador-skills-omie (resposta do Roberto, V2)"
-}

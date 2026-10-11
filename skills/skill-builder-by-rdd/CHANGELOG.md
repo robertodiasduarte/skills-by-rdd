@@ -1,12 +1,5 @@
 # Histórico
 
-## 1.1.2 — 10/10/2026
-
-"Quando não usar" passa a nomear a `skill-builder-omie-by-rdd`: skill que opera o ERP
-Omie pelo MCP oficial é gerada pela filha especializada, não por esta meta-skill.
-Acrescenta o cenário negativo `neg-omie-mcp-vai-para-filha` (15 cenários). Nenhum
-script, teste, referência ou modelo mudou.
-
 ## 1.1.1 — 20/09/2026
 
 Renomeia a meta-skill para **Skill Builder by RDD**. O identificador técnico passa a

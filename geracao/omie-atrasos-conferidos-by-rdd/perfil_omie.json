@@ -1,9 +1,0 @@
-{
-  "schema": 1,
-  "totaliza": true,
-  "executa_python_com_rede": true,
-  "perfil": "conferidor",
-  "multi_empresa": false,
-  "aprovacao_por_ferramenta": "nao_perguntado",
-  "mcp_disponivel": true
-}

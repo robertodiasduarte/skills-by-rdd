@@ -1,4 +1,0 @@
-interface:
-  display_name: "ICP Beatriz — exemplo de contabilidade"
-  short_description: "Exemplo de jornada médica e decisões de marketing"
-  default_prompt: "Use $icp-contabilidade-beatriz-exemplo para orientar esta decisão conforme o ICP e sua fase da jornada."

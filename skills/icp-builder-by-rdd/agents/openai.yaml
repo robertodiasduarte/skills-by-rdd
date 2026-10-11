@@ -1,4 +1,0 @@
-interface:
-  display_name: "ICP BUILDER BY RDD"
-  short_description: "Entrevista e cria skills de ICP para cada empresa"
-  default_prompt: "Use $icp-builder-by-rdd para entrevistar-me e criar uma skill que represente o ICP e sua jornada para minha empresa."

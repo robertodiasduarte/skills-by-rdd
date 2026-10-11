@@ -1,6 +1,6 @@
 # Validação da entrega
 
-Data: 20/09/2026. Versão: 1.1.1 (revalidada na 1.1.2 em 10/10/2026: scripts e testes inalterados).
+Data: 20/09/2026. Versão: 1.1.1.
 Ambiente de teste: Python 3.13.5, execução local.
 Os testes são de software e de protocolo; não contêm gabaritos normativos.
 
@@ -47,7 +47,7 @@ Não houve acesso ao repositório citado na documentação.
 
 ## O que esta skill ainda NÃO prova
 
-Os 15 cenários comportamentais em evals/cases.json foram escritos, mas não
+Os 14 cenários comportamentais em evals/cases.json foram escritos, mas não
 executados em Claude, ChatGPT, Grok, Kimi ou outro produto.
 Os 43 testes locais não demonstram obediência universal de modelos ao protocolo.
 

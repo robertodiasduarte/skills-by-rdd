@@ -15,10 +15,7 @@ jobs:
         run: bash scripts/publish-check.sh
 
       - name: Validators compile
-        run: python3 -m py_compile skills/*/scripts/*.py skills/*/assets/omie/*.py scripts/*.py
-
-      - name: Herança vigiada
-        run: python3 scripts/heranca-check.py
+        run: python3 -m py_compile skills/*/scripts/*.py
 
       - name: Shell scripts parse
         run: bash -n scripts/package.sh scripts/publish-check.sh
