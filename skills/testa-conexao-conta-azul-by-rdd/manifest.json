@@ -63,7 +63,7 @@
     "Que o ChatGPT Desktop executa o script; sem isso vale a tabela em prosa.",
     "Que o modelo respeita a regra fail-closed e espera o ok do usuário em toda conversa: a skill instrui, o aplicativo é quem chama as ferramentas.",
     "Qualquer padrão de nome de um MCP da própria Conta Azul: sem fonte pública em 2026-10-10.",
-    "A segurança do código do MCP instalado (fora do escopo; ver auditar-harness)."
+    "A segurança do código do MCP instalado (fora do escopo; ver rdd-audita-harness)."
   ],
   "pendencias": [
     "Rodar E1–E8 nos 2 aplicativos com um MCP local de terceiro e a conta de teste, e registrar em testes.comportamentais: {app, casos, aprovado_em, por}.",

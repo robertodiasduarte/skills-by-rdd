@@ -30,6 +30,10 @@ ao contador o que fazer em cada falha.
 7. Funcionar no navegador sem MCP (claude.ai e chatgpt.com web)
 8. Guardar ou exportar os dados retornados
 
+> Nota editorial (11/10/2026, depois da confirmação): a skill de auditoria citada na exclusão 6 se chama, no
+> catálogo público, **`rdd-audita-harness`**; `auditar-harness` é o nome interno dela. A exclusão é a mesma — só o nome
+> foi corrigido nos demais arquivos para o aluno conseguir achá-la. O texto acima é o literal confirmado.
+
 ## Períodos
 - **Consulta:** dados ao vivo no momento do teste; catálogo de erros e padrões de fornecedor com corte em 10/10/2026.
 - **Cálculo:** não aplicável.

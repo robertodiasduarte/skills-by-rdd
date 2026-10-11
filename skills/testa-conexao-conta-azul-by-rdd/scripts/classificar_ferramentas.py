@@ -39,9 +39,10 @@ RADICAIS_ESCRITA = (
     "mescl", "restaur", "apag", "destru", "limp", "substitu", "renov", "encerr", "finaliz", "conclu",
     "dispar", "vincul", "desvincul", "habilit", "desabilit", "ajust", "corrig", "execut",
     "efetu", "realiz", "process", "aplic", "atribu", "reenvi", "desconect", "notific", "prorrog", "reagend",
+    "inser", "contabiliz", "recalcul", "provision", "deposit", "sobrescrev", "repass", "compens",
     "creat", "updat", "insert", "upsert", "modif", "writ", "submit", "approv", "generat", "upload", "sync",
     "register", "authoriz", "attach", "archiv", "revok", "reconcil", "activat", "deactivat", "refund",
-    "merg", "restor", "destroy", "purg", "eras", "chang", "replac", "renam", "assign", "enabl", "disabl",
+    "merg", "restor", "settl", "overwrit", "push", "destroy", "purg", "eras", "chang", "replac", "renam", "assign", "enabl", "disabl",
     "reopen", "schedul", "trigger", "execut", "publish", "renew", "rotat", "invalidat", "unlink", "disconnect",
 )
 EXATOS_ESCRITA = (
@@ -59,6 +60,8 @@ EXATOS_ESCRITA = (
     "agendar", "agenda", "agende", "agendou", "cobrar", "cobra", "cobre", "cobrou",
     "add", "adds", "set", "sets", "put", "puts", "post", "posts", "patch", "patches", "send", "sends",
     "pay", "pays", "issue", "issues", "mark", "marks", "void", "voids", "block", "blocks", "release", "releases",
+    "save", "saves", "store", "stores", "book", "books", "sign", "signs",
+    "assina", "assinar", "assine", "assinou", "rateia", "ratear", "rateie", "rateou", "posta", "postar", "postou",
     "drop", "drops", "clear", "clears", "reset", "resets", "move", "moves", "apply", "applies", "close", "closes",
     "run", "runs", "complete", "completes", "finalize", "finalizes", "charge", "charges",
 )

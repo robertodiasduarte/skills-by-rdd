@@ -11,7 +11,7 @@ Isto não é recomendação de fornecedor. Corte: 10/10/2026.
 | Desconhecido | Nenhum dos sinais acima | "Fornecedor não identificado" |
 
 Em qualquer tipo: se houver ferramenta de **escrita**, o alerta de segurança vale. Para avaliar o código de
-um MCP antes de instalar, a indicação é a skill `auditar-harness` — esta skill não audita código.
+um MCP antes de instalar, a indicação é a skill `rdd-audita-harness` — esta skill não audita código.
 
 Atualização: quando houver fonte pública sobre um MCP da Conta Azul, esta tabela ganha os padrões dele
 numa nova versão (v1.1), sem mudar o procedimento.

@@ -17,7 +17,7 @@ se ele funciona com a empresa do seu cliente, sem correr o risco de lançar, alt
 
 **O que ela não faz.** Não pede nem aceita senha, token ou `client_secret`. Não chama ferramenta de escrita,
 nem para testar. Não instala nem configura o MCP. Não analisa os seus dados: mostra só o nome da empresa e
-quantos registros leu. Não audita o código do MCP — para isso, use a skill `auditar-harness`.
+quantos registros leu. Não audita o código do MCP — para isso, use a skill `rdd-audita-harness`.
 
 **Como ler o resultado.** Verde quer dizer: o MCP está instalado, a empresa responde e as consultas de leitura
 funcionam. Vermelho em "Segurança" quer dizer que o MCP tem ferramentas que escrevem no ERP: elas não foram

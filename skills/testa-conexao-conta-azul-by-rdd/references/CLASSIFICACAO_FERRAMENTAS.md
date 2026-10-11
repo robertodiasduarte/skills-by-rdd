@@ -134,6 +134,14 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "notific",
     "prorrog",
     "reagend",
+    "inser",
+    "contabiliz",
+    "recalcul",
+    "provision",
+    "deposit",
+    "sobrescrev",
+    "repass",
+    "compens",
     "creat",
     "updat",
     "insert",
@@ -156,6 +164,9 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "refund",
     "merg",
     "restor",
+    "settl",
+    "overwrit",
+    "push",
     "destroy",
     "purg",
     "eras",
@@ -263,6 +274,25 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "blocks",
     "release",
     "releases",
+    "save",
+    "saves",
+    "store",
+    "stores",
+    "book",
+    "books",
+    "sign",
+    "signs",
+    "assina",
+    "assinar",
+    "assine",
+    "assinou",
+    "rateia",
+    "ratear",
+    "rateie",
+    "rateou",
+    "posta",
+    "postar",
+    "postou",
     "drop",
     "drops",
     "clear",
@@ -451,6 +481,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
   ("conta ativa", "a agenda do dia"): lado seguro.
 - `fatura` sozinho conta como verbo ("Lista e **fatura** as vendas"): "a fatura do cliente" também sai escrita. Lado seguro.
 - Texto com auxiliar em qualquer lugar ("as notas **são** emitidas e listadas") faz todo particípio dele contar como escrita. Lado seguro.
+- `devolve` fica de fora de propósito: em API quer dizer "retorna" (leitura).
 - Nenhuma lista de palavras é completa. Um verbo de escrita que não está nas listas, num nome que também tem
   verbo de leitura, sai como leitura. Por isso a bateria pede **1 registro** e nenhum parâmetro de criação, e o
   relatório lista todas as ferramentas chamadas: confira a lista antes de usar o MCP no dia a dia.

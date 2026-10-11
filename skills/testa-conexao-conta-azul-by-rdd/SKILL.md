@@ -36,7 +36,7 @@ Não usar para:
 - consultar, analisar, conciliar ou comparar dados contábeis e financeiros (esta skill só testa a conexão);
 - lançar, alterar, dar baixa, faturar, excluir ou qualquer outra escrita na Conta Azul;
 - instalar, configurar ou editar o arquivo de configuração do MCP (mostre o passo a passo da página `/conta-azul/`);
-- auditar o código de um MCP de terceiro (indique a skill `auditar-harness`);
+- auditar o código de um MCP de terceiro (indique a skill `rdd-audita-harness`);
 - chamar a API da Conta Azul diretamente, fora do MCP.
 
 ## Dados necessários
