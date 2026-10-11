@@ -43,6 +43,10 @@ CAMPOS_PERFIL = {"schema", "totaliza", "executa_python_com_rede", "perfil", "mul
                  "aprovacao_por_ferramenta", "mcp_disponivel"}
 APROVACAO = {"declarada_sim", "declarada_nao", "nao_perguntado"}
 OPERACAO_RE = re.compile(r"\b([a-z]+/[a-z0-9-]+):([A-Z][A-Za-z0-9]+)\b")
+# Verbo de escrita em CamelCase citado solto, mesmo fora do catálogo (achado R1 do 2º revisor, rodada 7).
+VERBO_ESCRITA_RE = re.compile(r"\b(?:Incluir|Alterar|Excluir|Lancar|Cancelar|Concluir|Baixar|Faturar|Inutilizar|Upsert|"
+                              r"Associar|Trocar|Devolver|Gerar|Ativar|Suspender|Conciliar|Duplicar|Adicionar|Reabrir|Estornar)"
+                              r"[A-Z][A-Za-z0-9]*\b")
 OP_JSON_RE = re.compile(r"[\"']op[\"']\s*:\s*[\"']([A-Za-z][A-Za-z0-9]*)[\"']")
 FISCAL_RE = re.compile(r"(Faturar|Inutilizar)")
 RADICAL_FISCAL_RE = re.compile(r"fatur|inutiliz", re.I)
@@ -236,6 +240,8 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
         erros.append("OPERACAO_NAO_DECLARADA")
     # Forma JSON ("op": "Metodo"): vale para QUALQUER nome, inclusive fora do catálogo (achado R1 da rodada 2).
     if set(OP_JSON_RE.findall(tudo)) - metodos_declarados:
+        erros.append("OPERACAO_NAO_DECLARADA")
+    if set(VERBO_ESCRITA_RE.findall(tudo)) - metodos_declarados:
         erros.append("OPERACAO_NAO_DECLARADA")
 
     classes = {(c, o): classificar(catalogo, c, o) for c, o in declaradas}

@@ -298,6 +298,11 @@ class EscritaTests(TempDir):
         raiz = montar(self.tmp / "a", "operador", [LEITURA], corpo)
         self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
 
+    def test_verbo_de_escrita_fora_do_catalogo_citado_solto(self):
+        corpo = "Depois de conferir, chame LancarRecebimentoEmLote pelo omie_executar."
+        raiz = montar(self.tmp / "a", "conferidor", [LEITURA], corpo)
+        self.assertIn("OPERACAO_NAO_DECLARADA", self.erros(raiz))
+
     def test_confirmado_sem_escrita(self):
         raiz = montar(self.tmp / "a", "operador", [LEITURA], 'Use `"confirmado": true`.')
         self.assertIn("CONFIRMADO_SEM_ESCRITA", self.erros(raiz))
