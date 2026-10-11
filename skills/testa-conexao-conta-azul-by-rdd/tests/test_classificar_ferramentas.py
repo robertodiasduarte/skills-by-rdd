@@ -88,6 +88,14 @@ CASOS = [
     ("listar_titulos_a_receber", "Lista os títulos a receber", "leitura", "títulos a receber é nome de conta"),
     # Review pós-build rodada 3 (codex): forma exata terminada em -ida/-ado não é particípio
     ("consultar_titulos", "Consulta títulos; liquida os vencidos", "escrita", "liquida sem auxiliar antes"),
+    # Review pós-build rodada 4 (codex): camelCase e voz passiva com trecho intercalado
+    ("listOrCreateCustomer", "", "escrita", "camelCase: create"),
+    ("getCustomer", "", "leitura", "camelCase: get"),
+    ("listInvoices", "", "leitura", "camelCase: list"),
+    ("GetOrUpdateHTTPStatus", "", "escrita", "PascalCase + sigla: update"),
+    ("obter_cliente", "O cliente é, quando necessário, atualizado", "escrita", "auxiliar longe do particípio"),
+    ("obter_cliente", "The customer is, when needed, updated", "escrita", "auxiliar longe do particípio (EN)"),
+    ("listar_notas", "Lista as notas emitidas e canceladas no período", "leitura", "'e' é conjunção, não auxiliar"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]

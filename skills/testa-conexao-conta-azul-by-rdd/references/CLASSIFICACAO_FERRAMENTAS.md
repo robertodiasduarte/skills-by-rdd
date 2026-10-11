@@ -8,7 +8,8 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 ## Como ler o nome e a descrição
 
 1. Junte o **nome** e a **descrição** da ferramenta, em minúsculas e sem acento.
-2. Quebre em palavras: tudo que não é letra ou número separa (`listar_contas_a_pagar` vira `listar`, `contas`, `a`, `pagar`).
+2. Quebre em palavras: tudo que não é letra ou número separa (`listar_contas_a_pagar` vira `listar`, `contas`, `a`, `pagar`),
+   e a troca de minúscula para maiúscula também (`listOrCreateCustomer` vira `list`, `or`, `create`, `customer`).
 3. Compare **palavra a palavra**, nunca um pedaço do meio: `ver` não casa `reverter`, `get` não casa `forget`.
    - **Radical** casa o começo da palavra: `atualiz` casa `atualiza`, `atualizar`, `atualizacao`.
    - **Exato** casa só a palavra inteira: `gera` casa `gera`, mas não `geral`.
@@ -26,8 +27,8 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 Duas exceções na regra 1, porque não são verbo:
 - **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita.
   Palavra da lista de termos **exatos** de escrita nunca é tratada como particípio (`liquida` termina em -ida, mas é verbo).
-  Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; vem até 2 palavras depois de um auxiliar
-  (`é criado`, `são removidos`, `is created` — voz passiva); ou o texto fala em criar sob condição
+  Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; o texto tem um auxiliar em **qualquer** lugar
+  (`é criado`, `é, quando necessário, atualizado`, `is created` — voz passiva; `e` sem acento é conjunção e não conta); ou o texto fala em criar sob condição
   (`se não existir`, `automaticamente`, `if missing`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
   que é upsert). Auxiliares, marcadores e conjunções estão nas listas abaixo.
 - `pagar` e `receber` logo depois de `a` são nome de conta **só** quando antes vem `conta(s)`, `título(s)`,
@@ -298,9 +299,12 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "receber"
   ],
   "AUXILIARES": [
-    "e",
+    "é",
+    "será",
+    "serão",
     "sera",
     "serao",
+    "são",
     "sao",
     "foi",
     "foram",
@@ -363,7 +367,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 - `ativa`, `liquida`, `agenda`, `cobra`, `troca` contam como verbo mesmo quando são adjetivo ou substantivo
   ("conta ativa", "a agenda do dia"): lado seguro.
 - `fatura` sozinho conta como verbo ("Lista e **fatura** as vendas"): "a fatura do cliente" também sai escrita. Lado seguro.
-- "e" também é conjunção: em "notas emitidas **e** canceladas", `canceladas` conta como escrita. Lado seguro.
+- Texto com auxiliar em qualquer lugar ("as notas **são** emitidas e listadas") faz todo particípio dele contar como escrita. Lado seguro.
 - Nenhuma lista de palavras é completa. Um verbo de escrita que não está nas listas, num nome que também tem
   verbo de leitura, sai como leitura. Por isso a bateria pede **1 registro** e nenhum parâmetro de criação, e o
   relatório lista todas as ferramentas chamadas: confira a lista antes de usar o MCP no dia a dia.

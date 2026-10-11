@@ -16,8 +16,10 @@ Regras, nesta ordem:
 
 Casamento POR TOKEN, nunca por pedaço de palavra: "ver" não casa "reverter".
 Radical casa o início do token ("atualiz" casa "atualiza", "atualizacao"); exato casa só o token inteiro.
-Particípio adjetivo ("notas emitidas") não conta como verbo de escrita, exceto: no 1º token do nome; depois de
-auxiliar ("é criado", "is created" — voz passiva); a até 2 palavras de "ou"/"or" ("criado ou atualizado" — upsert);
+Nome e descrição são quebrados também em camelCase ("listOrCreateCustomer" = list, or, create, customer).
+Particípio adjetivo ("notas emitidas") não conta como verbo de escrita, exceto: no 1º token do nome; se o texto
+tem auxiliar em qualquer lugar ("é criado", "é, quando necessário, atualizado", "is created" — voz passiva);
+a até 2 palavras de "ou"/"or" ("criado ou atualizado" — upsert);
 ou se o texto fala em criar sob condição ("se não existir", "automaticamente", "if missing").
 Nome composto com conjunção ("listar_e_apagar", "get_or_reset") nunca é leitura: sai indeterminada se nenhum
 termo de escrita casou.
@@ -66,9 +68,10 @@ NOME_DE_CONTA = ("pagar", "receber")
 # "a pagar" só é nome de conta depois de um destes substantivos ("contas a pagar"); "começa a pagar" é verbo.
 ANTES_DE_NOME_DE_CONTA = ("conta", "contas", "titulo", "titulos", "valor", "valores", "lancamento", "lancamentos",
                           "parcela", "parcelas", "saldo", "saldos", "total", "totais")
-# Particípio depois de auxiliar é voz passiva ("um novo cliente é criado"): verbo, não adjetivo.
-AUXILIARES = ("e", "sera", "serao", "sao", "foi", "foram", "fica", "ficam", "sendo", "ser", "seja", "sejam",
-              "is", "are", "was", "were", "be", "been", "being", "gets")
+# Texto com auxiliar em QUALQUER posição tem voz passiva ("um novo cliente é criado", "é, quando necessário,
+# atualizado"): nenhum particípio dele é isento. Lidos com acento: "é" (verbo) não é "e" (conjunção).
+AUXILIARES = ("é", "será", "serão", "sera", "serao", "são", "sao", "foi", "foram", "fica", "ficam", "sendo", "ser",
+              "seja", "sejam", "is", "are", "was", "were", "be", "been", "being", "gets")
 # Descrição que fala em criar sob condição ("se não existir", "automaticamente", "if missing"):
 # nenhum particípio dela é isento.
 MARCADORES_CONDICIONAIS = ("automaticamente", "automatically", "missing", "absent")
@@ -79,8 +82,18 @@ CONJUNCOES_ALTERNATIVA = ("ou", "or")
 CONJUNCOES_NO_NOME = ("e", "ou", "and", "or")
 
 
+def _separar_camel(texto):
+    # listOrCreateCustomer -> list Or Create Customer; HTTPStatus -> HTTP Status (review rodada 4, codex).
+    s = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", texto or "")
+    return re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", s)
+
+
+def _tem_auxiliar(texto):
+    return any(t in AUXILIARES for t in re.findall(r"\w+", _separar_camel(texto).lower()))
+
+
 def tokens(texto):
-    s = unicodedata.normalize("NFKD", (texto or "").lower())
+    s = unicodedata.normalize("NFKD", _separar_camel(texto).lower())
     s = "".join(c for c in s if not unicodedata.combining(c))
     return re.findall(r"[a-z0-9]+", s)
 
@@ -99,14 +112,14 @@ def _condicional(toks):
     return any(a in ("nao", "not") and b.startswith("exist") for a, b in zip(toks, toks[1:]))
 
 
-def _conta_como_verbo(toks, i, primeiro_do_nome):
+def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar):
     tok = toks[i]
     vizinhos = toks[max(0, i - 2):i] + toks[i + 1:i + 3]
-    # Auxiliar até 2 palavras antes: "é rapidamente atualizado" também é voz passiva (review rodada 2, codex).
+    # Auxiliar em qualquer posição do texto = voz passiva (review rodadas 2 e 4, codex): sem janela de distância.
     # Forma EXATA da lista é verbo por definição: nunca isentar como particípio ("liquida" termina em -ida;
     # review rodada 3, codex).
     if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and tok.endswith(SUFIXOS_PARTICIPIO)
-            and not any(t in AUXILIARES for t in toks[max(0, i - 2):i]) and not _condicional(toks)
+            and not tem_auxiliar and not _condicional(toks)
             and not any(v in CONJUNCOES_ALTERNATIVA for v in vizinhos)):
         return False
     if tok in NOME_DE_CONTA and i > 1 and toks[i - 1] == "a" and toks[i - 2] in ANTES_DE_NOME_DE_CONTA:
@@ -116,9 +129,9 @@ def _conta_como_verbo(toks, i, primeiro_do_nome):
 
 def classificar(nome, descricao=""):
     tn, td = tokens(nome), tokens(descricao)
-    for toks, eh_nome in ((tn, True), (td, False)):
+    for toks, eh_nome, aux in ((tn, True, _tem_auxiliar(nome)), (td, False, _tem_auxiliar(descricao))):
         for i, tok in enumerate(toks):
-            if _escrita(tok) and _conta_como_verbo(toks, i, eh_nome and i == 0):
+            if _escrita(tok) and _conta_como_verbo(toks, i, eh_nome and i == 0, aux):
                 return "escrita", f"termo de escrita: {tok}"
     for tok in tn + td:
         if tok.startswith(RADICAL_INDETERMINADO):
