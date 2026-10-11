@@ -363,6 +363,46 @@ class DegradacaoTests(TempDir):
         self.assertIn("ESCRITA_SEM_GATE", json.loads(r.stdout)["errors"])
 
 
+EXEMPLOS = ROOT.parent
+
+
+@unittest.skipUnless((EXEMPLOS / "omie-atrasos-conferidos-by-rdd").is_dir()
+                     and (EXEMPLOS / "omie-tirar-pedido-by-rdd").is_dir(),
+                     "exemplos reais ficam no repositório do catálogo, fora do pacote publicado")
+class ExemplosAdulteradosTests(TempDir):
+    """AT-004 sobre cópias adulteradas dos exemplos reais (achados do avaliador fresco, ciclo 1)."""
+
+    def rodar(self, raiz: Path, perfil: str):
+        r = subprocess.run([sys.executable, "-B", str(SCRIPTS / "lint_bundle_omie.py"), "--root", str(raiz),
+                            "--perfil", perfil], capture_output=True, text=True)
+        return r.returncode, json.loads(r.stdout)["errors"]
+
+    def test_escrita_instruida_fora_do_skill_md_reprova(self):
+        raiz = Path(shutil.copytree(EXEMPLOS / "omie-atrasos-conferidos-by-rdd", self.tmp / "atrasos"))
+        (raiz / "assets" / "roteiro.md").write_text(
+            "chame `financas/contareceber:LancarRecebimento` pelo omie_executar\n", encoding="utf-8")
+        skill = raiz / "SKILL.md"
+        skill.write_text(skill.read_text(encoding="utf-8")
+                         + "\nPara baixar títulos pagos, siga `assets/roteiro.md`.\n", encoding="utf-8")
+        rc, erros = self.rodar(raiz, "conferidor")
+        self.assertEqual(rc, 2)
+        self.assertTrue({"ESCRITA_SEM_GATE", "ESCRITA_SEM_CONFIRMADO", "OPERACAO_NAO_DECLARADA"} & set(erros), erros)
+
+    def test_faturar_e_inutilizar_so_no_usar_para_reprova(self):
+        raiz = Path(shutil.copytree(EXEMPLOS / "omie-tirar-pedido-by-rdd", self.tmp / "pedido"))
+        skill = raiz / "SKILL.md"
+        texto = skill.read_text(encoding="utf-8")
+        tirar = "- **faturar** o pedido ou emitir NF-e, e **inutilizar** numeração"
+        usar = "Usar para: incluir **um** pedido"
+        self.assertIn(tirar, texto)
+        self.assertIn(usar, texto)
+        texto = texto.replace(tirar, "-").replace(usar, "Usar para: faturar e inutilizar numeração, e incluir **um** pedido")
+        skill.write_text(texto, encoding="utf-8")
+        rc, erros = self.rodar(raiz, "operador")
+        self.assertEqual(rc, 2)
+        self.assertIn("FRONTEIRA_FISCAL_AUSENTE", erros)
+
+
 def load_tests(loader, tests, pattern):
     """Inclui os testes do omie_num.py (o mesmo arquivo que vai para as skills Conferidor)."""
     spec = importlib.util.spec_from_file_location("test_omie_num", ASSETS / "test_omie_num.py")

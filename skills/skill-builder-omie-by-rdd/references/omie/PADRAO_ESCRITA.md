@@ -33,6 +33,9 @@ No Claude, em Configurações → Conectores → Omie, marcar `omie_executar` e 
 **pedir aprovação**. É o único freio mecânico do lado do cliente. A filha pergunta se isso foi feito e grava a
 resposta em `perfil_omie.json › aprovacao_por_ferramenta` (declaração, não verificação).
 
+O lint lê **todo arquivo de texto** do pacote (não só o `SKILL.md`): operação citada em qualquer lugar — referência,
+roteiro em `assets/`, cenário — conta como instrução e precisa estar declarada.
+
 ## Fronteira desta versão
 
 Toda skill gerada lista em "Quando não usar": **faturar** pedido ou OS (NF-e, NFS-e) e **inutilizar** numeração,

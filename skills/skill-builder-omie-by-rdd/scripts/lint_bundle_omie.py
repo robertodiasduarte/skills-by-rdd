@@ -129,12 +129,36 @@ def gate_de_escrita_ok(texto: str) -> bool:
     return all(chave in item.casefold() for chave, (_, item) in zip(PASSOS_GATE, itens[:6]))
 
 
+# Cópias exatas dos assets: citam nomes de métodos em listas de política/catálogo, não instruem o modelo.
+# Só saem da varredura se forem byte a byte iguais ao asset (divergente já reprova em OMIE_NUM_DIVERGENTE).
+COPIAS_DOS_ASSETS = {"scripts/omie_num.py": "omie_num.py",
+                     "scripts/catalogo_leitura.json": "catalogo_leitura.json",
+                     "tests/test_omie_num.py": "test_omie_num.py"}
+
+
 def textos(raiz: Path) -> str:
-    partes = [(raiz / "SKILL.md").read_text(encoding="utf-8")] if (raiz / "SKILL.md").is_file() else []
-    ref = raiz / "references"
-    if ref.is_dir():
-        partes += [p.read_text(encoding="utf-8") for p in sorted(ref.rglob("*.md"))]
+    """Texto de TODO arquivo de texto do pacote: qualquer arquivo pode instruir o modelo (achado AT-004 do
+    avaliador: escrita num assets/roteiro.md citado pelo SKILL.md passava). Fica de fora só o manifest.json
+    (é a própria declaração), as cópias exatas dos assets e o que tem byte nulo (binário)."""
+    partes = []
+    for p in sorted(raiz.rglob("*")):
+        rel = p.relative_to(raiz)
+        if not p.is_file() or {"__pycache__", ".git"} & set(rel.parts) or rel.as_posix() == "manifest.json":
+            continue
+        dados = p.read_bytes()
+        asset = COPIAS_DOS_ASSETS.get(rel.as_posix())
+        if (asset and dados == (ASSETS / asset).read_bytes()) or b"\0" in dados:
+            continue
+        partes.append(dados.decode("utf-8", errors="replace"))
     return "\n".join(partes)
+
+
+def parte_nao_usar(skill: str) -> str:
+    """Da 1ª menção a "não usar" em diante, dentro do corpo de "## Quando usar / Quando não usar": faturar e
+    inutilizar citados só em "Usar para" não são fronteira (achado AT-004 do avaliador)."""
+    corpo = secao(skill, "## Quando usar / Quando não usar").casefold()
+    m = re.search(r"n[ãa]o usar", corpo)
+    return corpo[m.start():] if m else ""
 
 
 def versao_frontmatter(skill: str) -> str | None:
@@ -190,7 +214,7 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
         erros.append("FATURAR_NO_ESCOPO")
     tem_escrita = "escrita" in classes.values()
 
-    nao_usar = secao(skill, "## Quando usar / Quando não usar").casefold()
+    nao_usar = parte_nao_usar(skill)
     if "faturar" not in nao_usar or "inutilizar" not in nao_usar:
         erros.append("FRONTEIRA_FISCAL_AUSENTE")
     if tem_escrita:
