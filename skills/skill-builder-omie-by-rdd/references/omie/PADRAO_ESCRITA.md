@@ -40,3 +40,6 @@ roteiro em `assets/`, cenário — conta como instrução e precisa estar declar
 
 Toda skill gerada lista em "Quando não usar": **faturar** pedido ou OS (NF-e, NFS-e) e **inutilizar** numeração,
 inclusive "só desta vez", inclusive com confirmação. Operação com `Faturar` ou `Inutilizar` no nome reprova o pacote.
+Formato estrito: as duas palavras ficam em itens `- ` da lista que vem logo abaixo da linha que começa por "Não usar";
+qualquer outra menção a faturar/inutilizar na seção (em "Usar para", entre parênteses, na própria linha "Não usar" ou
+depois da lista) reprova em `FRONTEIRA_FISCAL_FORA_DA_LISTA`.

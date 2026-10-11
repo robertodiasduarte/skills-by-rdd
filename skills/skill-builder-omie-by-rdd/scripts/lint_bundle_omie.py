@@ -45,6 +45,11 @@ APROVACAO = {"declarada_sim", "declarada_nao", "nao_perguntado"}
 OPERACAO_RE = re.compile(r"\b([a-z]+/[a-z0-9-]+):([A-Z][A-Za-z0-9]+)\b")
 OP_JSON_RE = re.compile(r"[\"']op[\"']\s*:\s*[\"']([A-Za-z][A-Za-z0-9]*)[\"']")
 FISCAL_RE = re.compile(r"(Faturar|Inutilizar)")
+RADICAL_FISCAL_RE = re.compile(r"fatur|inutiliz", re.I)
+NAO_USAR_RE = re.compile(r"^\s*n[ãa]o usar", re.I)
+TITULO_QUANDO_USAR = "## Quando usar / Quando não usar"
+# Os mesmos binários que o lint_bundle.py herdado aceita (só dentro de assets/); todo o resto tem de ser UTF-8.
+BINARIOS_PERMITIDOS = {".pdf", ".xlsx", ".docx", ".pptx", ".png", ".jpg", ".jpeg"}
 
 
 class Uso(ValueError):
@@ -114,11 +119,6 @@ def classificar(catalogo: dict, call: str, op: str) -> str:
     return "escrita"
 
 
-def secao(texto: str, titulo: str) -> str:
-    m = re.search(rf"^{re.escape(titulo)}\s*$(.*?)(?=^## |\Z)", texto, re.M | re.S)
-    return m.group(1) if m else ""
-
-
 def gate_de_escrita_ok(texto: str) -> bool:
     bloco = re.search(r"^### Gate de escrita\s*$(.*?)(?=^#{2,3} |\Z)", texto, re.M | re.S)
     if not bloco:
@@ -136,29 +136,58 @@ COPIAS_DOS_ASSETS = {"scripts/omie_num.py": "omie_num.py",
                      "tests/test_omie_num.py": "test_omie_num.py"}
 
 
-def textos(raiz: Path) -> str:
-    """Texto de TODO arquivo de texto do pacote: qualquer arquivo pode instruir o modelo (achado AT-004 do
-    avaliador: escrita num assets/roteiro.md citado pelo SKILL.md passava). Fica de fora só o manifest.json
-    (é a própria declaração), as cópias exatas dos assets e o que tem byte nulo (binário)."""
-    partes = []
+def textos(raiz: Path) -> tuple[str, list[str]]:
+    """Texto de TODO arquivo do pacote: qualquer arquivo pode instruir o modelo (achado AT-004 do avaliador:
+    escrita num assets/roteiro.md citado pelo SKILL.md passava). Fica de fora só o manifest.json (é a própria
+    declaração) e as cópias exatas dos assets. Arquivo que não é UTF-8 válido sem byte nulo (UTF-16, latin-1…)
+    não é pulado como binário: volta na 2ª lista, salvo binário permitido em assets/ (achado h7, ciclo 2)."""
+    partes, nao_utf8 = [], []
     for p in sorted(raiz.rglob("*")):
         rel = p.relative_to(raiz)
         if not p.is_file() or {"__pycache__", ".git"} & set(rel.parts) or rel.as_posix() == "manifest.json":
             continue
         dados = p.read_bytes()
         asset = COPIAS_DOS_ASSETS.get(rel.as_posix())
-        if (asset and dados == (ASSETS / asset).read_bytes()) or b"\0" in dados:
+        if asset and dados == (ASSETS / asset).read_bytes():
             continue
-        partes.append(dados.decode("utf-8", errors="replace"))
-    return "\n".join(partes)
+        try:
+            texto = dados.decode("utf-8")
+        except UnicodeDecodeError:
+            texto = None
+        if texto is not None and "\0" not in texto:
+            partes.append(texto)
+        elif not (rel.parts[0] == "assets" and p.suffix.lower() in BINARIOS_PERMITIDOS):
+            nao_utf8.append(rel.as_posix())
+    return "\n".join(partes), nao_utf8
 
 
-def parte_nao_usar(skill: str) -> str:
-    """Da 1ª menção a "não usar" em diante, dentro do corpo de "## Quando usar / Quando não usar": faturar e
-    inutilizar citados só em "Usar para" não são fronteira (achado AT-004 do avaliador)."""
-    corpo = secao(skill, "## Quando usar / Quando não usar").casefold()
-    m = re.search(r"n[ãa]o usar", corpo)
-    return corpo[m.start():] if m else ""
+def fronteira_fiscal(skill: str) -> list[str]:
+    """Faturar/inutilizar só contam como fronteira DENTRO da lista que vem logo abaixo da 1ª linha iniciada por
+    "Não usar" em "## Quando usar / Quando não usar" (itens "- " contíguos + continuações indentadas). Radical
+    fiscal em qualquer outro ponto da seção — a própria linha "Não usar", "Usar para", parênteses, depois da
+    lista — reprova: a regra posicional anterior foi derrotada duas vezes (achados c3/c4, ciclo 2)."""
+    blocos = [m.group(1) for m in re.finditer(rf"^{re.escape(TITULO_QUANDO_USAR)}\s*$(.*?)(?=^## |\Z)",
+                                              skill, re.M | re.S)]
+    if not blocos:
+        return ["FRONTEIRA_FISCAL_AUSENTE"]
+    linhas = blocos[0].split("\n")
+    lista: list[int] = []
+    inicio = next((i for i, linha in enumerate(linhas) if NAO_USAR_RE.match(linha)), None)
+    if inicio is not None:
+        for i in range(inicio + 1, len(linhas)):
+            linha = linhas[i]
+            if linha.startswith("- ") or (lista and linha[:1] in {" ", "\t"} and linha.strip()):
+                lista.append(i)
+            else:
+                break
+    dentro = "\n".join(linhas[i] for i in lista).casefold()
+    fora = "\n".join([*(linhas[i] for i in range(len(linhas)) if i not in lista), *blocos[1:]])
+    erros = []
+    if "fatur" not in dentro or "inutiliz" not in dentro:
+        erros.append("FRONTEIRA_FISCAL_AUSENTE")
+    if RADICAL_FISCAL_RE.search(fora):
+        erros.append("FRONTEIRA_FISCAL_FORA_DA_LISTA")
+    return erros
 
 
 def versao_frontmatter(skill: str) -> str | None:
@@ -174,9 +203,13 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     skill_path, manifest_path = raiz / "SKILL.md", raiz / "manifest.json"
     if not skill_path.is_file() or not manifest_path.is_file():
         return ["SKILL_OU_MANIFEST_AUSENTE"]
+    tudo, nao_utf8 = textos(raiz)
+    if nao_utf8:
+        erros.append("TEXTO_NAO_UTF8")
+        if "SKILL.md" in nao_utf8:
+            return erros
     skill = skill_path.read_text(encoding="utf-8")
     manifest = ler_json(manifest_path)
-    tudo = textos(raiz)
 
     if versao_frontmatter(skill) != manifest.get("version"):
         erros.append("VERSAO_AUSENTE_OU_DIVERGENTE")
@@ -214,9 +247,7 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
         erros.append("FATURAR_NO_ESCOPO")
     tem_escrita = "escrita" in classes.values()
 
-    nao_usar = parte_nao_usar(skill)
-    if "faturar" not in nao_usar or "inutilizar" not in nao_usar:
-        erros.append("FRONTEIRA_FISCAL_AUSENTE")
+    erros += fronteira_fiscal(skill)
     if tem_escrita:
         if not gate_de_escrita_ok(skill):
             erros.append("ESCRITA_SEM_GATE")

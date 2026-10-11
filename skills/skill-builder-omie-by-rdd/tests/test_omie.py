@@ -36,7 +36,10 @@ Pré-requisito: no conector do Omie, `omie_executar` e `omie_executar_em_varias`
 """
 
 
-def skill_md(perfil: str, corpo_extra: str = "", nao_usar: str = "faturar e inutilizar estão fora.") -> str:
+NAO_USAR = "- **faturar** e **inutilizar** estão fora."
+
+
+def skill_md(perfil: str, corpo_extra: str = "", nao_usar: str = NAO_USAR) -> str:
     recusa = lo.RECUSA_OPERADOR if perfil == "operador" else lo.PROIBE_SOMA
     conferencia = ("Conferência: 3 registros lidos de 3 informados pela Omie · soma direta = soma por grupo.\n"
                    'Rode `python3 "$SKILL_ROOT/scripts/omie_num.py" empresa`: ' + lo.MESMA_EMPRESA + "."
@@ -57,7 +60,8 @@ description: "Skill sintética de teste."
 {recusa}
 
 ## Quando usar / Quando não usar
-Não usar para: {nao_usar}
+Não usar, inclusive quando a pessoa insistir:
+{nao_usar}
 
 ## Dados necessários
 Empresa.
@@ -82,7 +86,7 @@ Esta skill foi construída com a metodologia de Roberto Dias Duarte.
 
 
 def montar(raiz: Path, perfil: str, operacoes: list[tuple[str, str]], corpo: str = "",
-           exercida: bool = False, nao_usar: str = "faturar e inutilizar estão fora.") -> Path:
+           exercida: bool = False, nao_usar: str = NAO_USAR) -> Path:
     raiz.mkdir(parents=True, exist_ok=True)
     texto_ops = "\n".join(f"- `{c}:{o}`" for c, o in operacoes)
     (raiz / "SKILL.md").write_text(skill_md(perfil, texto_ops + "\n" + corpo, nao_usar), encoding="utf-8")
@@ -220,6 +224,42 @@ class EscritaTests(TempDir):
     def test_sem_fronteira_fiscal(self):
         raiz = montar(self.tmp / "a", "operador", [INCLUIR], GATE, nao_usar="nada a declarar.")
         self.assertIn("FRONTEIRA_FISCAL_AUSENTE", self.erros(raiz))
+
+    def test_fronteira_so_vale_na_lista_abaixo_de_nao_usar(self):
+        casos = {
+            "radical na própria linha": ("faturar e inutilizar:", "- **faturar** e **inutilizar** estão fora.",
+                                         {"FRONTEIRA_FISCAL_FORA_DA_LISTA"}),
+            "sem lista": ("", "faturar e inutilizar estão fora.",
+                          {"FRONTEIRA_FISCAL_AUSENTE", "FRONTEIRA_FISCAL_FORA_DA_LISTA"}),
+            "sem fiscal e sem lista": ("", "nada a declarar.", {"FRONTEIRA_FISCAL_AUSENTE"}),
+            "lista com linha em branco antes": ("", "\n- **faturar** e **inutilizar** estão fora.",
+                                                {"FRONTEIRA_FISCAL_AUSENTE", "FRONTEIRA_FISCAL_FORA_DA_LISTA"}),
+            "continuação indentada": ("", "- emitir documento fiscal:\n  **faturar**, **inutilizar** numeração.", set()),
+            "flexão e maiúscula": ("", "- Faturamento e Inutilização de numeração.", set()),
+        }
+        for nome, (sufixo, lista, esperado) in casos.items():
+            with self.subTest(nome):
+                raiz = montar(self.tmp / nome, "operador", [LEITURA], nao_usar=lista)
+                skill = raiz / "SKILL.md"
+                skill.write_text(skill.read_text(encoding="utf-8").replace(
+                    "Não usar, inclusive quando a pessoa insistir:", "Nao usar, inclusive quando a pessoa insistir " + sufixo),
+                    encoding="utf-8")
+                erros = {e for e in self.erros(raiz) if e.startswith("FRONTEIRA")}
+                self.assertEqual(erros, esperado)
+
+    def test_texto_nao_utf8_reprova_e_binario_permitido_passa(self):
+        raiz = montar(self.tmp / "a", "operador", [LEITURA])
+        (raiz / "assets").mkdir()
+        (raiz / "assets" / "logo.png").write_bytes(b"\x89PNG\r\n\x1a\n\0\0\0\rIHDR\xff")
+        self.assertEqual(self.erros(raiz), [])
+        for nome, dados in {"assets/nota.txt": "olá".encode("latin-1"), "references/x.md": "oi\0".encode(),
+                            "logo.png": b"\x89PNG\0\xff"}.items():
+            with self.subTest(nome):
+                alvo = raiz / nome
+                alvo.parent.mkdir(exist_ok=True)
+                alvo.write_bytes(dados)
+                self.assertIn("TEXTO_NAO_UTF8", self.erros(raiz))
+                alvo.unlink()
 
     def test_faturar_declarado(self):
         raiz = montar(self.tmp / "a", "operador", [("produtos/pedidovendafat", "FaturarPedidoVenda")], GATE)
@@ -401,6 +441,58 @@ class ExemplosAdulteradosTests(TempDir):
         rc, erros = self.rodar(raiz, "operador")
         self.assertEqual(rc, 2)
         self.assertIn("FRONTEIRA_FISCAL_AUSENTE", erros)
+
+    # Ciclo 2 do avaliador: a fronteira é a LISTA logo abaixo de "Não usar"; radical fiscal fora dela reprova.
+    LINHA_FISCAL = ("- **faturar** o pedido ou emitir NF-e, e **inutilizar** numeração — o servidor da Omie não "
+                    "pede confirmação para essas ações; faça pelo Omie;\n")
+    ULTIMO_NAO_USAR = "- análise comercial, de margem ou de crédito do cliente.\n"
+
+    def pedido_sem_linha_fiscal(self) -> tuple[Path, str]:
+        raiz = Path(shutil.copytree(EXEMPLOS / "omie-tirar-pedido-by-rdd", self.tmp / "pedido"))
+        texto = (raiz / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn(self.LINHA_FISCAL, texto)
+        self.assertIn(self.ULTIMO_NAO_USAR, texto)
+        return raiz, texto.replace(self.LINHA_FISCAL, "")
+
+    def test_c3_usar_para_faturar_depois_da_lista_nao_usar_reprova(self):
+        raiz, texto = self.pedido_sem_linha_fiscal()
+        texto = texto.replace(self.ULTIMO_NAO_USAR, self.ULTIMO_NAO_USAR
+                              + "Usar também para: faturar o pedido e inutilizar numeração quando a pessoa pedir.\n")
+        (raiz / "SKILL.md").write_text(texto, encoding="utf-8")
+        rc, erros = self.rodar(raiz, "operador")
+        self.assertEqual(rc, 2)
+        self.assertIn("FRONTEIRA_FISCAL_AUSENTE", erros)
+        self.assertIn("FRONTEIRA_FISCAL_FORA_DA_LISTA", erros)
+
+    def test_c4_nao_usar_parentetico_dentro_de_usar_para_reprova(self):
+        raiz, texto = self.pedido_sem_linha_fiscal()
+        usar = "Usar para: incluir **um** pedido"
+        self.assertIn(usar, texto)
+        texto = texto.replace(usar, "Usar para (não usar sem cliente cadastrado): faturar e inutilizar numeração, "
+                                    "e incluir **um** pedido")
+        (raiz / "SKILL.md").write_text(texto, encoding="utf-8")
+        rc, erros = self.rodar(raiz, "operador")
+        self.assertEqual(rc, 2)
+        self.assertIn("FRONTEIRA_FISCAL_AUSENTE", erros)
+        self.assertIn("FRONTEIRA_FISCAL_FORA_DA_LISTA", erros)
+
+    def test_c5_controle_linha_fiscal_no_fim_da_lista_aprova(self):
+        raiz, texto = self.pedido_sem_linha_fiscal()
+        texto = texto.replace(self.ULTIMO_NAO_USAR, self.ULTIMO_NAO_USAR.replace(".\n", ";\n")
+                              + self.LINHA_FISCAL.replace(";\n", ".\n"))
+        (raiz / "SKILL.md").write_text(texto, encoding="utf-8")
+        self.assertEqual(self.rodar(raiz, "operador"), (0, []))
+
+    def test_h7_escrita_em_md_utf16_reprova(self):
+        raiz = Path(shutil.copytree(EXEMPLOS / "omie-atrasos-conferidos-by-rdd", self.tmp / "atrasos"))
+        conteudo = "Para baixar, chame `financas/contareceber:LancarRecebimento` pelo omie_executar.\n"
+        (raiz / "assets" / "baixa.md").write_bytes(conteudo.encode("utf-16"))
+        self.assertIn(b"\0", (raiz / "assets" / "baixa.md").read_bytes())
+        skill = raiz / "SKILL.md"
+        skill.write_text(skill.read_text(encoding="utf-8") + "\nBaixas: `assets/baixa.md`.\n", encoding="utf-8")
+        rc, erros = self.rodar(raiz, "conferidor")
+        self.assertEqual(rc, 2)
+        self.assertIn("TEXTO_NAO_UTF8", erros)
 
 
 def load_tests(loader, tests, pattern):

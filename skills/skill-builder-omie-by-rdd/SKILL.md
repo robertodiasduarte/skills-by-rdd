@@ -130,7 +130,7 @@ pasta ou ZIP com raiz única e o resultado dos dois lints. Sem ferramenta de arq
 - [ ] Toda operação no formato `serviço:Método` e declarada no manifest; nenhuma recusada.
 - [ ] Nenhum valor somado pelo modelo; Conferidor com script idêntico ao asset.
 - [ ] Escrita com o gate literal, `"confirmado": true` e o pré-requisito "pedir aprovação".
-- [ ] Faturar e inutilizar nomeados em "Quando não usar".
+- [ ] Faturar e inutilizar nomeados só na lista logo abaixo de "Não usar" (em nenhum outro ponto da seção).
 - [ ] Teste ao vivo registrado sem dado identificável, ou `pending` declarado.
 - [ ] `lint_bundle.py` e `lint_bundle_omie.py` com exit 0.
 
