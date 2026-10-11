@@ -26,6 +26,8 @@ Mudou:
   campo somado é numérico e a soma direta bate com a soma por grupo (ou por página). Qualquer falha ⇒
   `status: divergente`, exit 2, sem nenhum valor agregado na saída;
 - o `.env` é lido só da pasta do projeto (ou de `OMIE_ENV_FILE`), nunca das pastas-pai;
+- a contagem e o total de páginas são conferidos em todas as páginas: mudou durante a consulta ⇒ divergência;
+- resposta que não é objeto JSON vira erro controlado;
 - a soma roda com precisão de 200 algarismos e arredondamento proibido (perda de dígito ⇒ divergência);
 - a resposta da API é lida com `parse_float=Decimal`: nenhum valor passa por `float` antes da soma;
 - número em texto: vírgula decimal brasileira é aceita ("1.234,50", "1234,56"); "1.234" sem vírgula é ambíguo e reprova;

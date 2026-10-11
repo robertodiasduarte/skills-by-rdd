@@ -230,6 +230,18 @@ class TotalTests(Base):
         num.totalizar(self.cliente, self.catalogo, self.SERVICO, self.METODO, param, "resumo.nValAberto")
         self.assertEqual(self.srv.chamadas[0]["param"][0]["nRegPorPagina"], 100)
 
+    def test_contagem_que_muda_entre_paginas_nao_vira_total(self):
+        p1 = pagina([titulo(10)], 2, 2)
+        p2 = dict(pagina([titulo(20)], 3, 2), nPagina=2)
+        self.srv.paginas = [p1, p2]
+        rc, out = self.totalizar()
+        self.assert_sem_agregado(rc, out, "contagem_mudou_durante_a_consulta")
+
+    def test_resposta_que_nao_e_objeto_e_erro_controlado(self):
+        self.srv.paginas = [[1, 2, 3]]
+        with self.assertRaises(num.ApiError):
+            self.totalizar()
+
     def test_sem_contagem_informada(self):
         self.srv.paginas = [{"titulosEncontrados": [titulo(1)]}]
         rc, out = self.totalizar()

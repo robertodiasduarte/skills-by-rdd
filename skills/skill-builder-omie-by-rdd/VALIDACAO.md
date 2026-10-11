@@ -8,7 +8,7 @@ Data: 10/10/2026. Versão: 1.0.0. Ambiente: Python 3, execução local, sem aces
 python3 -B -m unittest discover -s "$SKILL_ROOT/tests" -p "test_*.py"
 ```
 
-Resultado observado: **121 testes executados; 120 aprovados; 0 falhas; 1 pulado** (o mesmo teste de
+Resultado observado: **123 testes executados; 122 aprovados; 0 falhas; 1 pulado** (o mesmo teste de
 symlink que o pai pula no macOS).
 
 - 43 controles herdados da `skill-builder-by-rdd` (`tests/test_controls.py`, cópia vigiada).
@@ -19,7 +19,7 @@ symlink que o pai pula no macOS).
   dão leitura; as bloqueadas dão escrita ou recusada; zero exceções).
 - `omie_num.py` (`assets/omie/test_omie_num.py`, servidor HTTP local): total ok, teto exato de 5 páginas,
   6 páginas truncam, contagem divergente, valor não numérico ou ausente, sem contagem informada, consistência por
-  injeção, valor infinito, lista vazia da Omie como zero, número em texto ambíguo, decimal sem passar por float, soma sem arredondamento silencioso, .env só da pasta do projeto, parâmetro inválido como erro de uso, limite de consumo que para sem retentar, empresa das chaves, agrupamento, escrita recusada, leitura fora dos exemplos aceita, barreira de nome independente,
+  injeção, valor infinito, lista vazia da Omie como zero, número em texto ambíguo, decimal sem passar por float, soma sem arredondamento silencioso, contagem que muda entre páginas, resposta que não é objeto, .env só da pasta do projeto, parâmetro inválido como erro de uso, limite de consumo que para sem retentar, empresa das chaves, agrupamento, escrita recusada, leitura fora dos exemplos aceita, barreira de nome independente,
   http fora de localhost recusado e credencial que não vaza em erro da API nem na memória da consulta. Em toda saída divergente, nenhum
   valor agregado.
 

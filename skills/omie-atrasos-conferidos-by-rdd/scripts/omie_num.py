@@ -289,28 +289,38 @@ def ler_paginas(client: Client, servico: str, metodo: str, param: dict):
         inicio = int(param.get(keys[0], 1)) if keys else 1
         if not SEM_REGISTROS.search(str(exc)) or inicio != 1:
             raise
-        return [[]], 0, False, None, param, keys
+        return [[]], 0, False, None, param, keys, False
+    if not isinstance(first, dict):
+        # Resposta fora do formato (lista, texto): erro controlado, nunca traceback (achado A1 da rodada 7).
+        raise ApiError("Resposta da Omie fora do formato esperado (não é um objeto JSON).")
     keys = keys or page_keys_for(param, first)
     rec_key, records = find_records(first)
     paginas = [list(records)]
     total_paginas = first.get(keys[2]) if keys else None
     informados = first.get(keys[3]) if keys else None
-    truncado = False
+    truncado = instavel = False
     if keys and isinstance(total_paginas, int) and total_paginas > 1:
         start = int(param.get(keys[0], 1))
         last_page = min(total_paginas, start + HARD_MAX_PAGES - 1)
         for p in range(start + 1, last_page + 1):
             param[keys[0]] = p
-            _, more = find_records(client.call(servico, metodo, param))
+            resp = client.call(servico, metodo, param)
+            if not isinstance(resp, dict):
+                raise ApiError("Resposta da Omie fora do formato esperado (não é um objeto JSON).")
+            # A contagem e o total de páginas têm de ser os mesmos em todas as páginas: se a carteira mudou durante
+            # a consulta, a leitura não é de um único momento e o total não sai (achado R1 da rodada 7).
+            if resp.get(keys[3]) != informados or resp.get(keys[2]) != total_paginas:
+                instavel = True
+            _, more = find_records(resp)
             paginas.append(list(more))
         truncado = last_page < total_paginas
-    return paginas, informados, truncado, rec_key, param, keys
+    return paginas, informados, truncado, rec_key, param, keys, instavel
 
 
 def totalizar(client: Client, catalog: dict, servico: str, metodo: str, param: dict,
               soma: str, agrupar: str | None = None) -> tuple[int, dict]:
     s = check_allowed(catalog, servico, metodo)
-    paginas, informados, truncado, rec_key, param, keys = ler_paginas(client, s, metodo, param)
+    paginas, informados, truncado, rec_key, param, keys, instavel = ler_paginas(client, s, metodo, param)
     registros = [r for pg in paginas for r in pg]
     mem = {
         "endpoint": base_url() + s + "/",
@@ -342,6 +352,8 @@ def totalizar(client: Client, catalog: dict, servico: str, metodo: str, param: d
     if nao_numericos:
         return divergente("valor_nao_numerico", registros=nao_numericos[:20],
                           quantidade=len(nao_numericos))
+    if instavel:
+        return divergente("contagem_mudou_durante_a_consulta")
     if not isinstance(informados, int) or isinstance(informados, bool):
         return divergente("sem_contagem_informada")
     if truncado:
