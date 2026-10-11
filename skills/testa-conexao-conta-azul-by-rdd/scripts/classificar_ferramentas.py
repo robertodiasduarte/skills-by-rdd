@@ -15,7 +15,9 @@ Regras, nesta ordem:
 
 Casamento POR TOKEN, nunca por pedaço de palavra: "ver" não casa "reverter".
 Radical casa o início do token ("atualiz" casa "atualiza", "atualizacao"); exato casa só o token inteiro.
-Particípio adjetivo ("notas emitidas") não conta como verbo de escrita, exceto no 1º token do nome.
+Particípio adjetivo ("notas emitidas") não conta como verbo de escrita, exceto: no 1º token do nome; depois de
+auxiliar ("é criado", "is created" — voz passiva); ou se o texto fala em criar sob condição ("se não existir",
+"automaticamente", "if missing").
 "a pagar" e "a receber" são nome de conta ("contas a pagar"), não verbo.
 """
 import json
@@ -27,8 +29,11 @@ RADICAIS_ESCRITA = (
     "cria", "crie", "cadastr", "inclu", "edit", "atualiz", "alter", "exclu", "delet", "remov",
     "cancel", "emit", "emiss", "quit", "revert", "revers", "convert", "convers", "envi", "adicion",
     "estorn", "aprov", "confirm", "transmit", "salv", "grav", "import", "duplic", "reabr", "fech",
-    "marc", "sincron",
+    "marc", "sincron", "autoriz", "anex", "revog", "anul", "bloque", "liber", "reembols", "transfer",
+    "mescl", "restaur",
     "creat", "updat", "insert", "upsert", "modif", "writ", "submit", "approv", "generat", "upload", "sync",
+    "register", "authoriz", "attach", "archiv", "revok", "reconcil", "activat", "deactivat", "refund",
+    "merg", "restor",
 )
 EXATOS_ESCRITA = (
     "gera", "gerar", "gere", "gerou", "geram", "geracao",
@@ -36,14 +41,24 @@ EXATOS_ESCRITA = (
     "registrar", "registra", "registre", "registrou",
     "lancar", "lanca", "lance", "lancou",
     "faturar", "fature", "faturou",
+    "arquivar", "arquiva", "arquive", "arquivou",
+    "liquidar", "liquide", "liquidou",
+    "conciliar", "concilia", "concilie", "conciliou",
+    "ativar", "ative", "ativou", "inativar", "inative", "desativar", "desative",
     "add", "adds", "set", "sets", "put", "puts", "post", "posts", "patch", "send", "sends",
-    "pay", "pays", "issue", "issues", "mark", "marks",
+    "pay", "pays", "issue", "issues", "mark", "marks", "void", "voids", "block", "blocks", "release", "releases",
 )
 RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch", "read")
 EXATOS_LEITURA = ("get", "find", "ver", "show", "view")
 RADICAL_INDETERMINADO = "baix"
 SUFIXOS_PARTICIPIO = ("ado", "ada", "ados", "adas", "ido", "ida", "idos", "idas")
 NOME_DE_CONTA = ("pagar", "receber")
+# Particípio depois de auxiliar é voz passiva ("um novo cliente é criado"): verbo, não adjetivo.
+AUXILIARES = ("e", "sera", "serao", "sao", "foi", "foram", "fica", "ficam", "sendo", "ser", "seja", "sejam",
+              "is", "are", "was", "were", "be", "been", "being", "gets")
+# Descrição que fala em criar sob condição ("se não existir", "automaticamente", "if missing"):
+# nenhum particípio dela é isento.
+MARCADORES_CONDICIONAIS = ("automaticamente", "automatically", "missing", "absent")
 
 
 def tokens(texto):
@@ -60,9 +75,16 @@ def _leitura(tok):
     return tok in EXATOS_LEITURA or any(tok.startswith(r) for r in RADICAIS_LEITURA)
 
 
+def _condicional(toks):
+    if any(t in MARCADORES_CONDICIONAIS for t in toks):
+        return True
+    return any(a in ("nao", "not") and b.startswith("exist") for a, b in zip(toks, toks[1:]))
+
+
 def _conta_como_verbo(toks, i, primeiro_do_nome):
     tok = toks[i]
-    if not primeiro_do_nome and tok.endswith(SUFIXOS_PARTICIPIO):
+    if (not primeiro_do_nome and tok.endswith(SUFIXOS_PARTICIPIO)
+            and not (i > 0 and toks[i - 1] in AUXILIARES) and not _condicional(toks)):
         return False
     if tok in NOME_DE_CONTA and i > 0 and toks[i - 1] == "a":
         return False

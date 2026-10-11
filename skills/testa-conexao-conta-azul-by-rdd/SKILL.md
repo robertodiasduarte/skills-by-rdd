@@ -48,9 +48,11 @@ Não são necessários e nunca devem ser pedidos: `client_id`, `client_secret`, 
 
 1. **Pré-requisitos.** Pergunte, numa mensagem, os 5 itens de [references/PRE_REQUISITOS.md](references/PRE_REQUISITOS.md).
    Se a empresa estiver na Conta Azul Mais, explique pela chave `mais_sem_permissao` antes de seguir.
-2. **Descoberta.** Separe as ferramentas da sessão cujo nome ou descrição cita a Conta Azul ou seus módulos
-   (pessoas, financeiro, vendas, produtos, contratos). Nenhuma ⇒ vermelho com a chave `sem_ferramentas_visiveis`
-   e o passo a passo da página `/conta-azul/` para o aplicativo do usuário; encerre com o relatório.
+2. **Descoberta.** Separe só as ferramentas de um MCP **identificado como da Conta Azul**: o nome do servidor
+   ou do conector cita a Conta Azul, ou o nome ou a descrição da própria ferramenta cita a Conta Azul. Palavra de
+   módulo sozinha (vendas, financeiro, pessoas) **não basta**: outro ERP conectado na mesma sessão tem as mesmas.
+   Se a origem de uma ferramenta não der para saber, pergunte ao usuário qual MCP é o da Conta Azul antes de chamar.
+   Nenhuma ⇒ vermelho com a chave `sem_ferramentas_visiveis` e o passo a passo da página `/conta-azul/`; encerre.
 3. **Fornecedor provável.** Descreva o tipo de MCP por [references/FORNECEDORES_CONHECIDOS.md](references/FORNECEDORES_CONHECIDOS.md).
    Não afirme que um MCP é da própria Conta Azul só pelo nome.
 4. **Classificação.** Rode o script, se o ambiente permitir:

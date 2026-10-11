@@ -5,7 +5,7 @@ Cada chamada pede o mínimo: **1 registro** quando a ferramenta aceitar tamanho 
 
 | Item | Como testar | Verde | Amarelo | Vermelho |
 |---|---|---|---|---|
-| MCP visível | Listar as ferramentas da sessão cujo nome ou descrição cita a Conta Azul (ou seus módulos: pessoas, financeiro, vendas, produtos, contratos) | Há ferramentas da Conta Azul e ao menos 1 é leitura | Há ferramentas, mas nenhuma é leitura | Nenhuma ferramenta da Conta Azul |
+| MCP visível | Listar as ferramentas de um MCP identificado como da Conta Azul (o nome do servidor/conector ou da ferramenta cita a Conta Azul). Palavra de módulo sozinha não basta: outro ERP tem "vendas" também | Há ferramentas da Conta Azul e ao menos 1 é leitura | Há ferramentas, mas nenhuma é leitura | Nenhuma ferramenta da Conta Azul |
 | Empresa conectada | Chamar a ferramenta de leitura que devolve a conta conectada (ex.: nome com `conta_conectada`, `empresa`, `me`) | Devolve o nome da empresa | Não há ferramenta de leitura para isso | Erro (traduzir pelo catálogo) |
 | Pessoas | 1 chamada de leitura de clientes/fornecedores, limite 1 | Responde (contar registros) | Não há ferramenta de leitura do módulo | Erro (traduzir) |
 | Financeiro | 1 chamada de leitura de contas a pagar ou a receber, limite 1 | Responde | Sem ferramenta de leitura | Erro |

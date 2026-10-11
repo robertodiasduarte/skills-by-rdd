@@ -52,6 +52,21 @@ CASOS = [
     ("update_sale", "", "escrita", "update"),
     ("dar_baixa_titulo", "", "indeterminada", "baixa"),
     ("pagar_titulo", "", "escrita", "pagar como verbo"),
+    # Voz passiva e criação condicional (R1 do review pós-build)
+    ("listar_clientes", "Lista os clientes; se o CPF não existir, um novo cliente é criado", "escrita", "é criado = passiva"),
+    ("listar_clientes", "Lista clientes; cliente criado automaticamente se não existir", "escrita", "criação condicional"),
+    ("get_customers", "Returns customers; a new one is created if missing", "escrita", "is created = passiva"),
+    # Verbos que faltavam (R2 do review pós-build)
+    ("get_or_register_customer", "", "escrita", "register"),
+    ("fetch_customer", "Fetches the customer; registers it if absent", "escrita", "registers"),
+    ("listar_titulos", "Lista e autoriza a pagar os títulos vencidos", "escrita", "autoriza"),
+    ("consultar_e_conciliar", "", "escrita", "conciliar"),
+    ("buscar_e_arquivar", "", "escrita", "arquivar"),
+    # Substantivos de leitura que NÃO podem virar escrita
+    ("listar_arquivos", "", "leitura", "arquivo é substantivo"),
+    ("listar_clientes_ativos", "", "leitura", "ativo é adjetivo"),
+    ("buscar_conciliacoes", "", "leitura", "conciliação é substantivo"),
+    ("consultar_valor_liquido", "", "leitura", "líquido é adjetivo"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -91,6 +106,8 @@ class TestClassificador(unittest.TestCase):
             "RADICAL_INDETERMINADO": cf.RADICAL_INDETERMINADO,
             "SUFIXOS_PARTICIPIO": list(cf.SUFIXOS_PARTICIPIO),
             "NOME_DE_CONTA": list(cf.NOME_DE_CONTA),
+            "AUXILIARES": list(cf.AUXILIARES),
+            "MARCADORES_CONDICIONAIS": list(cf.MARCADORES_CONDICIONAIS),
         })
 
     def test_regra_fail_closed_identica(self):

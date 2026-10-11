@@ -23,8 +23,10 @@ REGRA FAIL-CLOSED: só ferramentas classificadas como leitura são chamadas; esc
 | 4 | nada casou | **indeterminada** |
 
 Duas exceções na regra 1, porque não são verbo:
-- **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita,
-  a não ser que seja a **primeira** palavra do nome.
+- **Particípio que funciona como adjetivo** (`emitidas`, `cancelados`, `realizados`) não conta como escrita.
+  Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; vem logo depois de um auxiliar
+  (`é criado`, `são removidos`, `is created` — voz passiva); ou o texto fala em criar sob condição
+  (`se não existir`, `automaticamente`, `if missing`). Os auxiliares e os marcadores estão nas listas abaixo.
 - `pagar` e `receber` logo depois de `a` são nome de conta (`contas a pagar`), não o verbo.
 
 Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
@@ -38,6 +40,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 | `baixar_xml_nfe` | indeterminada | `baix` |
 | `listar_contas_a_pagar` | leitura | `a pagar` é nome de conta |
 | `listar_notas` — “Lista as notas emitidas” | leitura | `emitidas` é adjetivo |
+| `listar_clientes` — “se o CPF não existir, um novo cliente é criado” | escrita | `é criado` é voz passiva |
 | `verificar_status` | indeterminada | `ver` só casa a palavra inteira |
 
 ## Listas (fonte única; o teste compara com o script)
@@ -78,6 +81,16 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "fech",
     "marc",
     "sincron",
+    "autoriz",
+    "anex",
+    "revog",
+    "anul",
+    "bloque",
+    "liber",
+    "reembols",
+    "transfer",
+    "mescl",
+    "restaur",
     "creat",
     "updat",
     "insert",
@@ -88,7 +101,18 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "approv",
     "generat",
     "upload",
-    "sync"
+    "sync",
+    "register",
+    "authoriz",
+    "attach",
+    "archiv",
+    "revok",
+    "reconcil",
+    "activat",
+    "deactivat",
+    "refund",
+    "merg",
+    "restor"
   ],
   "EXATOS_ESCRITA": [
     "gera",
@@ -112,6 +136,24 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "faturar",
     "fature",
     "faturou",
+    "arquivar",
+    "arquiva",
+    "arquive",
+    "arquivou",
+    "liquidar",
+    "liquide",
+    "liquidou",
+    "conciliar",
+    "concilia",
+    "concilie",
+    "conciliou",
+    "ativar",
+    "ative",
+    "ativou",
+    "inativar",
+    "inative",
+    "desativar",
+    "desative",
     "add",
     "adds",
     "set",
@@ -128,7 +170,13 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "issue",
     "issues",
     "mark",
-    "marks"
+    "marks",
+    "void",
+    "voids",
+    "block",
+    "blocks",
+    "release",
+    "releases"
   ],
   "RADICAIS_LEITURA": [
     "list",
@@ -165,6 +213,34 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
   "NOME_DE_CONTA": [
     "pagar",
     "receber"
+  ],
+  "AUXILIARES": [
+    "e",
+    "sera",
+    "serao",
+    "sao",
+    "foi",
+    "foram",
+    "fica",
+    "ficam",
+    "sendo",
+    "ser",
+    "seja",
+    "sejam",
+    "is",
+    "are",
+    "was",
+    "were",
+    "be",
+    "been",
+    "being",
+    "gets"
+  ],
+  "MARCADORES_CONDICIONAIS": [
+    "automaticamente",
+    "automatically",
+    "missing",
+    "absent"
   ]
 }
 ```
@@ -175,3 +251,7 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
 - Ferramenta de leitura com palavra de escrita na descrição (“Lista notas por data de **emissão**”) sai
   como escrita e não é testada. É o lado seguro: perde-se cobertura, nunca se escreve no ERP.
 - Nome sem nenhum verbo conhecido (`conta_azul_status`) sai indeterminado, mesmo que só leia.
+- "e" também é conjunção: em "notas emitidas **e** canceladas", `canceladas` conta como escrita. Lado seguro.
+- Nenhuma lista de palavras é completa. Um verbo de escrita que não está nas listas, num nome que também tem
+  verbo de leitura, sai como leitura. Por isso a bateria pede **1 registro** e nenhum parâmetro de criação, e o
+  relatório lista todas as ferramentas chamadas: confira a lista antes de usar o MCP no dia a dia.
