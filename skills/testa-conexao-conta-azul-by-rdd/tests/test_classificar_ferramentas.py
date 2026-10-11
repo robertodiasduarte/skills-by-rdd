@@ -159,6 +159,12 @@ class TestClassificador(unittest.TestCase):
         casos = {c["id"]: c for c in json.loads((RAIZ / "evals" / "cases.json").read_text(encoding="utf-8"))["cases"]}
         self.assertEqual(casos["E8"]["chamadas_antes_do_ok_esperadas"], 0)
 
+    def test_prosa_descreve_a_separacao_de_sigla(self):
+        """Review rodada 8 (codex): a prosa tem de ensinar as 2 regras de camelCase do script, inclusive a sigla."""
+        md = (RAIZ / "references" / "CLASSIFICACAO_FERRAMENTAS.md").read_text(encoding="utf-8")
+        self.assertIn("GetOrUpdateHTTPStatus", md)
+        self.assertEqual(cf.tokens("GetOrUpdateHTTPStatus"), ["get", "or", "update", "http", "status"])
+
     def test_cli_deterministico(self):
         entrada = json.dumps([{"nome": n, "descricao": d} for n, d, _, _ in CASOS], ensure_ascii=False)
         script = RAIZ / "scripts" / "classificar_ferramentas.py"

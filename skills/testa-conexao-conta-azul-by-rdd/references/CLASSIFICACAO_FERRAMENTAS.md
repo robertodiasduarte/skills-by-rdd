@@ -11,8 +11,9 @@ Leia o **nome** e a **descrição** separadamente (cada um tem as suas palavras)
 
 1. **Antes de mexer no texto**, veja se ele tem um auxiliar de voz passiva — `é`, `são`, `foi`, `será`, `is`, `was`…
    (lista `AUXILIARES` abaixo). Leia **com acento**: `é` é verbo, `e` é conjunção e não conta.
-2. Separe as palavras grudadas em camelCase: a troca de minúscula para maiúscula separa
-   (`listOrCreateCustomer` vira `list`, `Or`, `Create`, `Customer`).
+2. Separe as palavras grudadas em camelCase: a troca de minúscula (ou número) para maiúscula separa
+   (`listOrCreateCustomer` vira `list`, `Or`, `Create`, `Customer`), e uma sigla em maiúsculas se separa da palavra
+   que começa logo depois dela (`GetOrUpdateHTTPStatus` vira `Get`, `Or`, `Update`, `HTTP`, `Status`).
 3. Só então passe para minúsculas e tire os acentos, e quebre em palavras: tudo que não é letra ou número separa
    (`listar_contas_a_pagar` vira `listar`, `contas`, `a`, `pagar`).
 4. Compare **palavra a palavra**, nunca um pedaço do meio: `ver` não casa `reverter`, `get` não casa `forget`.
