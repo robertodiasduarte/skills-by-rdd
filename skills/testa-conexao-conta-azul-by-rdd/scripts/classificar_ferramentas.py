@@ -116,11 +116,12 @@ def tokens(texto):
 
 
 def tokens_e_fronteiras(texto):
-    """Tokens e, para cada um, se ele abre um trecho novo (depois de . ; : ! ? , parênteses ou quebra de linha).
-    A isenção de particípio exige o substantivo no MESMO trecho (review rodada 6, codex: "Lista clientes.
-    Criado um cliente…" colava `clientes` + `criado` ao descartar o ponto)."""
+    """Tokens e, para cada um, se ele abre um trecho novo. Trecho = só letras, números, espaço e `_`: QUALQUER
+    outro sinal (ponto, vírgula, travessão, hífen, barra, aspas, parênteses, quebra de linha…) separa.
+    A isenção de particípio exige o substantivo no MESMO trecho (review rodadas 6 e 7, codex: o ponto e depois
+    o travessão colavam `clientes` + `criado`; lista de sinais vira regra por exclusão)."""
     toks, fronteiras = [], []
-    for trecho in re.split(r"[.;:!?,()\[\]\n]+", texto or ""):
+    for trecho in re.split(r"[^\w \t]+", texto or ""):
         for k, t in enumerate(tokens(trecho)):
             toks.append(t)
             fronteiras.append(k == 0)

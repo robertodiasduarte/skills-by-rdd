@@ -113,6 +113,12 @@ CASOS = [
     ("listar_clientes", "Lista clientes. Criado um cliente de teste a cada chamada.", "escrita", "ponto separa"),
     ("listar_notas", "Lista as notas, emitidas na hora", "escrita", "vírgula separa"),
     ("listar_notas", "Lista as notas emitidas.", "leitura", "mesmo trecho"),
+    # Review pós-build rodada 7 (codex): qualquer sinal separa, não uma lista de pontuação
+    ("listar_clientes", "Lista clientes — criado um cliente de teste a cada chamada.", "escrita", "travessão separa"),
+    ("listar_clientes", "Lista clientes - criado um cliente de teste", "escrita", "hífen separa"),
+    ("listar_clientes", "Lista clientes / criado um cliente de teste", "escrita", "barra separa"),
+    ("listar_clientes", "Lista clientes \"criado\" a cada chamada", "escrita", "aspas separam"),
+    ("listar_notas_emitidas", "", "leitura", "nome com _ não separa"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]

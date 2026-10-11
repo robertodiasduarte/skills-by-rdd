@@ -31,8 +31,8 @@ Leia o **nome** e a **descrição** separadamente (cada um tem as suas palavras)
 
 Duas exceções na regra 1, porque não são verbo:
 - **Particípio** (`criado`, `emitidas`, `atualizados`) **conta como escrita**. Só é isento (adjetivo) quando TUDO vale:
-  1. vem **colado depois de um substantivo do domínio, no mesmo trecho** (ponto, vírgula, ponto e vírgula,
-     dois-pontos, parênteses ou quebra de linha entre os dois quebram a ligação) (`notas emitidas`, `pagamentos realizados`, `clientes cadastrados`
+  1. vem **colado depois de um substantivo do domínio, no mesmo trecho**: entre os dois só pode haver espaço ou `_`;
+     qualquer outro sinal (ponto, vírgula, travessão, hífen, barra, aspas, parênteses, quebra de linha…) quebra a ligação (`notas emitidas`, `pagamentos realizados`, `clientes cadastrados`
      — lista `SUBSTANTIVOS_DO_DOMINIO` abaixo);
   2. não é a 1ª palavra do nome;
   3. nome e descrição **juntos** não têm auxiliar (`é`, `são`, `foi`, `is`…) nem palavra de condição (`se`, `caso`,
