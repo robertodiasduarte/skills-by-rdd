@@ -60,8 +60,9 @@ EXATOS_ESCRITA = (
     "drop", "drops", "clear", "clears", "reset", "resets", "move", "moves", "apply", "applies", "close", "closes",
     "run", "runs", "complete", "completes", "finalize", "finalizes", "charge", "charges",
 )
-RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch", "read")
-EXATOS_LEITURA = ("get", "find", "ver", "show", "view")
+RADICAIS_LEITURA = ("list", "busc", "consult", "obte", "obti", "detalh", "pesquis", "mostr", "exib", "search", "fetch")
+# "read" é exato: como radical casava "readd" (re-add) e "readjust" (review rodada 4, auditor).
+EXATOS_LEITURA = ("get", "find", "ver", "show", "view", "read", "reads")
 RADICAL_INDETERMINADO = "baix"
 SUFIXOS_PARTICIPIO = ("ado", "ada", "ados", "adas", "ido", "ida", "idos", "idas")
 NOME_DE_CONTA = ("pagar", "receber")
@@ -74,7 +75,9 @@ AUXILIARES = ("é", "será", "serão", "sera", "serao", "são", "sao", "foi", "f
               "seja", "sejam", "is", "are", "was", "were", "be", "been", "being", "gets")
 # Descrição que fala em criar sob condição ("se não existir", "automaticamente", "if missing"):
 # nenhum particípio dela é isento.
-MARCADORES_CONDICIONAIS = ("automaticamente", "automatically", "missing", "absent")
+MARCADORES_CONDICIONAIS = ("automaticamente", "automatically", "missing", "absent", "needed", "preciso")
+# Radicais de condição: "caso inexistente", "se não existir", "doesn't exist", "quando necessário".
+RADICAIS_CONDICIONAIS = ("exist", "inexist", "necessar")
 # Particípio a até 2 palavras de "ou"/"or" = alternativa de ação ("criado ou atualizado": upsert), não adjetivo.
 CONJUNCOES_ALTERNATIVA = ("ou", "or")
 # Nome composto com conjunção ("listar_e_apagar", "get_or_reset") junta duas ações: nunca é leitura, mesmo
@@ -107,9 +110,7 @@ def _leitura(tok):
 
 
 def _condicional(toks):
-    if any(t in MARCADORES_CONDICIONAIS for t in toks):
-        return True
-    return any(a in ("nao", "not") and b.startswith("exist") for a, b in zip(toks, toks[1:]))
+    return any(t in MARCADORES_CONDICIONAIS or t.startswith(RADICAIS_CONDICIONAIS) for t in toks)
 
 
 def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar):

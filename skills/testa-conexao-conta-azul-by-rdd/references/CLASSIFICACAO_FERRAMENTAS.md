@@ -29,7 +29,7 @@ Duas exceções na regra 1, porque não são verbo:
   Palavra da lista de termos **exatos** de escrita nunca é tratada como particípio (`liquida` termina em -ida, mas é verbo).
   Ele **conta** (é verbo) quando: é a **primeira** palavra do nome; o texto tem um auxiliar em **qualquer** lugar
   (`é criado`, `é, quando necessário, atualizado`, `is created` — voz passiva; `e` sem acento é conjunção e não conta); ou o texto fala em criar sob condição
-  (`se não existir`, `automaticamente`, `if missing`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
+  (qualquer palavra que comece com `exist`, `inexist` ou `necessar` — `se não existir`, `caso inexistente`, `doesn't exist`, `quando necessário` — ou `automaticamente`, `if missing`, `needed`); ou está a até 2 palavras de `ou`/`or` (`criado ou atualizado`,
   que é upsert). Auxiliares, marcadores e conjunções estão nas listas abaixo.
 - `pagar` e `receber` logo depois de `a` são nome de conta **só** quando antes vem `conta(s)`, `título(s)`,
   `valor(es)`, `lançamento(s)`, `parcela(s)`, `saldo(s)` ou `total(is)` (`contas a pagar`). `começa a pagar` é verbo.
@@ -273,15 +273,16 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "mostr",
     "exib",
     "search",
-    "fetch",
-    "read"
+    "fetch"
   ],
   "EXATOS_LEITURA": [
     "get",
     "find",
     "ver",
     "show",
-    "view"
+    "view",
+    "read",
+    "reads"
   ],
   "RADICAL_INDETERMINADO": "baix",
   "SUFIXOS_PARTICIPIO": [
@@ -327,7 +328,14 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "automaticamente",
     "automatically",
     "missing",
-    "absent"
+    "absent",
+    "needed",
+    "preciso"
+  ],
+  "RADICAIS_CONDICIONAIS": [
+    "exist",
+    "inexist",
+    "necessar"
   ],
   "CONJUNCOES_ALTERNATIVA": [
     "ou",

@@ -96,6 +96,14 @@ CASOS = [
     ("obter_cliente", "O cliente é, quando necessário, atualizado", "escrita", "auxiliar longe do particípio"),
     ("obter_cliente", "The customer is, when needed, updated", "escrita", "auxiliar longe do particípio (EN)"),
     ("listar_notas", "Lista as notas emitidas e canceladas no período", "leitura", "'e' é conjunção, não auxiliar"),
+    # Review pós-build rodada 4 (auditor): read como palavra exata e condicionais
+    ("readd_customer", "", "indeterminada", "readd não é read"),
+    ("readjust_prices", "", "indeterminada", "readjust não é read"),
+    ("read_customer", "", "leitura", "read exato"),
+    ("listar_clientes", "Lista clientes; cliente criado caso inexistente", "escrita", "caso inexistente"),
+    ("get_customer", "Returns the customer; created if it doesn't exist", "escrita", "doesn't exist"),
+    ("listar_clientes", "Lista clientes; cliente cadastrado quando necessário", "escrita", "quando necessário"),
+    ("listar_notas", "Lista as notas emitidas", "leitura", "sem condição: particípio segue adjetivo"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
@@ -143,6 +151,7 @@ class TestClassificador(unittest.TestCase):
             "CONJUNCOES_ALTERNATIVA": list(cf.CONJUNCOES_ALTERNATIVA),
             "CONJUNCOES_NO_NOME": list(cf.CONJUNCOES_NO_NOME),
             "ANTES_DE_NOME_DE_CONTA": list(cf.ANTES_DE_NOME_DE_CONTA),
+            "RADICAIS_CONDICIONAIS": list(cf.RADICAIS_CONDICIONAIS),
         })
 
     def test_regra_fail_closed_identica(self):
