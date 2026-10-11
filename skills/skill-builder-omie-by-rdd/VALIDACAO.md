@@ -8,7 +8,7 @@ Data: 10/10/2026. Versão: 1.0.0. Ambiente: Python 3, execução local, sem aces
 python3 -B -m unittest discover -s "$SKILL_ROOT/tests" -p "test_*.py"
 ```
 
-Resultado observado: **108 testes executados; 107 aprovados; 0 falhas; 1 pulado** (o mesmo teste de
+Resultado observado: **109 testes executados; 108 aprovados; 0 falhas; 1 pulado** (o mesmo teste de
 symlink que o pai pula no macOS).
 
 - 43 controles herdados da `skill-builder-by-rdd` (`tests/test_controls.py`, cópia vigiada).

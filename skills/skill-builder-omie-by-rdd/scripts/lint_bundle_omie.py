@@ -215,7 +215,7 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     elif perfil == "conferidor":
         if tem_escrita:
             erros.append("CONFERIDOR_COM_ESCRITA")
-        for rel in ("scripts/omie_num.py", "scripts/catalogo_leitura.json", "tests/test_omie_num.py"):
+        for rel in ("scripts/omie_num.py", "scripts/catalogo_leitura.json", "tests/test_omie_num.py", "assets/env.exemplo.txt"):
             if not (raiz / rel).is_file():
                 erros.append("CONFERIDOR_SEM_SCRIPT")
         if set(scripts) - {"scripts/omie_num.py", "tests/test_omie_num.py"}:

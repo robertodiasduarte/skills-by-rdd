@@ -103,6 +103,8 @@ def montar(raiz: Path, perfil: str, operacoes: list[tuple[str, str]], corpo: str
         shutil.copy(ASSETS / "omie_num.py", raiz / "scripts" / "omie_num.py")
         shutil.copy(ASSETS / "catalogo_leitura.json", raiz / "scripts" / "catalogo_leitura.json")
         shutil.copy(ASSETS / "test_omie_num.py", raiz / "tests" / "test_omie_num.py")
+        (raiz / "assets").mkdir(exist_ok=True)
+        shutil.copy(ASSETS / "env.exemplo.txt", raiz / "assets" / "env.exemplo.txt")
     return raiz
 
 
@@ -287,6 +289,11 @@ class PerfilBundleTests(TempDir):
 
     def test_conferidor_aprovado(self):
         self.assertEqual(lo.lint(montar(self.tmp / "a", "conferidor", [LEITURA]), None, CATALOGO), [])
+
+    def test_conferidor_sem_modelo_de_env(self):
+        raiz = montar(self.tmp / "a", "conferidor", [LEITURA])
+        (raiz / "assets" / "env.exemplo.txt").unlink()
+        self.assertIn("CONFERIDOR_SEM_SCRIPT", lo.lint(raiz, None, CATALOGO))
 
     def test_conferidor_script_alterado(self):
         raiz = montar(self.tmp / "a", "conferidor", [LEITURA])
