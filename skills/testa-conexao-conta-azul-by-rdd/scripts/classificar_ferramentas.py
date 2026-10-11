@@ -38,6 +38,7 @@ RADICAIS_ESCRITA = (
     "marc", "sincron", "autoriz", "anex", "revog", "anul", "bloque", "liber", "reembols", "transfer",
     "mescl", "restaur", "apag", "destru", "limp", "substitu", "renov", "encerr", "finaliz", "conclu",
     "dispar", "vincul", "desvincul", "habilit", "desabilit", "ajust", "corrig", "execut",
+    "efetu", "realiz", "process", "aplic", "atribu", "reenvi", "desconect", "notific", "prorrog", "reagend",
     "creat", "updat", "insert", "upsert", "modif", "writ", "submit", "approv", "generat", "upload", "sync",
     "register", "authoriz", "attach", "archiv", "revok", "reconcil", "activat", "deactivat", "refund",
     "merg", "restor", "destroy", "purg", "eras", "chang", "replac", "renam", "assign", "enabl", "disabl",
@@ -105,8 +106,9 @@ def _separar_camel(texto):
 
 def _tem_auxiliar(texto):
     # NFC antes de procurar: "é" decomposto (e + acento combinante) viraria "e" e passaria (review rodada 5, codex).
+    # "_" separa: auxiliar dentro de nome snake_case também conta (review rodada 7, A2).
     s = unicodedata.normalize("NFC", _separar_camel(texto).lower())
-    return any(t in AUXILIARES for t in re.findall(r"\w+", s))
+    return any(t in AUXILIARES for t in re.findall(r"[^\W_]+", s))
 
 
 def tokens(texto):
@@ -149,6 +151,9 @@ def _conta_como_verbo(toks, i, primeiro_do_nome, tem_auxiliar, condicional, fron
     # review rodada 3, codex).
     if (not primeiro_do_nome and tok not in EXATOS_ESCRITA and tok.endswith(SUFIXOS_PARTICIPIO)
             and i > 0 and not fronteiras[i] and toks[i - 1] in SUBSTANTIVOS_DO_DOMINIO
+            # Plural nos dois (review rodada 7, A3): listagem descreve "notas emitidas"; "cliente criado" no
+            # singular costuma ser o resultado da própria operação.
+            and tok.endswith("s") and toks[i - 1].endswith("s")
             and not tem_auxiliar and not condicional
             and not any(v in CONJUNCOES_ALTERNATIVA for v in vizinhos)):
         return False

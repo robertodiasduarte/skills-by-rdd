@@ -34,11 +34,13 @@ Duas exceções na regra 1, porque não são verbo:
   1. vem **colado depois de um substantivo do domínio, no mesmo trecho**: entre os dois só pode haver espaço ou `_`;
      qualquer outro sinal (ponto, vírgula, travessão, hífen, barra, aspas, parênteses, quebra de linha…) quebra a ligação (`notas emitidas`, `pagamentos realizados`, `clientes cadastrados`
      — lista `SUBSTANTIVOS_DO_DOMINIO` abaixo);
-  2. não é a 1ª palavra do nome;
-  3. nome e descrição **juntos** não têm auxiliar (`é`, `são`, `foi`, `is`…) nem palavra de condição (`se`, `caso`,
+  2. o substantivo **e** o particípio estão no **plural** (`notas emitidas`); no singular (`cliente criado`) conta como
+     escrita, porque costuma ser o resultado da própria operação;
+  3. não é a 1ª palavra do nome;
+  4. nome e descrição **juntos** não têm auxiliar (`é`, `são`, `foi`, `is`…) nem palavra de condição (`se`, `caso`,
      `quando`, `if`, `when`…), nem palavra que comece com `exist`, `inexist` ou `necessar`, nem `automaticamente`,
      `if missing`, `needed`;
-  4. não está a até 2 palavras de `ou`/`or` (`criado ou atualizado` é upsert).
+  5. não está a até 2 palavras de `ou`/`or` (`criado ou atualizado` é upsert).
   Palavra da lista de termos **exatos** de escrita nunca é isenta (`liquida` termina em -ida, mas é verbo).
 - `pagar` e `receber` logo depois de `a` são nome de conta **só** quando antes vem `conta(s)`, `título(s)`,
   `valor(es)`, `lançamento(s)`, `parcela(s)`, `saldo(s)` ou `total(is)` (`contas a pagar`). `começa a pagar` é verbo.
@@ -121,6 +123,16 @@ Em dúvida, a classe é **indeterminada**, e indeterminada não é chamada.
     "ajust",
     "corrig",
     "execut",
+    "efetu",
+    "realiz",
+    "process",
+    "aplic",
+    "atribu",
+    "reenvi",
+    "desconect",
+    "notific",
+    "prorrog",
+    "reagend",
     "creat",
     "updat",
     "insert",

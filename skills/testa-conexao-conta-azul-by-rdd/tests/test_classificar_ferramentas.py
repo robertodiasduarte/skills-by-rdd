@@ -119,6 +119,12 @@ CASOS = [
     ("listar_clientes", "Lista clientes / criado um cliente de teste", "escrita", "barra separa"),
     ("listar_clientes", "Lista clientes \"criado\" a cada chamada", "escrita", "aspas separam"),
     ("listar_notas_emitidas", "", "leitura", "nome com _ não separa"),
+    # Review pós-build rodada 7 (auditor): verbos PT, auxiliar no nome, singular
+    ("listar_titulos", "Lista os títulos e efetua o pagamento dos vencidos", "escrita", "efetua"),
+    ("listar_notas", "Lista as notas e reenvia as rejeitadas", "escrita", "reenvia"),
+    ("listar_notas_emitidas_is_signed", "", "escrita", "auxiliar dentro do nome snake_case"),
+    ("obter_cliente", "Cliente criado conforme os dados informados", "escrita", "singular: resultado da operação"),
+    ("listar_clientes", "Lista os clientes cadastrados", "leitura", "plural nos dois"),
     # Desconhecido
     ("conta_azul_status", "", "indeterminada", "sem termo conhecido"),
 ]
