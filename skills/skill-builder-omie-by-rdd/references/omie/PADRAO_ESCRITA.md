@@ -34,7 +34,8 @@ No Claude, em Configurações → Conectores → Omie, marcar `omie_executar` e 
 resposta em `perfil_omie.json › aprovacao_por_ferramenta` (declaração, não verificação).
 
 O lint lê **todo arquivo de texto** do pacote (não só o `SKILL.md`): operação citada em qualquer lugar — referência,
-roteiro em `assets/`, cenário — conta como instrução e precisa estar declarada.
+roteiro em `assets/`, cenário, e a prosa do `manifest.json` (`pending`, `requisitos` e qualquer outro campo; só
+`operacoes` é declaração) — conta como instrução e precisa estar declarada.
 Todo nome em CamelCase no pacote (maiúscula inicial e uma maiúscula logo depois de minúscula, como `SalvarPedido`) é
 tratado como operação e tem de estar declarado em `manifest.json › operacoes`, salvo a lista fechada de nomes próprios
 do lint (`NOMES_PROPRIOS_PERMITIDOS`); campo da Omie (`nValAberto`) e sigla (`CNPJ`, `NFe`) não contam.

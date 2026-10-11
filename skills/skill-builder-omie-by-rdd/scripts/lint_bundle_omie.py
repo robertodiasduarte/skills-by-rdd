@@ -184,8 +184,8 @@ COPIAS_DOS_ASSETS = {"scripts/omie_num.py": "omie_num.py",
 
 def textos(raiz: Path) -> tuple[str, list[str], list[str]]:
     """Texto de TODO arquivo do pacote: qualquer arquivo pode instruir o modelo (achado AT-004 do avaliador:
-    escrita num assets/roteiro.md citado pelo SKILL.md passava). Fica de fora só o manifest.json (é a própria
-    declaração) e as cópias exatas dos assets. Arquivo que não é UTF-8 válido sem byte nulo (UTF-16, latin-1…)
+    escrita num assets/roteiro.md citado pelo SKILL.md passava). Ficam de fora só as cópias exatas dos assets; o
+    manifest.json entra pela prosa_do_manifest() (só `operacoes` é declaração). Arquivo que não é UTF-8 válido sem byte nulo (UTF-16, latin-1…)
     não é pulado como binário: volta na 2ª lista, salvo imagem em assets/ (achado h7, ciclo 2). PDF/Office em
     qualquer lugar, e imagem sem a assinatura do formato, voltam na 3ª lista (achado h8, ciclo 3)."""
     partes, nao_utf8, proibidos = [], [], []
@@ -253,6 +253,21 @@ def versao_frontmatter(skill: str) -> str | None:
     return v.group(1).strip() if v else None
 
 
+def prosa_do_manifest(no, chave: str | None = None) -> list[str]:
+    """Todo texto do manifest.json fora de `operacoes` (a única parte que é declaração). `pending`, `requisitos` e
+    qualquer campo inventado são prosa que o modelo lê — o SKILL.md linka o manifesto (achado AT-004, ciclo 5:
+    "chame SalvarPedido pelo omie_executar" em `pending` passava nos dois lints)."""
+    if chave == "operacoes":
+        return []
+    if isinstance(no, str):
+        return [no]
+    if isinstance(no, dict):
+        return [s for k, v in no.items() for s in [k, *prosa_do_manifest(v, k)]]
+    if isinstance(no, list):
+        return [s for v in no for s in prosa_do_manifest(v)]
+    return []
+
+
 def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
     erros = []
     skill_path, manifest_path = raiz / "SKILL.md", raiz / "manifest.json"
@@ -267,6 +282,7 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
             return erros
     skill = skill_path.read_text(encoding="utf-8")
     manifest = ler_json(manifest_path)
+    tudo += "\n" + "\n".join(prosa_do_manifest(manifest))
 
     if versao_frontmatter(skill) != manifest.get("version"):
         erros.append("VERSAO_AUSENTE_OU_DIVERGENTE")
