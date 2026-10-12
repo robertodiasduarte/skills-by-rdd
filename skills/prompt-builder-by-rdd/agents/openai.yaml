@@ -1,7 +1,7 @@
 interface:
   display_name: Prompt Builder by RDD
-  short_description: Cria system prompts contract-first com brainstorm, evidencia
-    e gate.
+  short_description: Escreve o prompt de produção do seu app com contrato de saída explícito.
+  default_prompt: Use a skill prompt-builder-by-rdd para escrever o prompt de produção do meu aplicativo, com contrato de saída explícito, as fórmulas de cada cálculo e a regra do que fazer quando faltar informação.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

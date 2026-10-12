@@ -20,11 +20,13 @@ Três modos: `parse` (o padrão), `semantic` (mapa semântico sobre Markdown já
 
 ### `prompt-builder-by-rdd`
 
-**Transforma um processo seu em um system prompt profissional.**
+**Escreve o prompt de produção do seu app ou da sua automação.**
 
-Conduz um brainstorm progressivo sobre o trabalho, reúne os materiais que sustentam as regras, consolida o escopo e só produz o prompt depois da sua confirmação explícita. O prompt gerado é contract-first: define resultado pronto, limites e critério de evidência em vez de prescrever a cadeia de raciocínio, e separa instruções de dados, documentos e exemplos com delimitadores — sem exigir XML como envelope principal. Quando o assunto depende de data, delimita o período de consulta e o de cálculo, em vez de deixar implícito.
+Gera um único prompt pronto para rodar dentro do sistema, com contrato de saída explícito: o que entra, o formato exato do que sai, as fórmulas de cada cálculo e o que fazer quando faltar informação. Corta o texto decorativo e devolve um único bloco para colar.
 
-Funciona em qualquer domínio e jurisdição. Não executa o processo profissional no seu lugar, não monta arquitetura de vários agentes e não busca fontes externas sem você autorizar.
+Não escreve e-mail, texto de tela nem documentação; é para o prompt que roda dentro do sistema. É a mesma skill que o SDD Open by RDD distribui como `sdd-prompt-builder`.
+
+**Versão 5.0.0:** é outra skill com o mesmo nome da 4.x. Se você instalou a 4.x, remova-a antes de instalar a 5.0.0. A 4.0.0 continua na Release v1.2.0, como histórico.
 
 [Baixar o .zip](../../releases/latest/download/prompt-builder-by-rdd.zip)
 

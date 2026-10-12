@@ -1,52 +1,23 @@
-# Validacao da entrega
+# Validação da entrega
 
-Versao: 4.0.0  
-Escopo: PB-RDD-001 V2  
-Data: 2026-09-21
+Versão: 5.0.0
+Data: 2026-10-12
+Base: prompt-builder do SDD Open by RDD, v2.0.0 (11/09/2026)
 
-## Testes executados
+## O que foi verificado
 
-| Teste | Status | Evidencia resumida |
+| Verificação | Status | Evidência resumida |
 |---|---|---|
-| `quick_validate.py` da Skill Creator | `executado_aprovado` | `Skill is valid!` |
-| `lint_bundle.py` da Skill Builder by RDD | `executado_aprovado` | zero erros, 16 arquivos |
-| Parse de `manifest.json` | `executado_aprovado` | JSON valido |
-| Parse de `evals/cases.json` | `executado_aprovado` | JSON valido, 18 cenarios |
-| Parse de `agents/openai.yaml` | `executado_aprovado` | YAML valido |
-| Assertivas contract-first | `executado_aprovado` | versao 4.0, escopo V2, sem envelope `<system_prompt>`, delimitacao de dados, evidencia, prioridade, estados e validacao numerica presentes |
-| Empacotamento provisório com `package_skill.py` | `executado_aprovado` | ZIP criado abaixo do limite de 25 MB |
-| Inspecao do ZIP provisório | `executado_aprovado` | raiz unica, 16 arquivos, sem ZIP aninhado |
+| Corpo do `SKILL.md` idêntico à cópia pública do SDD Open | `executado_aprovado` | `cmp` byte a byte de tudo o que vem depois do frontmatter |
+| As 3 references idênticas à cópia pública | `executado_aprovado` | `cmp` de `prompt-building-rules.md`, `output-template.md` e `sdd-integration.md` |
+| Frontmatter | `executado_aprovado` | `name`, `description` (igual à da cópia pública), `license`, `metadata.author` e `metadata.version` |
+| Conteúdo proibido em repositório público | `executado_aprovado` | `scripts/publish-check.sh` do catálogo, mais uma varredura de vocabulário privado |
+| Empacotamento | `executado_aprovado` | `scripts/package.sh`; o zip tem 10 arquivos sob `prompt-builder-by-rdd/` e declara 5.0.0 |
+| Herança entre skills do catálogo | `executado_aprovado` | `scripts/heranca-check.py` |
 
-## Testes escritos, mas nao executados comportamentalmente
+## O que esta validação não prova
 
-Os 18 cenarios de `evals/cases.json` permanecem em status `escrito_nao_executado` ate serem executados em ambientes/modelos alvo.
+- Que a skill se comporta da mesma forma em todos os produtos de IA. A validação é estrutural: confere arquivos e texto, não executa a skill num modelo.
+- Que um prompt gerado está correto para o seu processo. A skill organiza o contrato do prompt; as regras do domínio continuam sendo responsabilidade de quem as fornece.
 
-Eles agora cobrem duas camadas:
-
-- comportamento da propria Prompt Builder by RDD durante brainstorm, gate, pesquisa e seguranca;
-- qualidade do system prompt produzido, incluindo contrato versus roteiro de raciocinio, delimitacao de dados, evidencia, nao expansao de escopo, prioridade de fontes, estados fechados, validacao numerica e estabilidade.
-
-Validacao estrutural local nao prova aderencia comportamental entre fornecedores.
-
-## Gate de escopo
-
-A aprovacao conversacional de PB-RDD-001 V2 foi explicita e posterior ao resumo versionado.
-
-O `scope_gate.py` da meta-skill RDD nao e usado como prova deterministica desta autorizacao porque seu schema e especializado em quatro areas reguladas e nao representa fielmente o escopo global e multidominio da Prompt Builder by RDD. Esta entrega registra, portanto, `controle_conversacional` para o gate de escopo.
-
-## Verificacao da migracao 4.0
-
-A versao 4.0 nao exige XML como estrutura principal. O template usa Markdown/secoes textuais como contrato e reserva XML/delimitadores equivalentes principalmente para dados de runtime, documentos e exemplos.
-
-A autossuficiencia foi redefinida como autossuficiencia do contrato de comportamento. Corpus ou bases extensas podem permanecer fora do system prompt quando o ambiente puder fornece-los em runtime.
-
-Configuracoes proprietarias de fornecedor nao fazem parte do prompt portatil. Quando uteis e verificadas para o ambiente-alvo, podem aparecer somente no relatorio externo como recomendacao de deployment.
-
-## O que esta validacao ainda nao prova
-
-- comportamento identico em ChatGPT, Claude, Gemini ou outros modelos;
-- validade profissional de regras de dominio fornecidas por usuarios;
-- conformidade legal de um ambiente de IA;
-- status atual de certificacoes de fornecedores terceiros;
-- estabilidade comportamental sem execucao repetida dos evals;
-- validade de uma conclusao numerica sem o mecanismo deterministico definido e efetivamente executado.
+Esta versão não traz cenários de avaliação próprios. Os da 4.0.0 testavam um fluxo (brainstorm com gate de confirmação) que a 5.0.0 não tem, e por isso saíram junto com ela.

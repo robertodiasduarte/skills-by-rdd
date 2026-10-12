@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.0 - 2026-10-12
+
+- **Outra skill, mesmo nome.** A 5.0.0 substitui integralmente a 4.0.0: não é uma evolução dela. A base agora é o prompt-builder do SDD Open by RDD, v2.0.0 de 11/09/2026 (no SDD Open ela se chama `sdd-prompt-builder`). O corpo do `SKILL.md` e as 3 references são idênticos aos de lá; só o cabeçalho (frontmatter) muda.
+- Se você instalou a 4.x, remova-a antes de instalar a 5.0.0. Os dois pacotes têm o mesmo nome, e o aplicativo pode recusar ou duplicar a instalação.
+- O que ela faz agora: escreve um único prompt de produção, com contrato de saída explícito, fórmulas declaradas para todo cálculo, regra para contexto ausente e verificação curta. O resultado vem em um bloco pronto para colar.
+- O que saiu: o brainstorm progressivo, o gate de escopo versionado, os modos interativo/autônomo, as 9 references da 4.0.0 e os 18 cenários de `evals/`.
+- A 4.0.0 continua disponível na Release v1.2.0 do catálogo, como histórico.
+
 ## 4.0.0 - 2026-09-21
 
 - Alterada a arquitetura central de `XML-first` para `contract-first + data-delimited + evidence-driven`.
