@@ -1,6 +1,6 @@
 # Validação da entrega
 
-Data: 20/09/2026. Versão: 1.1.1 (revalidada na 1.1.2 em 10/10/2026: scripts e testes inalterados).
+Data: 20/09/2026. Versão: 1.1.1 (revalidada na 1.1.2 em 10/10/2026 e na 1.2.0 em 20/11/2026: scripts e testes inalterados).
 Ambiente de teste: Python 3.13.5, execução local.
 Os testes são de software e de protocolo; não contêm gabaritos normativos.
 
@@ -29,7 +29,7 @@ Os scripts foram compilados sintaticamente sem gerar arquivos de cache.
 ## Validação estrutural local
 
 Executado `python3 "$SKILL_ROOT/scripts/lint_bundle.py" --root "$SKILL_ROOT"`.
-Resultado observado: `pass: true`, lista de erros vazia, 24 arquivos.
+Resultado observado: `pass: true`, lista de erros vazia, 24 arquivos (22 na 1.2.0, sem a pasta de cenários).
 
 O empacotador de skills do ambiente também valida o frontmatter antes de criar o ZIP.
 O pacote deve conter uma única raiz e uma única entrada principal SKILL.md.
@@ -47,7 +47,7 @@ Não houve acesso ao repositório citado na documentação.
 
 ## O que esta skill ainda NÃO prova
 
-Os 15 cenários comportamentais em evals/cases.json foram escritos, mas não
+Os 15 cenários comportamentais (no repositório, fora do pacote: pasta evals, arquivo skill-builder-by-rdd/cases.json) foram escritos, mas não
 executados em Claude, ChatGPT, Grok, Kimi ou outro produto.
 Os 43 testes locais não demonstram obediência universal de modelos ao protocolo.
 

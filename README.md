@@ -34,7 +34,7 @@ Não escreve e-mail, texto de tela nem documentação; é para o prompt que roda
 
 **Transforma um processo seu em uma skill profissional.**
 
-Ela entrevista você sobre o trabalho, pede os materiais que sustentam as regras, fecha o escopo por escrito e só então gera a skill — depois da sua confirmação. Entrega outra skill, não a resposta do caso contábil que você usou como exemplo.
+Ela entrevista você sobre o trabalho, pede os materiais que sustentam as regras, fecha o escopo por escrito e só então gera a skill — depois da sua confirmação. Entrega outra skill, não a resposta do caso contábil que você usou como exemplo. A skill criada é sua: você escolhe o autor e a licença, e o crédito à metodologia pode ser retirado.
 
 A skill que ela cria não vem com motor de cálculo verificado: para conta conferida por dois caminhos independentes, use a esteira "Skill avançada" da plataforma RDD.
 
@@ -158,6 +158,16 @@ Troque `-a claude-code` por `-a codex` ou pelo nome do seu agente, e use `-s '*'
 </details>
 
 Depois acione pelo nome: *"Use a skill parsing-chunking-by-rdd. Prepare este documento para a minha base."*
+
+### O ChatGPT pediu para analisar a skill antes de usar?
+
+O ChatGPT analisa automaticamente toda skill enviada. Às vezes ele mostra **"Analise esta habilidade antes de usá-la"** com o botão **"Aprovar habilidade"**. Isso não é bloqueio: é um pedido de revisão. A mesma skill, com os mesmos bytes, pode passar sem aviso numa conta e ser marcada em outra.
+
+1. Confira se o `.zip` veio da [Release oficial](../../releases/latest) (veja **Verificar o download** abaixo).
+2. Apague as versões antigas ou duplicadas da mesma skill em Habilidades e envie de novo. Skills com nome ou descrição parecidos instaladas lado a lado podem disparar o aviso.
+3. Se o aviso continuar, pode aprovar: os scripts destas skills só leem arquivos locais, e cada pasta traz o código aberto para você conferir.
+
+Histórico do caso em [docs/2026-11-20_aviso-revisao-chatgpt.md](docs/2026-11-20_aviso-revisao-chatgpt.md).
 
 ## Verificar o download
 

@@ -11,6 +11,11 @@ Período de consulta e período de cálculo, separadamente.
 Entradas, saídas, regras, exceções e premissas.
 Perfil pedido e efetivo; justificativa de eventual redução.
 
+## Autoria da skill
+Autor: nao disponivel (informado pelo usuário).
+Licença: nao disponivel (sugerir MIT; o usuário escolhe).
+Crédito à metodologia RDD: sim | não (removível a pedido do usuário).
+
 ## Materiais
 ID | Gaveta | Título/origem | Localizador | Versão/vigência | Estado | Lacuna
 Não preencher dado desconhecido: usar nao disponivel.

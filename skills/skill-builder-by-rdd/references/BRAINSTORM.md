@@ -95,6 +95,10 @@ Identificar ferramentas reais e necessidade de aprovação para ações externas
 A criação de uma skill não autoriza publicar, protocolar, transmitir, assinar ou pagar.
 Definir quem revisa, quem mantém a base e qual evento exige atualização.
 
+Perguntar quem assina a skill como autor e qual licença ela terá. Sugerir MIT,
+aceitar outra licença ou "todos os direitos reservados". Avisar que a skill trará
+uma seção de crédito à metodologia RDD e que ela pode ser retirada.
+
 ## Bloco 7 — Qualidade e conclusão
 
 Perguntar o que caracteriza uma boa resposta e quais erros seriam inaceitáveis.

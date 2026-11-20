@@ -29,7 +29,7 @@ symlink que o pai pula no macOS).
 
 ## O que esta skill ainda NÃO prova
 
-Os 12 cenários de `evals/cases.json` foram escritos e não executados em modelos; 3 deles exigem o
+Os 12 cenários de conversa (no repositório, fora do pacote: pasta evals, subpasta skill-builder-omie-by-rdd) foram escritos e não executados em modelos; 3 deles exigem o
 conector do Omie ligado. O lint de domínio prova que o protocolo de escrita está no texto da skill gerada, não que o
 modelo do usuário o siga. "Pedir aprovação" no conector é declaração do usuário. Lista completa em
 `manifest.json › pending`.

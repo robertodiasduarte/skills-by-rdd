@@ -1,5 +1,18 @@
 # Histórico
 
+## 1.2.0 — 20/11/2026
+
+A skill gerada pertence ao usuário: autor e licença passam a ser perguntados no
+brainstorm e registrados no resumo do escopo e no registro de brainstorm, em vez de fixados em
+Roberto Dias Duarte e MIT. O crédito à metodologia (`metadata.methodology` e a seção
+`## Metodologia e autoria`) continua por padrão, aparece no resumo do escopo e pode
+ser removido a pedido. A descrição passa a declarar isso.
+A própria meta-skill continua MIT, de autoria de Roberto Dias Duarte.
+Os 15 cenários de conversa saem do pacote distribuído e passam a morar no
+repositório em pasta `evals` do repositório, arquivo `skill-builder-by-rdd/cases.json`: eles citam frases de
+injeção como casos de teste, e o pacote não precisa delas para funcionar.
+Nenhum script ou teste mudou.
+
 ## 1.1.2 — 10/10/2026
 
 "Quando não usar" passa a nomear a `skill-builder-omie-by-rdd`: skill que opera o ERP

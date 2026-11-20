@@ -1,8 +1,8 @@
 ---
 name: {{nome}}
-license: MIT
+license: substituir-pela-licenca-escolhida-pelo-usuario
 metadata:
-  author: Roberto Dias Duarte
+  author: substituir-pelo-autor-informado-pelo-usuario
   methodology: Metodologia de Roberto Dias Duarte
   version: '{{versao}}'
 description: "{{O que a skill faz no Omie, em terceira pessoa}}. Use quando {{gatilhos aprovados, com as palavras que a pessoa usa}}. Requer o conector MCP do Omie. Período de consulta: {{dados ao vivo no momento da execução | período pedido}}; período de cálculo: não aplicável. Não soma valores de vários registros, não fatura nem inutiliza e não faz análise contábil, tributária ou financeira."

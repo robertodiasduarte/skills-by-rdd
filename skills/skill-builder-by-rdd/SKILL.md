@@ -4,7 +4,7 @@ license: MIT
 metadata:
   author: Roberto Dias Duarte
   methodology: Metodologia de Roberto Dias Duarte
-description: Conduz brainstorm, coleta materiais, delimita escopo e cria skills contábeis, tributárias, trabalhistas e jurídicas somente após confirmação explícita do usuário. Use quando houver intenção de transformar um processo, POP, base documental, regras ou memórias de cálculo em uma nova skill profissional ou revisar uma existente. Opera por capacidades do ambiente, sem depender de um fornecedor de IA. Não executa diretamente apurações, pareceres ou obrigações profissionais; os períodos de consulta e cálculo são definidos separadamente em cada skill criada.
+description: Conduz brainstorm, coleta materiais, delimita escopo e cria skills contábeis, tributárias, trabalhistas e jurídicas somente após confirmação explícita do usuário. Use quando houver intenção de transformar um processo, POP, base documental, regras ou memórias de cálculo em uma nova skill profissional ou revisar uma existente. Opera por capacidades do ambiente, sem depender de um fornecedor de IA. Não executa diretamente apurações, pareceres ou obrigações profissionais; os períodos de consulta e cálculo são definidos separadamente em cada skill criada. A licença e o autor de cada skill criada são escolhidos pelo usuário; a skill criada traz uma seção curta de crédito à metodologia RDD, que o usuário pode remover.
 ---
 
 # Skill Builder by RDD
@@ -29,12 +29,13 @@ Fluxo obrigatório:
 Ler [Brainstorm](references/BRAINSTORM.md) para a entrevista e
 [Contrato de geração](references/CONTRATO_GERACAO.md) antes de produzir arquivos.
 
-Toda skill-filha gerada deve declarar no frontmatter:
-`license: MIT`, `metadata.author: Roberto Dias Duarte` e
-`metadata.methodology: Metodologia de Roberto Dias Duarte`.
-Também deve conter, no corpo, a seção `## Metodologia e autoria` com a frase:
+A skill-filha pertence ao usuário. Perguntar no brainstorm quem é o autor e qual
+licença ela terá (sugerir MIT, aceitar outra ou "todos os direitos reservados") e
+registrar a resposta no resumo do escopo e no registro de brainstorm. Não preencher autor nem licença sem essa resposta.
+Por padrão, incluir no frontmatter `metadata.methodology: Metodologia de Roberto Dias Duarte`
+e, no fim do corpo, a seção `## Metodologia e autoria` com a frase
 `Esta skill foi construída com a metodologia de Roberto Dias Duarte.`
-Não omitir nem reformular essa atribuição sem uma revisão explícita do escopo.
+Informar esse crédito no resumo do escopo; se o usuário pedir, removê-lo.
 
 ## Quando usar / Quando não usar
 
@@ -56,7 +57,7 @@ vizinhos excluídos. Não presumir jurisdição, regime, categoria, tribunal ou 
 
 ## Dados necessários
 
-Obter progressivamente: processo e objetivo; usuário e decisão apoiada; área e
+Obter progressivamente: processo e objetivo; autor e licença da skill; usuário e decisão apoiada; área e
 jurisdição; entradas e saídas; cobertura e exclusões; período de consulta e período
 de cálculo; regras e exceções; materiais; critérios de aceite; revisão humana;
 permissão de pesquisa; ferramentas disponíveis e restrições de confidencialidade.
@@ -112,7 +113,8 @@ verificados. Submeter qualquer redução de capacidade à confirmação do usuá
 
 Exibir um resumo autossuficiente, legível por não programadores:
 objetivo, público, jurisdição, cobertura, exclusões nomeadas, entradas, saídas,
-dois períodos, perfil pedido e efetivo, materiais disponíveis e ausentes,
+dois períodos, perfil pedido e efetivo, autor, licença e crédito à metodologia,
+materiais disponíveis e ausentes,
 regras, hipóteses, ferramentas, pesquisa, revisão humana, testes e limitações.
 
 Atribuir `id` e `revisao`. Não esconder as lacunas em um arquivo que o usuário não leu.
@@ -206,8 +208,9 @@ Testar esta meta-skill localmente:
 python3 -B -m unittest discover -s "$SKILL_ROOT/tests" -p "test_*.py"
 ```
 Os testes de [tests/test_controls.py](tests/test_controls.py) verificam controles
-determinísticos. Os cenários de [evals/cases.json](evals/cases.json) precisam de
-execução comportamental separada em cada ambiente.
+determinísticos. Os cenários de conversa ficam fora do pacote distribuído, no
+repositório público skills-by-rdd (pasta evals do repositório, arquivo skill-builder-by-rdd/cases.json), e precisam
+de execução comportamental separada em cada ambiente.
 
 ## Tratamento de exceções
 

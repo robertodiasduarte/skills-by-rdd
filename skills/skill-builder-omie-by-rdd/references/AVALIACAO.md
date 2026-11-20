@@ -9,7 +9,8 @@ apenas porque Python passou neste ambiente.
 
 ## Cenários de conversa
 
-Usar evals/cases.json como roteiro. Em cada ambiente-alvo, registrar:
+Usar como roteiro os cenários de conversa desta skill, guardados no repositório público
+skills-by-rdd (pasta evals, subpasta com o nome da skill), fora do pacote distribuído. Em cada ambiente-alvo, registrar:
 produto e configuração; versão do pacote; data; entradas; saídas; resultado; falhas.
 
 Executar cada cenário negativo em três repetições independentes, como adaptação da
