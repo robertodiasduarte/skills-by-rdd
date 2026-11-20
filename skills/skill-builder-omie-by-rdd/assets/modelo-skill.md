@@ -1,8 +1,8 @@
 ---
 name: substituir-pelo-nome-aprovado
-license: MIT
+license: substituir-pela-licenca-escolhida-pelo-usuario
 metadata:
-  author: Roberto Dias Duarte
+  author: substituir-pelo-autor-informado-pelo-usuario
   methodology: Metodologia de Roberto Dias Duarte
 description: "Descrever em terceira pessoa a tarefa delimitada. Use quando houver os gatilhos aprovados. Informar os dois períodos e os vizinhos excluídos."
 ---
@@ -38,3 +38,4 @@ Referenciar somente arquivos efetivamente presentes.
 
 ## Metodologia e autoria
 Esta skill foi construída com a metodologia de Roberto Dias Duarte.
+<!-- Seção e metadata.methodology removíveis se o usuário recusar o crédito no escopo. -->

@@ -286,7 +286,11 @@ def lint(raiz: Path, perfil: str | None, catalogo: dict) -> list[str]:
 
     if versao_frontmatter(skill) != manifest.get("version"):
         erros.append("VERSAO_AUSENTE_OU_DIVERGENTE")
-    if "## Metodologia e autoria" not in skill or "Esta skill foi construída com a metodologia de Roberto Dias Duarte." not in skill:
+    # O crédito à metodologia é padrão e removível: só deixa de ser exigido quando o usuário o recusou
+    # e o manifest da skill gerada registra isso ("credito_metodologia": false).
+    if manifest.get("credito_metodologia", True) is not False and (
+            "## Metodologia e autoria" not in skill
+            or "Esta skill foi construída com a metodologia de Roberto Dias Duarte." not in skill):
         erros.append("ATRIBUICAO_AUSENTE")
     perfil_manifest = manifest.get("perfil_omie")
     if perfil_manifest not in {"operador", "conferidor"}:

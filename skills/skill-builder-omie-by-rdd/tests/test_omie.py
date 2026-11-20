@@ -204,6 +204,26 @@ class EscritaTests(TempDir):
     def test_operador_com_escrita_completa_aprovado(self):
         self.assertEqual(self.erros(montar(self.tmp / "a", "operador", [LEITURA, INCLUIR], GATE)), [])
 
+    def _sem_credito(self, raiz, recusado):
+        skill = raiz / "SKILL.md"
+        skill.write_text(skill.read_text(encoding="utf-8").replace(
+            "## Metodologia e autoria\n\nEsta skill foi construída com a metodologia de Roberto Dias Duarte.\n", ""),
+            encoding="utf-8")
+        if recusado:
+            mp = raiz / "manifest.json"
+            m = json.loads(mp.read_text(encoding="utf-8"))
+            m["credito_metodologia"] = False
+            mp.write_text(json.dumps(m, ensure_ascii=False), encoding="utf-8")
+        return raiz
+
+    def test_credito_ausente_sem_recusa_reprova(self):
+        raiz = self._sem_credito(montar(self.tmp / "a", "operador", [LEITURA]), recusado=False)
+        self.assertIn("ATRIBUICAO_AUSENTE", self.erros(raiz))
+
+    def test_credito_recusado_no_manifest_passa(self):
+        raiz = self._sem_credito(montar(self.tmp / "a", "operador", [LEITURA]), recusado=True)
+        self.assertEqual(self.erros(raiz), [])
+
     def test_escrita_sem_gate(self):
         corpo = GATE.replace("### Gate de escrita", "### Passos")
         self.assertIn("ESCRITA_SEM_GATE", self.erros(montar(self.tmp / "a", "operador", [INCLUIR], corpo)))

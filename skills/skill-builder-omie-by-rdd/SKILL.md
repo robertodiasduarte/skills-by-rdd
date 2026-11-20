@@ -4,8 +4,8 @@ license: MIT
 metadata:
   author: Roberto Dias Duarte
   methodology: Metodologia de Roberto Dias Duarte
-  version: '1.0.0'
-description: Conduz entrevista, delimita escopo e cria skills que consultam e operam o ERP Omie pelo conector MCP oficial, somente após confirmação explícita do usuário. Use quando houver intenção de transformar uma rotina no Omie (títulos atrasados, pedidos, estoque, OS, CRM, tarefas, carteira de empresas) em uma skill. Exige o conector MCP do Omie; testa a skill gerada em leitura na empresa do usuário antes de entregar. Toda soma de valores sai de script com conferência, nunca do modelo. Não fatura, não inutiliza, não grava nada no Omie por conta própria e não faz análise contábil, tributária ou financeira. Período de consulta e de cálculo são definidos em cada skill criada.
+  version: '1.1.0'
+description: Conduz entrevista, delimita escopo e cria skills que consultam e operam o ERP Omie pelo conector MCP oficial, somente após confirmação explícita do usuário. Use quando houver intenção de transformar uma rotina no Omie (títulos atrasados, pedidos, estoque, OS, CRM, tarefas, carteira de empresas) em uma skill. Exige o conector MCP do Omie; testa a skill gerada em leitura na empresa do usuário antes de entregar. Toda soma de valores sai de script com conferência, nunca do modelo. Não fatura, não inutiliza, não grava nada no Omie por conta própria e não faz análise contábil, tributária ou financeira. Período de consulta e de cálculo são definidos em cada skill criada. A licença e o autor de cada skill criada são escolhidos pelo usuário; o crédito à metodologia RDD pode ser removido.
 ---
 
 # Skill Builder Omie by RDD
@@ -25,9 +25,11 @@ Uma pergunta principal por mensagem. Primeira pergunta, quando a resposta ainda 
 Ler antes de começar: [Brainstorm](references/BRAINSTORM.md), [Perfis Omie](references/omie/PERFIS_OMIE.md),
 [Operações](references/omie/OPERACOES.md) e [Contrato de geração](references/CONTRATO_GERACAO.md).
 
-Toda skill gerada declara no frontmatter `license: MIT`, `metadata.author: Roberto Dias Duarte`,
-`metadata.methodology: Metodologia de Roberto Dias Duarte` e `metadata.version` igual ao `manifest.json`, e traz a
-seção `## Metodologia e autoria` com a frase: `Esta skill foi construída com a metodologia de Roberto Dias Duarte.`
+A skill gerada pertence ao usuário: perguntar no brainstorm quem é o autor e qual licença ela terá (sugerir MIT) e
+preencher `license` e `metadata.author` só com a resposta. Ela declara `metadata.version` igual ao `manifest.json` e,
+por padrão, `metadata.methodology: Metodologia de Roberto Dias Duarte` e a seção `## Metodologia e autoria` com a frase
+`Esta skill foi construída com a metodologia de Roberto Dias Duarte.` Esse crédito aparece no resumo do escopo; se o
+usuário o recusar, omitir os dois e gravar `"credito_metodologia": false` no `manifest.json` da skill gerada.
 
 ## Quando usar / Quando não usar
 
@@ -138,8 +140,9 @@ Testes desta meta-skill:
 ```bash
 python3 -B -m unittest discover -s "$SKILL_ROOT/tests" -p "test_*.py"
 ```
-[Controles herdados](tests/test_controls.py) e [controles Omie](tests/test_omie.py). Os cenários de
-[evals/cases.json](evals/cases.json) precisam de execução comportamental separada.
+[Controles herdados](tests/test_controls.py) e [controles Omie](tests/test_omie.py). Os cenários de conversa
+ficam fora do pacote distribuído, no repositório público skills-by-rdd (pasta evals, subpasta
+skill-builder-omie-by-rdd), e precisam de execução comportamental separada.
 
 ## Tratamento de exceções
 
