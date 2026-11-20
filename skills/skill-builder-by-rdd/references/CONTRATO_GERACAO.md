@@ -60,14 +60,17 @@ não usar “boilerplate oficial RDD” para algo reconstruído da descrição.
 
 ## SKILL.md
 
-Frontmatter: name e description obrigatórios. Em toda skill-filha gerada, incluir
-obrigatoriamente `license: MIT`, `metadata.author: Roberto Dias Duarte` e
+Frontmatter: name e description obrigatórios. `license` e `metadata.author` recebem
+exatamente o que o usuário informou na seção "Autoria da skill" do registro de brainstorm; sem
+resposta, perguntar antes de gerar, nunca presumir. Por padrão, incluir
 `metadata.methodology: Metodologia de Roberto Dias Duarte`. Compatibility e allowed-tools
 continuam opcionais conforme o ambiente. Versão, se usada, fica dentro de metadata.
 Não depender de ferramentas nomeadas de um fornecedor.
 
-No corpo de toda skill-filha, incluir `## Metodologia e autoria` com a frase literal:
+Por padrão, terminar o corpo com `## Metodologia e autoria` e a frase:
 `Esta skill foi construída com a metodologia de Roberto Dias Duarte.`
+Esse crédito aparece no resumo do escopo; quando o
+usuário o recusar, omitir a seção e o `metadata.methodology`.
 
 Name: kebab-case, até 64 caracteres, sem hífens consecutivos ou nas pontas,
 igual ao diretório. Preservar as palavras reservadas da validação RDD.

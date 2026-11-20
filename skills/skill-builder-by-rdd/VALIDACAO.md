@@ -1,6 +1,6 @@
 # Validação da entrega
 
-Data: 20/09/2026. Versão: 1.1.1 (revalidada na 1.1.2 em 10/10/2026: scripts e testes inalterados).
+Data: 20/09/2026. Versão: 1.1.1 (revalidada na 1.1.2 em 10/10/2026 e na 1.2.0 em 20/11/2026: scripts e testes inalterados).
 Ambiente de teste: Python 3.13.5, execução local.
 Os testes são de software e de protocolo; não contêm gabaritos normativos.
 
