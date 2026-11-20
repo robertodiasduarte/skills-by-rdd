@@ -208,8 +208,9 @@ Testar esta meta-skill localmente:
 python3 -B -m unittest discover -s "$SKILL_ROOT/tests" -p "test_*.py"
 ```
 Os testes de [tests/test_controls.py](tests/test_controls.py) verificam controles
-determinísticos. Os cenários de [evals/cases.json](evals/cases.json) precisam de
-execução comportamental separada em cada ambiente.
+determinísticos. Os cenários de conversa ficam fora do pacote distribuído, no
+repositório público skills-by-rdd (pasta evals do repositório, arquivo skill-builder-by-rdd/cases.json), e precisam
+de execução comportamental separada em cada ambiente.
 
 ## Tratamento de exceções
 

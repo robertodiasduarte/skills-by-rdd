@@ -8,6 +8,9 @@ Roberto Dias Duarte e MIT. O crédito à metodologia (`metadata.methodology` e a
 `## Metodologia e autoria`) continua por padrão, aparece no resumo do escopo e pode
 ser removido a pedido. A descrição passa a declarar isso.
 A própria meta-skill continua MIT, de autoria de Roberto Dias Duarte.
+Os 15 cenários de conversa saem do pacote distribuído e passam a morar no
+repositório em pasta `evals` do repositório, arquivo `skill-builder-by-rdd/cases.json`: eles citam frases de
+injeção como casos de teste, e o pacote não precisa delas para funcionar.
 Nenhum script ou teste mudou.
 
 ## 1.1.2 — 10/10/2026
